@@ -63,7 +63,7 @@ export default {
     /*margin-left: 50%;*/
     left: 0px;
     top: 0px;
-    width: 220px;
+    width: 230px;
     height: 100%;
     overflow: scroll;
   }
