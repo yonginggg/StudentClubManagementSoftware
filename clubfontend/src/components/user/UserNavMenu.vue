@@ -1,6 +1,6 @@
 <template>
-  <el-container>
-    <el-aside>
+<!--  <el-container>-->
+<!--    <el-aside>-->
       <el-menu
         :default-active="'/index'"
         router
@@ -13,7 +13,7 @@
             <i class="el-icon-menu"></i>
             <span>基本功能</span>
           </template>
-          <el-menu-item index="1-1">个人信息</el-menu-item>
+          <el-menu-item index="personal">个人信息</el-menu-item>
           <el-menu-item index="1-2">讨论区</el-menu-item>
           <el-menu-item index="1-3">社团招新</el-menu-item>
           <el-menu-item index="1-4">社团创建</el-menu-item>
@@ -47,8 +47,8 @@
           <el-menu-item index="4-2">公告管理</el-menu-item>
         </el-submenu>
       </el-menu>
-    </el-aside>
-  </el-container>
+<!--    </el-aside>-->
+<!--  </el-container>-->
 </template>
 
 <script>
@@ -63,7 +63,7 @@ export default {
     /*margin-left: 50%;*/
     left: 0px;
     top: 0px;
-    width: 220px;
+    width: 15%;
     height: 100%;
     overflow: scroll;
   }

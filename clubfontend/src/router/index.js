@@ -4,7 +4,8 @@ import AppIndex from '@/components/home/AppIndex'
 import Login from '@/components/Login'
 import Registered from '@/components/Registered'
 import Home from '@/components/UserHome'
-
+// eslint-disable-next-line no-unused-vars
+import Personal from '../components/personal/Personal'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,14 @@ export default new Router({
           path: '/index',
           name: 'AppIndex',
           component: AppIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/personal',
+          name: 'Personal',
+          component: Personal,
           meta: {
             requireAuth: true
           }

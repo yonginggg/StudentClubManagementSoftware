@@ -1,15 +1,15 @@
 <template>
   <div>
-    <nav-menu></nav-menu>
+    <user-nav-menu></user-nav-menu>
     <router-view/>
   </div>
 </template>
 
 <script>
-import NavMenu from './user/UserNavMenu'
+import UserNavMenu from './user/UserNavMenu'
 export default {
   name: 'Home',
-  components: {NavMenu}
+  components: {UserNavMenu}
 }
 </script>
 
