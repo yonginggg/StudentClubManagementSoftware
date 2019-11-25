@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanActivity" >
+    <id column="activityId" property="activityid" jdbcType="INTEGER" />
+    <result column="activityRange" property="activityrange" jdbcType="VARCHAR" />
+    <result column="activityName" property="activityname" jdbcType="VARCHAR" />
+    <result column="activityIntroduction" property="activityintroduction" jdbcType="VARCHAR" />
+    <result column="activityStartTime" property="activitystarttime" jdbcType="TIMESTAMP" />
+    <result column="activityEndTime" property="activityendtime" jdbcType="TIMESTAMP" />
+    <result column="activityReleaseTime" property="activityreleasetime" jdbcType="TIMESTAMP" />
+    <result column="activityDeadLine" property="activitydeadline" jdbcType="TIMESTAMP" />
+    <result column="activityPalce" property="activitypalce" jdbcType="INTEGER" />
+    <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
+    <result column="departmentId" property="departmentid" jdbcType="INTEGER" />
+    <result column="activityState" property="activitystate" jdbcType="BIT" />
+    <result column="activitiesApplicationTime" property="activitiesapplicationtime" jdbcType="TIMESTAMP" />
+    <result column="activitiesApplicationState" property="activitiesapplicationstate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    activityId, activityRange, activityName, activityIntroduction, activityStartTime, 
+    activityEndTime, activityReleaseTime, activityDeadLine, activityPalce, associationsId, 
+    departmentId, activityState, activitiesApplicationTime, activitiesApplicationState
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanActivity" >
+    insert into activity (activityId, activityRange, activityName, 
+      activityIntroduction, activityStartTime, 
+      activityEndTime, activityReleaseTime, 
+      activityDeadLine, activityPalce, associationsId, 
+      departmentId, activityState, activitiesApplicationTime, 
+      activitiesApplicationState)
+    values (#{activityid,jdbcType=INTEGER}, #{activityrange,jdbcType=VARCHAR}, #{activityname,jdbcType=VARCHAR}, 
+      #{activityintroduction,jdbcType=VARCHAR}, #{activitystarttime,jdbcType=TIMESTAMP}, 
+      #{activityendtime,jdbcType=TIMESTAMP}, #{activityreleasetime,jdbcType=TIMESTAMP}, 
+      #{activitydeadline,jdbcType=TIMESTAMP}, #{activitypalce,jdbcType=INTEGER}, #{associationsid,jdbcType=INTEGER}, 
+      #{departmentid,jdbcType=INTEGER}, #{activitystate,jdbcType=BIT}, #{activitiesapplicationtime,jdbcType=TIMESTAMP}, 
+      #{activitiesapplicationstate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanActivity" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityid != null" >
+        activityId,
+      </if>
+      <if test="activityrange != null" >
+        activityRange,
+      </if>
+      <if test="activityname != null" >
+        activityName,
+      </if>
+      <if test="activityintroduction != null" >
+        activityIntroduction,
+      </if>
+      <if test="activitystarttime != null" >
+        activityStartTime,
+      </if>
+      <if test="activityendtime != null" >
+        activityEndTime,
+      </if>
+      <if test="activityreleasetime != null" >
+        activityReleaseTime,
+      </if>
+      <if test="activitydeadline != null" >
+        activityDeadLine,
+      </if>
+      <if test="activitypalce != null" >
+        activityPalce,
+      </if>
+      <if test="associationsid != null" >
+        associationsId,
+      </if>
+      <if test="departmentid != null" >
+        departmentId,
+      </if>
+      <if test="activitystate != null" >
+        activityState,
+      </if>
+      <if test="activitiesapplicationtime != null" >
+        activitiesApplicationTime,
+      </if>
+      <if test="activitiesapplicationstate != null" >
+        activitiesApplicationState,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityid != null" >
+        #{activityid,jdbcType=INTEGER},
+      </if>
+      <if test="activityrange != null" >
+        #{activityrange,jdbcType=VARCHAR},
+      </if>
+      <if test="activityname != null" >
+        #{activityname,jdbcType=VARCHAR},
+      </if>
+      <if test="activityintroduction != null" >
+        #{activityintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="activitystarttime != null" >
+        #{activitystarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityendtime != null" >
+        #{activityendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityreleasetime != null" >
+        #{activityreleasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activitydeadline != null" >
+        #{activitydeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activitypalce != null" >
+        #{activitypalce,jdbcType=INTEGER},
+      </if>
+      <if test="associationsid != null" >
+        #{associationsid,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="activitystate != null" >
+        #{activitystate,jdbcType=BIT},
+      </if>
+      <if test="activitiesapplicationtime != null" >
+        #{activitiesapplicationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activitiesapplicationstate != null" >
+        #{activitiesapplicationstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanActivity" >
+    update activity
+    <set >
+      <if test="activityrange != null" >
+        activityRange = #{activityrange,jdbcType=VARCHAR},
+      </if>
+      <if test="activityname != null" >
+        activityName = #{activityname,jdbcType=VARCHAR},
+      </if>
+      <if test="activityintroduction != null" >
+        activityIntroduction = #{activityintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="activitystarttime != null" >
+        activityStartTime = #{activitystarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityendtime != null" >
+        activityEndTime = #{activityendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityreleasetime != null" >
+        activityReleaseTime = #{activityreleasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activitydeadline != null" >
+        activityDeadLine = #{activitydeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activitypalce != null" >
+        activityPalce = #{activitypalce,jdbcType=INTEGER},
+      </if>
+      <if test="associationsid != null" >
+        associationsId = #{associationsid,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null" >
+        departmentId = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="activitystate != null" >
+        activityState = #{activitystate,jdbcType=BIT},
+      </if>
+      <if test="activitiesapplicationtime != null" >
+        activitiesApplicationTime = #{activitiesapplicationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activitiesapplicationstate != null" >
+        activitiesApplicationState = #{activitiesapplicationstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanActivity" >
+    update activity
+    set activityRange = #{activityrange,jdbcType=VARCHAR},
+      activityName = #{activityname,jdbcType=VARCHAR},
+      activityIntroduction = #{activityintroduction,jdbcType=VARCHAR},
+      activityStartTime = #{activitystarttime,jdbcType=TIMESTAMP},
+      activityEndTime = #{activityendtime,jdbcType=TIMESTAMP},
+      activityReleaseTime = #{activityreleasetime,jdbcType=TIMESTAMP},
+      activityDeadLine = #{activitydeadline,jdbcType=TIMESTAMP},
+      activityPalce = #{activitypalce,jdbcType=INTEGER},
+      associationsId = #{associationsid,jdbcType=INTEGER},
+      departmentId = #{departmentid,jdbcType=INTEGER},
+      activityState = #{activitystate,jdbcType=BIT},
+      activitiesApplicationTime = #{activitiesapplicationtime,jdbcType=TIMESTAMP},
+      activitiesApplicationState = #{activitiesapplicationstate,jdbcType=VARCHAR}
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </update>
+</mapper>

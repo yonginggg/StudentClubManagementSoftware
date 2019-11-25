@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanMember" >
+    <id column="memberId" property="memberid" jdbcType="INTEGER" />
+    <result column="memberPost" property="memberpost" jdbcType="VARCHAR" />
+    <result column="memberTime" property="membertime" jdbcType="TIMESTAMP" />
+    <result column="memberIntroduction" property="memberintroduction" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    memberId, memberPost, memberTime, memberIntroduction, userId, associationsId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from member
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanMember" >
+    insert into member (memberId, memberPost, memberTime, 
+      memberIntroduction, userId, associationsId
+      )
+    values (#{memberid,jdbcType=INTEGER}, #{memberpost,jdbcType=VARCHAR}, #{membertime,jdbcType=TIMESTAMP}, 
+      #{memberintroduction,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{associationsid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanMember" >
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memberid != null" >
+        memberId,
+      </if>
+      <if test="memberpost != null" >
+        memberPost,
+      </if>
+      <if test="membertime != null" >
+        memberTime,
+      </if>
+      <if test="memberintroduction != null" >
+        memberIntroduction,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="associationsid != null" >
+        associationsId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memberid != null" >
+        #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="memberpost != null" >
+        #{memberpost,jdbcType=VARCHAR},
+      </if>
+      <if test="membertime != null" >
+        #{membertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberintroduction != null" >
+        #{memberintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="associationsid != null" >
+        #{associationsid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanMember" >
+    update member
+    <set >
+      <if test="memberpost != null" >
+        memberPost = #{memberpost,jdbcType=VARCHAR},
+      </if>
+      <if test="membertime != null" >
+        memberTime = #{membertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberintroduction != null" >
+        memberIntroduction = #{memberintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="associationsid != null" >
+        associationsId = #{associationsid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanMember" >
+    update member
+    set memberPost = #{memberpost,jdbcType=VARCHAR},
+      memberTime = #{membertime,jdbcType=TIMESTAMP},
+      memberIntroduction = #{memberintroduction,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      associationsId = #{associationsid,jdbcType=INTEGER}
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </update>
+</mapper>

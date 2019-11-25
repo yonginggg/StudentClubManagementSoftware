@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanNotice" >
+    <id column="noticeId" property="noticeid" jdbcType="INTEGER" />
+    <result column="noticeRange" property="noticerange" jdbcType="VARCHAR" />
+    <result column="noticeContent" property="noticecontent" jdbcType="VARCHAR" />
+    <result column="noticeTime" property="noticetime" jdbcType="TIMESTAMP" />
+    <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
+    <result column="noticeState" property="noticestate" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    noticeId, noticeRange, noticeContent, noticeTime, associationsId, noticeState
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where noticeId = #{noticeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where noticeId = #{noticeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanNotice" >
+    insert into notice (noticeId, noticeRange, noticeContent, 
+      noticeTime, associationsId, noticeState
+      )
+    values (#{noticeid,jdbcType=INTEGER}, #{noticerange,jdbcType=VARCHAR}, #{noticecontent,jdbcType=VARCHAR}, 
+      #{noticetime,jdbcType=TIMESTAMP}, #{associationsid,jdbcType=INTEGER}, #{noticestate,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanNotice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeid != null" >
+        noticeId,
+      </if>
+      <if test="noticerange != null" >
+        noticeRange,
+      </if>
+      <if test="noticecontent != null" >
+        noticeContent,
+      </if>
+      <if test="noticetime != null" >
+        noticeTime,
+      </if>
+      <if test="associationsid != null" >
+        associationsId,
+      </if>
+      <if test="noticestate != null" >
+        noticeState,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeid != null" >
+        #{noticeid,jdbcType=INTEGER},
+      </if>
+      <if test="noticerange != null" >
+        #{noticerange,jdbcType=VARCHAR},
+      </if>
+      <if test="noticecontent != null" >
+        #{noticecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticetime != null" >
+        #{noticetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="associationsid != null" >
+        #{associationsid,jdbcType=INTEGER},
+      </if>
+      <if test="noticestate != null" >
+        #{noticestate,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanNotice" >
+    update notice
+    <set >
+      <if test="noticerange != null" >
+        noticeRange = #{noticerange,jdbcType=VARCHAR},
+      </if>
+      <if test="noticecontent != null" >
+        noticeContent = #{noticecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticetime != null" >
+        noticeTime = #{noticetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="associationsid != null" >
+        associationsId = #{associationsid,jdbcType=INTEGER},
+      </if>
+      <if test="noticestate != null" >
+        noticeState = #{noticestate,jdbcType=BIT},
+      </if>
+    </set>
+    where noticeId = #{noticeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanNotice" >
+    update notice
+    set noticeRange = #{noticerange,jdbcType=VARCHAR},
+      noticeContent = #{noticecontent,jdbcType=VARCHAR},
+      noticeTime = #{noticetime,jdbcType=TIMESTAMP},
+      associationsId = #{associationsid,jdbcType=INTEGER},
+      noticeState = #{noticestate,jdbcType=BIT}
+    where noticeId = #{noticeid,jdbcType=INTEGER}
+  </update>
+</mapper>

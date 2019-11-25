@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanManager" >
+    <id column="managerId" property="managerid" jdbcType="VARCHAR" />
+    <result column="managerName" property="managername" jdbcType="VARCHAR" />
+    <result column="managerPalce" property="managerpalce" jdbcType="VARCHAR" />
+    <result column="managerTel" property="managertel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    managerId, managerName, managerPalce, managerTel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where managerId = #{managerid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from manager
+    where managerId = #{managerid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanManager" >
+    insert into manager (managerId, managerName, managerPalce, 
+      managerTel)
+    values (#{managerid,jdbcType=VARCHAR}, #{managername,jdbcType=VARCHAR}, #{managerpalce,jdbcType=VARCHAR}, 
+      #{managertel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanManager" >
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerid != null" >
+        managerId,
+      </if>
+      <if test="managername != null" >
+        managerName,
+      </if>
+      <if test="managerpalce != null" >
+        managerPalce,
+      </if>
+      <if test="managertel != null" >
+        managerTel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerid != null" >
+        #{managerid,jdbcType=VARCHAR},
+      </if>
+      <if test="managername != null" >
+        #{managername,jdbcType=VARCHAR},
+      </if>
+      <if test="managerpalce != null" >
+        #{managerpalce,jdbcType=VARCHAR},
+      </if>
+      <if test="managertel != null" >
+        #{managertel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanManager" >
+    update manager
+    <set >
+      <if test="managername != null" >
+        managerName = #{managername,jdbcType=VARCHAR},
+      </if>
+      <if test="managerpalce != null" >
+        managerPalce = #{managerpalce,jdbcType=VARCHAR},
+      </if>
+      <if test="managertel != null" >
+        managerTel = #{managertel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where managerId = #{managerid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanManager" >
+    update manager
+    set managerName = #{managername,jdbcType=VARCHAR},
+      managerPalce = #{managerpalce,jdbcType=VARCHAR},
+      managerTel = #{managertel,jdbcType=VARCHAR}
+    where managerId = #{managerid,jdbcType=VARCHAR}
+  </update>
+</mapper>

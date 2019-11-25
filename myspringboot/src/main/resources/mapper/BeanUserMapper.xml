@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanUserMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanUser" >
+    <id column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="userPwd" property="userpwd" jdbcType="VARCHAR" />
+    <result column="userSex" property="usersex" jdbcType="VARCHAR" />
+    <result column="userMajor" property="usermajor" jdbcType="VARCHAR" />
+    <result column="userClass" property="userclass" jdbcType="VARCHAR" />
+    <result column="userTel" property="usertel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userId, userName, userPwd, userSex, userMajor, userClass, userTel
+  </sql>
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+  </select>
+  <select id="selectUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userName = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteUser" parameterType="java.lang.String" >
+    delete from user
+    where userId = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertUser" parameterType="com.zks.model.BeanUser" >
+    insert into user (userId, userName, userPwd, 
+      userSex, userMajor, userClass, 
+      userTel)
+    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR}, 
+      #{usersex,jdbcType=VARCHAR}, #{usermajor,jdbcType=VARCHAR}, #{userclass,jdbcType=VARCHAR}, 
+      #{usertel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanUser" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="userpwd != null" >
+        userPwd,
+      </if>
+      <if test="usersex != null" >
+        userSex,
+      </if>
+      <if test="usermajor != null" >
+        userMajor,
+      </if>
+      <if test="userclass != null" >
+        userClass,
+      </if>
+      <if test="usertel != null" >
+        userTel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null" >
+        #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null" >
+        #{usersex,jdbcType=VARCHAR},
+      </if>
+      <if test="usermajor != null" >
+        #{usermajor,jdbcType=VARCHAR},
+      </if>
+      <if test="userclass != null" >
+        #{userclass,jdbcType=VARCHAR},
+      </if>
+      <if test="usertel != null" >
+        #{usertel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanUser" >
+    update user
+    <set >
+      <if test="username != null" >
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null" >
+        userPwd = #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null" >
+        userSex = #{usersex,jdbcType=VARCHAR},
+      </if>
+      <if test="usermajor != null" >
+        userMajor = #{usermajor,jdbcType=VARCHAR},
+      </if>
+      <if test="userclass != null" >
+        userClass = #{userclass,jdbcType=VARCHAR},
+      </if>
+      <if test="usertel != null" >
+        userTel = #{usertel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateUser" parameterType="com.zks.model.BeanUser" >
+    update user
+    set userName = #{username,jdbcType=VARCHAR},
+      userPwd = #{userpwd,jdbcType=VARCHAR},
+      userSex = #{usersex,jdbcType=VARCHAR},
+      userMajor = #{usermajor,jdbcType=VARCHAR},
+      userClass = #{userclass,jdbcType=VARCHAR},
+      userTel = #{usertel,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

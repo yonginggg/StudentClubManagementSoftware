@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanSubjectPostMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanSubjectPost" >
+    <id column="subjectPostId" property="subjectpostid" jdbcType="INTEGER" />
+    <result column="subjectPostContent" property="subjectpostcontent" jdbcType="VARCHAR" />
+    <result column="subjectPostTime" property="subjectposttime" jdbcType="TIMESTAMP" />
+    <result column="collectNum" property="collectnum" jdbcType="INTEGER" />
+    <result column="lookNum" property="looknum" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    subjectPostId, subjectPostContent, subjectPostTime, collectNum, lookNum, userId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from subjectPost
+    where subjectPostId = #{subjectpostid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from subjectPost
+    where subjectPostId = #{subjectpostid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanSubjectPost" >
+    insert into subjectPost (subjectPostId, subjectPostContent, 
+      subjectPostTime, collectNum, lookNum, 
+      userId)
+    values (#{subjectpostid,jdbcType=INTEGER}, #{subjectpostcontent,jdbcType=VARCHAR}, 
+      #{subjectposttime,jdbcType=TIMESTAMP}, #{collectnum,jdbcType=INTEGER}, #{looknum,jdbcType=INTEGER}, 
+      #{userid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanSubjectPost" >
+    insert into subjectPost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subjectpostid != null" >
+        subjectPostId,
+      </if>
+      <if test="subjectpostcontent != null" >
+        subjectPostContent,
+      </if>
+      <if test="subjectposttime != null" >
+        subjectPostTime,
+      </if>
+      <if test="collectnum != null" >
+        collectNum,
+      </if>
+      <if test="looknum != null" >
+        lookNum,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subjectpostid != null" >
+        #{subjectpostid,jdbcType=INTEGER},
+      </if>
+      <if test="subjectpostcontent != null" >
+        #{subjectpostcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectposttime != null" >
+        #{subjectposttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectnum != null" >
+        #{collectnum,jdbcType=INTEGER},
+      </if>
+      <if test="looknum != null" >
+        #{looknum,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanSubjectPost" >
+    update subjectPost
+    <set >
+      <if test="subjectpostcontent != null" >
+        subjectPostContent = #{subjectpostcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectposttime != null" >
+        subjectPostTime = #{subjectposttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectnum != null" >
+        collectNum = #{collectnum,jdbcType=INTEGER},
+      </if>
+      <if test="looknum != null" >
+        lookNum = #{looknum,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where subjectPostId = #{subjectpostid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanSubjectPost" >
+    update subjectPost
+    set subjectPostContent = #{subjectpostcontent,jdbcType=VARCHAR},
+      subjectPostTime = #{subjectposttime,jdbcType=TIMESTAMP},
+      collectNum = #{collectnum,jdbcType=INTEGER},
+      lookNum = #{looknum,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=VARCHAR}
+    where subjectPostId = #{subjectpostid,jdbcType=INTEGER}
+  </update>
+</mapper>

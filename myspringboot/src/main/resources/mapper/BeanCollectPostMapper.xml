@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanCollectPostMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanCollectPost" >
+    <id column="collectPostId" property="collectpostid" jdbcType="INTEGER" />
+    <result column="collectPostTime" property="collectposttime" jdbcType="TIMESTAMP" />
+    <result column="subjectPostId" property="subjectpostid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    collectPostId, collectPostTime, subjectPostId, userId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from collectPost
+    where collectPostId = #{collectpostid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from collectPost
+    where collectPostId = #{collectpostid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanCollectPost" >
+    insert into collectPost (collectPostId, collectPostTime, 
+      subjectPostId, userId)
+    values (#{collectpostid,jdbcType=INTEGER}, #{collectposttime,jdbcType=TIMESTAMP}, 
+      #{subjectpostid,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanCollectPost" >
+    insert into collectPost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collectpostid != null" >
+        collectPostId,
+      </if>
+      <if test="collectposttime != null" >
+        collectPostTime,
+      </if>
+      <if test="subjectpostid != null" >
+        subjectPostId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collectpostid != null" >
+        #{collectpostid,jdbcType=INTEGER},
+      </if>
+      <if test="collectposttime != null" >
+        #{collectposttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectpostid != null" >
+        #{subjectpostid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanCollectPost" >
+    update collectPost
+    <set >
+      <if test="collectposttime != null" >
+        collectPostTime = #{collectposttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectpostid != null" >
+        subjectPostId = #{subjectpostid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collectPostId = #{collectpostid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanCollectPost" >
+    update collectPost
+    set collectPostTime = #{collectposttime,jdbcType=TIMESTAMP},
+      subjectPostId = #{subjectpostid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=VARCHAR}
+    where collectPostId = #{collectpostid,jdbcType=INTEGER}
+  </update>
+</mapper>

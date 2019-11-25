@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zks.dao.BeanReplaytPostMapper" >
+  <resultMap id="BaseResultMap" type="com.zks.model.BeanReplaytPost" >
+    <id column="replayPostId" property="replaypostid" jdbcType="INTEGER" />
+    <result column="replayPostContent" property="replaypostcontent" jdbcType="VARCHAR" />
+    <result column="replayPostTime" property="replayposttime" jdbcType="TIMESTAMP" />
+    <result column="likeNum" property="likenum" jdbcType="INTEGER" />
+    <result column="subjectPostId" property="subjectpostid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    replayPostId, replayPostContent, replayPostTime, likeNum, subjectPostId, userId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from replaytPost
+    where replayPostId = #{replaypostid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from replaytPost
+    where replayPostId = #{replaypostid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zks.model.BeanReplaytPost" >
+    insert into replaytPost (replayPostId, replayPostContent, 
+      replayPostTime, likeNum, subjectPostId, 
+      userId)
+    values (#{replaypostid,jdbcType=INTEGER}, #{replaypostcontent,jdbcType=VARCHAR}, 
+      #{replayposttime,jdbcType=TIMESTAMP}, #{likenum,jdbcType=INTEGER}, #{subjectpostid,jdbcType=INTEGER}, 
+      #{userid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zks.model.BeanReplaytPost" >
+    insert into replaytPost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="replaypostid != null" >
+        replayPostId,
+      </if>
+      <if test="replaypostcontent != null" >
+        replayPostContent,
+      </if>
+      <if test="replayposttime != null" >
+        replayPostTime,
+      </if>
+      <if test="likenum != null" >
+        likeNum,
+      </if>
+      <if test="subjectpostid != null" >
+        subjectPostId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="replaypostid != null" >
+        #{replaypostid,jdbcType=INTEGER},
+      </if>
+      <if test="replaypostcontent != null" >
+        #{replaypostcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="replayposttime != null" >
+        #{replayposttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likenum != null" >
+        #{likenum,jdbcType=INTEGER},
+      </if>
+      <if test="subjectpostid != null" >
+        #{subjectpostid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zks.model.BeanReplaytPost" >
+    update replaytPost
+    <set >
+      <if test="replaypostcontent != null" >
+        replayPostContent = #{replaypostcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="replayposttime != null" >
+        replayPostTime = #{replayposttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likenum != null" >
+        likeNum = #{likenum,jdbcType=INTEGER},
+      </if>
+      <if test="subjectpostid != null" >
+        subjectPostId = #{subjectpostid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where replayPostId = #{replaypostid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanReplaytPost" >
+    update replaytPost
+    set replayPostContent = #{replaypostcontent,jdbcType=VARCHAR},
+      replayPostTime = #{replayposttime,jdbcType=TIMESTAMP},
+      likeNum = #{likenum,jdbcType=INTEGER},
+      subjectPostId = #{subjectpostid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=VARCHAR}
+    where replayPostId = #{replaypostid,jdbcType=INTEGER}
+  </update>
+</mapper>
