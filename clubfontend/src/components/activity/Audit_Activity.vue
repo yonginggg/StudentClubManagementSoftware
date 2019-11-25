@@ -2,7 +2,7 @@
     <el-table
       :data="tableData"
       border
-      style="width: 100%">
+      style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
       <el-table-column
         fixed
         prop="id"
@@ -41,34 +41,32 @@
 </template>
 
 <script>
-  import AdminNavMenu from '../admin/AdminNavMenu'
-  export default {
-    name: 'Audit_Activity'
-  }
-  export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-      }
-    },
-    data() {
-      return {
-        tableData: [{
-          id: 1000,
-          name: '音乐会',
-          data: '2019-12-1',
-          community: '吉他社',
-          address: '南校区风雨操场'
-        }, {
-          id: 1001,
-          name: '篮球比赛',
-          data: '2019-12-2',
-          community: '篮球社',
-          address: '南校区篮球场',
-        }]
-      }
+// import AdminNavMenu from '../admin/AdminNavMenu'
+export default {
+  name: 'Audit_Activity',
+  methods: {
+    handleClick (row) {
+      console.log(row)
+    }
+  },
+  data () {
+    return {
+      tableData: [{
+        id: 1000,
+        name: '音乐会',
+        data: '2019-12-1',
+        community: '吉他社',
+        address: '南校区风雨操场'
+      }, {
+        id: 1001,
+        name: '篮球比赛',
+        data: '2019-12-2',
+        community: '篮球社',
+        address: '南校区篮球场'
+      }]
     }
   }
+}
 </script>
 
 <style scoped>

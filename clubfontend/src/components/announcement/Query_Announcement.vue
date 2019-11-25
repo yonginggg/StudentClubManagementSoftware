@@ -2,7 +2,7 @@
   <el-table
     :data="tableData"
     border
-    style="width: 100%">
+    style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <el-table-column
       fixed
       prop="id"
@@ -42,34 +42,32 @@
 </template>
 
 <script>
-  export default {
-    name: 'Query_Announcement'
-  }
-  export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-      }
-    },
-    data() {
-      return {
-        tableData: [{
-          id: '100',
-          name: '服务器维护',
-          data1: '2019-1-1',
-          data2: '2019-1-10',
-          initiator: '管理员1',
-          adminId : '管理员1'
-        },{
-          id: '101',
-          name: '十一放假通知',
-          data1: '2019-9-20',
-          data2: '2019-10-10',
-          initiator : '管理员2'
-        } ]
-      }
+export default {
+  name: 'Query_Announcement',
+  methods: {
+    handleClick (row) {
+      console.log(row)
+    }
+  },
+  data () {
+    return {
+      tableData: [{
+        id: '100',
+        name: '服务器维护',
+        data1: '2019-1-1',
+        data2: '2019-1-10',
+        initiator: '管理员1',
+        adminId: '管理员1'
+      }, {
+        id: '101',
+        name: '十一放假通知',
+        data1: '2019-9-20',
+        data2: '2019-10-10',
+        initiator: '管理员2'
+      } ]
     }
   }
+}
 </script>
 
 <style scoped>

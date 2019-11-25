@@ -1,4 +1,4 @@
-SW  AQ<template>
+<template>
   <!--  <el-container>-->
   <!--    <el-aside>-->
   <el-menu
@@ -23,16 +23,16 @@ SW  AQ<template>
         <span>活动管理</span>
       </template>
       <el-menu-item index="Audit_Activity">审核活动申请</el-menu-item>
-      <el-menu-item index="6-2">审核活动修改</el-menu-item>
-      <el-menu-item index="6-3">查看活动</el-menu-item>
+      <el-menu-item index="Modify_Activity">审核活动修改</el-menu-item>
+      <el-menu-item index="Query_Activity">查看活动</el-menu-item>
     </el-submenu>
     <el-submenu index="7">
       <template slot="title">
         <i class="el-icon-s-custom"></i>
         <span>公告管理</span>
       </template>
-      <el-menu-item index="7-1">发布公告</el-menu-item>
-      <el-menu-item index="7-2">查看公告</el-menu-item>
+      <el-menu-item index="Create_Announcement">发布公告</el-menu-item>
+      <el-menu-item index="Query_Announcement">查看公告</el-menu-item>
     </el-submenu>
     <el-submenu index="8">
       <template slot="title">

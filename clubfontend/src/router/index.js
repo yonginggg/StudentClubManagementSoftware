@@ -8,6 +8,17 @@ import Home from '@/components/UserHome'
 // eslint-disable-next-line no-unused-vars
 import PersonalIndex from '../components/personal/PersonalIndex'
 import CreateAssociation from '../components/association/CreateAssociation'
+import AdminHome from '../components/AdminHome'
+// eslint-disable-next-line camelcase
+import Audit_Activity from '../components/activity/Audit_Activity'
+// eslint-disable-next-line camelcase
+import Modify_Activity from '../components/activity/Modify_Activity'
+// eslint-disable-next-line camelcase
+import Query_Activity from '../components/activity/Query_Activity'
+// eslint-disable-next-line camelcase
+import Create_Announcement from '../components/announcement/Create_Announcement'
+// eslint-disable-next-line camelcase
+import Query_Announcement from '../components/announcement/Query_Announcement'
 Vue.use(Router)
 
 export default new Router({
@@ -47,24 +58,48 @@ export default new Router({
       ]
     },
     {
-      path: '/admin',
+      path: '/AdminHome',
       name: 'AdminHome',
-      component: Home,
+      component: AdminHome,
       // home页面并不需要被访问
-      redirect: '/admin',
+      redirect: '/AdminIndex',
       children: [
         {
-          path: '/index',
-          name: 'AppIndex',
-          component: AppIndex,
+          path: '/Audit_Activity',
+          name: 'Audit_Activity',
+          component: Audit_Activity,
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/personal',
-          name: 'Personal',
-          component: Personal,
+          path: '/Modify_Activity',
+          name: 'Modify_Activity',
+          component: Modify_Activity,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/Query_Activity',
+          name: 'Query_Activity',
+          component: Query_Activity,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/Create_Announcement',
+          name: 'Create_Announcement',
+          component: Create_Announcement,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/Query_Announcement',
+          name: 'Query_Announcement',
+          component: Query_Announcement,
           meta: {
             requireAuth: true
           }

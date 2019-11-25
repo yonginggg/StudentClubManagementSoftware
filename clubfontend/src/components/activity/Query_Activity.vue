@@ -2,7 +2,7 @@
   <el-table
     :data="tableData"
     border
-    style="width: 100%">
+    style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <el-table-column
       fixed
       prop="date"
@@ -46,35 +46,33 @@
 </template>
 
 <script>
-  export default {
-    name: 'Query_Activity'
-  }
-  export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-      }
-    },
-    data() {
-      return {
-        tableData: [{
-          date: '2019-10-02',
-          id: '899',
-          name: '辩论会',
-          community: '辩论社',
-          state: '已通过',
-          adminId : '管理员1'
-        },{
-          date: '2019-10-04',
-          id: '900',
-          name: '音乐会',
-          community: '吉他社',
-          state: '未通过',
-          adminId : '管理员2'
-        } ]
-      }
+export default {
+  name: 'Query_Activity',
+  methods: {
+    handleClick (row) {
+      console.log(row)
+    }
+  },
+  data () {
+    return {
+      tableData: [{
+        date: '2019-10-02',
+        id: '899',
+        name: '辩论会',
+        community: '辩论社',
+        state: '已通过',
+        adminId: '管理员1'
+      }, {
+        date: '2019-10-04',
+        id: '900',
+        name: '音乐会',
+        community: '吉他社',
+        state: '未通过',
+        adminId: '管理员2'
+      } ]
     }
   }
+}
 </script>
 
 <style scoped>

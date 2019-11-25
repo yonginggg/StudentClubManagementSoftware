@@ -2,7 +2,7 @@
   <el-table
     :data="tableData"
     border
-    style="width: 100%">
+    style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <el-table-column
       fixed
       prop="id"
@@ -41,33 +41,31 @@
 </template>
 
 <script>
-  export default {
-    name: 'Modify_Activity'
-  }
-  export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-      }
-    },
-  data() {
+export default {
+  name: 'Modify_Activity',
+  methods: {
+    handleClick (row) {
+      console.log(row)
+    }
+  },
+  data () {
     return {
       tableData: [{
         id: 1005,
         name: '足球赛',
         community: '足球社',
         state: '已通过',
-        change: '活动地址更改',
+        change: '活动地址更改'
       }, {
         id: 1006,
         name: '读书会',
         community: '文学社',
         state: '未通过',
-        change: '活动时间更改',
+        change: '活动时间更改'
       }]
     }
   }
-  }
+}
 </script>
 
 <style scoped>
