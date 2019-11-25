@@ -6,7 +6,8 @@ import Registered from '@/components/Registered'
 import Home from '@/components/UserHome'
 
 // eslint-disable-next-line no-unused-vars
-import Personal from '../components/personal/Personal'
+import PersonalIndex from '../components/personal/PersonalIndex'
+import CreateAssociation from '../components/association/CreateAssociation'
 Vue.use(Router)
 
 export default new Router({
@@ -30,7 +31,15 @@ export default new Router({
         {
           path: '/personal',
           name: 'Personal',
-          component: Personal,
+          component: PersonalIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/createAssociation',
+          name: 'CreateAssociation',
+          component: CreateAssociation,
           meta: {
             requireAuth: true
           }
