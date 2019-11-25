@@ -16,7 +16,7 @@
           <el-menu-item index="personal">个人信息</el-menu-item>
           <el-menu-item index="1-2">讨论区</el-menu-item>
           <el-menu-item index="1-3">社团招新</el-menu-item>
-          <el-menu-item index="1-4">社团创建</el-menu-item>
+          <el-menu-item index="createAssociation">社团创建</el-menu-item>
           <el-menu-item index="1-5">社团活动</el-menu-item>
         </el-submenu>
         <el-submenu index="2">

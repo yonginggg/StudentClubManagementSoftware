@@ -1,18 +1,18 @@
 <template>
-  <el-container>
+  <el-container >
     <div style="margin: 20px;"></div>
-    <el-form :label-position="left" label-width="100px" :model="personInformation">
+    <el-form :label-position="left" label-width="150px" :model="personInformation">
       <el-form-item label="账户名称: ">
-        <el-input v-model="personInformation.userId"></el-input>
+        <el-input v-model="personInformation.userId" placeholder="请输入账户名称"></el-input>
       </el-form-item>
       <el-form-item label="账户密码:">
-        <el-input v-model="personInformation.userPwd"></el-input>
+        <el-input v-model="personInformation.userPwd" placeholder="请输入账户密码"></el-input>
       </el-form-item>
       <el-form-item label="确认密码:">
-        <el-input v-model="personInformation.userPwd2"></el-input>
+        <el-input v-model="personInformation.userPwd2" placeholder="请在此确认密码"></el-input>
       </el-form-item>
       <el-form-item label="联系方式:">
-        <el-input v-model="personInformation.userTel"></el-input>
+        <el-input v-model="personInformation.userTel" placeholder="请输入手机号"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
