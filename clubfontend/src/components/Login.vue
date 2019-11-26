@@ -12,61 +12,73 @@
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 100%;background: #505458;border: none; float: left" v-on:click="login">登录</el-button>
+      <el-button type="primary" style="width: 100%;background: #505458;border: none; float: left" v-on:click="login">
+        登录
+      </el-button>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 100%;background: #505458;border: none; float: right" v-on:click="registered">注册</el-button>
+      <el-button type="primary" style="width: 100%;background: #505458;border: none; float: right"
+                 v-on:click="registered">注册
+      </el-button>
     </el-form-item>
   </el-form>
   </body>
 </template>
 
 <script>
-import qs from 'qs'
-export default {
-  name: 'Login',
-  data () {
-    return {
-      loginForm: {
-        userId: '',
-        userPwd: ''
-      },
-      responseResult: []
+    import qs from 'qs'
+
+    export default {
+        name: 'Login',
+        data() {
+            return {
+                loginForm: {
+                    userId: '',
+                    userPwd: ''
+                },
+                responseResult: []
+            }
+        },
+        methods: {
+            login() {
+                var dataObj = qs.stringify(this.loginForm);
+                // this.$axios
+                //     .post('/login', {
+                //         headers: {
+                //             'Content-Type': 'application/x-www-form-urlencoded'
+                //         },
+                //         data: dataObj
+                //     })
+                //     .then(successResponse => {
+                //         if (successResponse.data.code === 200) {
+                //             this.$router.replace({path: '/index'})
+                //         }
+                //     })
+                //     .catch(failResponse => {
+                //     })
+                // this.$router.replace({path: '/index'})
+                this.$axios({
+                        method: 'post',
+                        url: '/login',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: dataObj, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    console.log(successResponse.data);
+                        if (successResponse.data.port === 200) {
+                            this.$router.replace({path: '/index'})
+                        }
+                    })
+
+            },
+            registered() {
+                this.$router
+                    .replace({path: '/registered'})
+            }
+        }
     }
-  },
-  methods: {
-    login () {
-      // this.$axios
-      //   .post('/login', {
-      //     userId: this.loginForm.userId,
-      //     userPwd: this.loginForm.userPwd
-      //   })
-      //   .then(successResponse => {
-      //     if (successResponse.data.code === 200) {
-      //       this.$router.replace({path: '/index'})
-      //     }
-      //   })
-      //   .catch(failResponse => {
-      //   })
-      this.$router.replace({path: '/index'})
-      //   var dataObj = qs.stringify(this.loginForm);
-      //   this.$axios({
-      //       method: 'post',
-      //       url: '/login',
-      //       headers: {
-      //           'Content-Type': 'application/x-www-form-urlencoded'
-      //       },
-      //       data: dataObj, // 直接提交转换后的数据即可
-      //   },
-      //   console.log(dataObj)
-      //   )
-    },
-    registered () {
-      this.$router
-        .replace({ path: '/registered' })
-    }
-  }
-}
 </script>
 
 <style>
@@ -88,14 +100,15 @@ export default {
   }
 
   #poster {
-    background:url("../assets/batman.jpg") no-repeat;
+    background: url("../assets/batman.jpg") no-repeat;
     background-position: center;
     height: 100%;
     width: 100%;
     background-size: cover;
     position: fixed;
   }
-  body{
+
+  body {
     margin: 0px;
   }
 </style>

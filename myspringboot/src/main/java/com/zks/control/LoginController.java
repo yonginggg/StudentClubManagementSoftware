@@ -22,8 +22,6 @@ public class LoginController {
     public JSONObject login(@RequestParam("userId") String userid, @RequestParam("userPwd") String userpwd) throws Exception {
         UserService userService = new UserService();
         JSONObject result = userService.login(userid, userpwd);
-//        System.out.println(result);
-        System.out.println(userid);
         return result;
     }
 }
