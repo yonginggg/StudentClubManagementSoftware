@@ -19,6 +19,7 @@ import Query_Activity from '../components/activity/Query_Activity'
 import Create_Announcement from '../components/announcement/Create_Announcement'
 // eslint-disable-next-line camelcase
 import Query_Announcement from '../components/announcement/Query_Announcement'
+import ViewActivityUser from "../components/activity/ViewActivityUser";
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +52,14 @@ export default new Router({
           path: '/createAssociation',
           name: 'CreateAssociation',
           component: CreateAssociation,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/viewActivityUser',
+          name: 'ViewActivityUser',
+          component: ViewActivityUser,
           meta: {
             requireAuth: true
           }

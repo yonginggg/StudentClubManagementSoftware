@@ -48,18 +48,18 @@ export default {
       //   })
       //   .catch(failResponse => {
       //   })
-      // // this.$router.replace({path: '/index'})
-        var dataObj = qs.stringify(this.loginForm);
-        this.$axios({
-            method: 'post',
-            url: '/login',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: dataObj, // 直接提交转换后的数据即可
-        },
-        console.log(dataObj)
-        )
+      this.$router.replace({path: '/index'})
+      //   var dataObj = qs.stringify(this.loginForm);
+      //   this.$axios({
+      //       method: 'post',
+      //       url: '/login',
+      //       headers: {
+      //           'Content-Type': 'application/x-www-form-urlencoded'
+      //       },
+      //       data: dataObj, // 直接提交转换后的数据即可
+      //   },
+      //   console.log(dataObj)
+      //   )
     },
     registered () {
       this.$router

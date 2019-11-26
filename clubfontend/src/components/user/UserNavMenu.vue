@@ -17,7 +17,7 @@
           <el-menu-item index="1-2">讨论区</el-menu-item>
           <el-menu-item index="1-3">社团招新</el-menu-item>
           <el-menu-item index="createAssociation">社团创建</el-menu-item>
-          <el-menu-item index="1-5">社团活动</el-menu-item>
+          <el-menu-item index="viewActivityUser">所有活动</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
