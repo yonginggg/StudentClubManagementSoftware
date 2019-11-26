@@ -14,4 +14,6 @@ public interface BeanUserMapper {
     int updateByPrimaryKeySelective(BeanUser record);
 
     int updateUser(BeanUser record);
+
+    BeanUser getByUsernameAndPassword(String userid,String password);
 }

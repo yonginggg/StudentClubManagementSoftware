@@ -1,5 +1,5 @@
 server:
-  port: 8880 #端口号
+  port: 8081 #端口号
 
 
 spring:
@@ -14,7 +14,7 @@ spring:
       #基本属性
       url: jdbc:mysql://127.0.0.1:3306/社团管理?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
       username: root
-      password: Zs990618
+      password:
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1

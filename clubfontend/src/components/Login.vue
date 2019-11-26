@@ -4,7 +4,7 @@
            label-width="0px">
     <h3 class="login_title">系统登录</h3>
     <el-form-item>
-      <el-input type="text" v-model="loginForm.userName"
+      <el-input type="text" v-model="loginForm.userId"
                 auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
     <el-form-item>
@@ -22,12 +22,13 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   name: 'Login',
   data () {
     return {
       loginForm: {
-        userName: '',
+        userId: '',
         userPwd: ''
       },
       responseResult: []
@@ -37,7 +38,7 @@ export default {
     login () {
       // this.$axios
       //   .post('/login', {
-      //     userName: this.loginForm.userName,
+      //     userId: this.loginForm.userId,
       //     userPwd: this.loginForm.userPwd
       //   })
       //   .then(successResponse => {
@@ -47,7 +48,18 @@ export default {
       //   })
       //   .catch(failResponse => {
       //   })
-      this.$router.replace({path: '/index'})
+      // // this.$router.replace({path: '/index'})
+        var dataObj = qs.stringify(this.loginForm);
+        this.$axios({
+            method: 'post',
+            url: '/login',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: dataObj, // 直接提交转换后的数据即可
+        },
+        console.log(dataObj)
+        )
     },
     registered () {
       this.$router

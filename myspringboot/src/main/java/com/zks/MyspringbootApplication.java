@@ -1,4 +1,4 @@
-package com.zks.myspringboot;
+package com.zks;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
