@@ -11,13 +11,13 @@ public class BeanActivity {
 
     private String activityintroduction;
 
-    private Date activitystarttime;
+    private Date activitystarttime; //活动开始时间
 
-    private Date activityendtime;
+    private Date activityendtime; //活动结束时间
 
-    private Date activityreleasetime;
+    private Date activityreleasetime; //活动公布时间（审核通过时间）
 
-    private Date activitydeadline;
+    private Date activitydeadline; //活动报名截止时间
 
     private Integer activitypalce;
 
@@ -25,9 +25,7 @@ public class BeanActivity {
 
     private Integer departmentid;
 
-    private Boolean activitystate;
-
-    private Date activitiesapplicationtime;
+    private Date activitiesapplicationtime; //活动申请时间
 
     private String activitiesapplicationstate;
 
@@ -117,14 +115,6 @@ public class BeanActivity {
 
     public void setDepartmentid(Integer departmentid) {
         this.departmentid = departmentid;
-    }
-
-    public Boolean getActivitystate() {
-        return activitystate;
-    }
-
-    public void setActivitystate(Boolean activitystate) {
-        this.activitystate = activitystate;
     }
 
     public Date getActivitiesapplicationtime() {

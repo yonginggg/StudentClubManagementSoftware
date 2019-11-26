@@ -19,9 +19,11 @@ public class UserService {
 
         SqlSession session = MybatiesSession.getSession();
         user = session.selectOne("selectUser", userId);
+        String regex = "^1[3|4|5|8][0-9]\\d{8}$";
+        String md5Pwd = DigestUtils.md5DigestAsHex(userPwd.getBytes());
         if(user == null){
             jsonObject = JsonUtil.errorResult(401,"学号不存在");
-        } else if(!user.getUserpwd().equals(userPwd)){
+        } else if(!user.getUserpwd().equals(md5Pwd)){
             jsonObject = JsonUtil.errorResult(401, "密码错误");
         } else {
             jsonObject = JsonUtil.UserResult(200, user);
@@ -191,13 +193,7 @@ public class UserService {
 
     public static void main(String[] args) throws Exception {
         UserService a = new UserService();
-//        BeanUser user = null;
-//        user.setUserid("11");
-//        user.setUsername("zs");
-//        user.setUsermajor("yixue");
-//        user.setUserclass("1702");
-//        user.setUsersex("nv");
-//        user.setUsertel("13429590332");
+
         JSONObject zs = a.register("317973","zss","12333","12333","女","yixue","1702","134331");
 
     }

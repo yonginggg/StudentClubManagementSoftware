@@ -13,37 +13,54 @@
     <result column="activityPalce" property="activitypalce" jdbcType="INTEGER" />
     <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
     <result column="departmentId" property="departmentid" jdbcType="INTEGER" />
-    <result column="activityState" property="activitystate" jdbcType="BIT" />
     <result column="activitiesApplicationTime" property="activitiesapplicationtime" jdbcType="TIMESTAMP" />
     <result column="activitiesApplicationState" property="activitiesapplicationstate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     activityId, activityRange, activityName, activityIntroduction, activityStartTime, 
     activityEndTime, activityReleaseTime, activityDeadLine, activityPalce, associationsId, 
-    departmentId, activityState, activitiesApplicationTime, activitiesApplicationState
+    departmentId, activitiesApplicationTime, activitiesApplicationState
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectAllActivity" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from activity
     where activityId = #{activityid,jdbcType=INTEGER}
   </select>
+  <select id="selectActivityByAssociation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+    where associationsId = #{associationsId,jdbcType=INTEGER}
+  </select>
+  <select id="selectActivityByDepartment" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+    where departmentId = #{departmentId,jdbcType=INTEGER}
+  </select>
+  <select id="selectActivityByPlace" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+    where activityPalce = #{activityPalce,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from activity
     where activityId = #{activityid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zks.model.BeanActivity" >
+  <insert id="insertActivity" parameterType="com.zks.model.BeanActivity" >
     insert into activity (activityId, activityRange, activityName, 
       activityIntroduction, activityStartTime, 
       activityEndTime, activityReleaseTime, 
       activityDeadLine, activityPalce, associationsId, 
-      departmentId, activityState, activitiesApplicationTime, 
+      departmentId, activitiesApplicationTime, 
       activitiesApplicationState)
     values (#{activityid,jdbcType=INTEGER}, #{activityrange,jdbcType=VARCHAR}, #{activityname,jdbcType=VARCHAR}, 
       #{activityintroduction,jdbcType=VARCHAR}, #{activitystarttime,jdbcType=TIMESTAMP}, 
       #{activityendtime,jdbcType=TIMESTAMP}, #{activityreleasetime,jdbcType=TIMESTAMP}, 
       #{activitydeadline,jdbcType=TIMESTAMP}, #{activitypalce,jdbcType=INTEGER}, #{associationsid,jdbcType=INTEGER}, 
-      #{departmentid,jdbcType=INTEGER}, #{activitystate,jdbcType=BIT}, #{activitiesapplicationtime,jdbcType=TIMESTAMP}, 
+      #{departmentid,jdbcType=INTEGER}, #{activitiesapplicationtime,jdbcType=TIMESTAMP}, 
       #{activitiesapplicationstate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zks.model.BeanActivity" >
@@ -81,9 +98,6 @@
       </if>
       <if test="departmentid != null" >
         departmentId,
-      </if>
-      <if test="activitystate != null" >
-        activityState,
       </if>
       <if test="activitiesapplicationtime != null" >
         activitiesApplicationTime,
@@ -126,9 +140,6 @@
       <if test="departmentid != null" >
         #{departmentid,jdbcType=INTEGER},
       </if>
-      <if test="activitystate != null" >
-        #{activitystate,jdbcType=BIT},
-      </if>
       <if test="activitiesapplicationtime != null" >
         #{activitiesapplicationtime,jdbcType=TIMESTAMP},
       </if>
@@ -170,9 +181,6 @@
       <if test="departmentid != null" >
         departmentId = #{departmentid,jdbcType=INTEGER},
       </if>
-      <if test="activitystate != null" >
-        activityState = #{activitystate,jdbcType=BIT},
-      </if>
       <if test="activitiesapplicationtime != null" >
         activitiesApplicationTime = #{activitiesapplicationtime,jdbcType=TIMESTAMP},
       </if>
@@ -182,7 +190,7 @@
     </set>
     where activityId = #{activityid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanActivity" >
+  <update id="updateActivity" parameterType="com.zks.model.BeanActivity" >
     update activity
     set activityRange = #{activityrange,jdbcType=VARCHAR},
       activityName = #{activityname,jdbcType=VARCHAR},
@@ -194,7 +202,6 @@
       activityPalce = #{activitypalce,jdbcType=INTEGER},
       associationsId = #{associationsid,jdbcType=INTEGER},
       departmentId = #{departmentid,jdbcType=INTEGER},
-      activityState = #{activitystate,jdbcType=BIT},
       activitiesApplicationTime = #{activitiesapplicationtime,jdbcType=TIMESTAMP},
       activitiesApplicationState = #{activitiesapplicationstate,jdbcType=VARCHAR}
     where activityId = #{activityid,jdbcType=INTEGER}

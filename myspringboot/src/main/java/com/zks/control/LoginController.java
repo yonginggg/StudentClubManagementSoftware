@@ -24,4 +24,14 @@ public class LoginController {
         JSONObject result = userService.login(userid, userpwd);
         return result;
     }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public JSONObject register(@RequestParam("userId") String userId, @RequestParam("userName") String userName,
+                               @RequestParam("oldPwd") String oldPwd, @RequestParam("newPwd") String newPwd,
+                               @RequestParam("userSex") String userSex, @RequestParam("userMajor") String userMajor,
+                               @RequestParam("userClass") String userClass, @RequestParam("userTel") String userTel) throws Exception {
+        UserService userService = new UserService();
+        JSONObject result = userService.register(userId, userName,  oldPwd,  newPwd, userSex, userMajor, userClass, userTel);
+        return result;
+    }
 }
