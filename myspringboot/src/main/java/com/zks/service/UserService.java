@@ -19,11 +19,11 @@ public class UserService {
 
         SqlSession session = MybatiesSession.getSession();
         user = session.selectOne("selectUser", userId);
-//        String regex = "^1[3|4|5|8][0-9]\\d{8}$";
-//        String md5Pwd = DigestUtils.md5DigestAsHex(userPwd.getBytes());
+        String regex = "^1[3|4|5|8][0-9]\\d{8}$";
+        String md5Pwd = DigestUtils.md5DigestAsHex(userPwd.getBytes());
         if(user == null){
             jsonObject = JsonUtil.errorResult(401,"学号不存在");
-        } else if(!user.getUserpwd().equals(userPwd)){
+        } else if(!user.getUserpwd().equals(md5Pwd)){
             jsonObject = JsonUtil.errorResult(401, "密码错误");
         } else {
             jsonObject = JsonUtil.UserResult(200, user);

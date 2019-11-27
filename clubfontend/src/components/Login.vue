@@ -42,21 +42,8 @@
         methods: {
             login() {
                 var dataObj = qs.stringify(this.loginForm);
-                // this.$axios
-                //     .post('/login', {
-                //         headers: {
-                //             'Content-Type': 'application/x-www-form-urlencoded'
-                //         },
-                //         data: dataObj
-                //     })
-                //     .then(successResponse => {
-                //         if (successResponse.data.code === 200) {
-                //             this.$router.replace({path: '/index'})
-                //         }
-                //     })
-                //     .catch(failResponse => {
-                //     })
-                // this.$router.replace({path: '/index'})
+                var _this = this
+                // console.log(this.$store.state.user.userId)
                 this.$axios({
                         method: 'post',
                         url: '/login',
@@ -68,6 +55,7 @@
                 ).then(successResponse => {
                     // console.log(successResponse.data);
                     if (successResponse.data.port === 200) {
+                        _this.$store.commit('login', _this.loginForm)
                         this.$router.replace({path: '/index'})
                     }
                     if(successResponse.data.port === 401){

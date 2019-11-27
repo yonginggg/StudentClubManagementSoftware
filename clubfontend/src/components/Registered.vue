@@ -36,7 +36,8 @@
                 auto-complete="off" placeholder="电话"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="registered">注册</el-button>
+      <el-button type="primary" style="width: 48%;background: #505458;border: none; float: left" v-on:click="registered">注册</el-button>
+      <el-button type="primary" style="width: 48%;background: #505458;border: none; float: left" v-on:click="back">返回</el-button>
     </el-form-item>
   </el-form>
   </body>
@@ -83,7 +84,10 @@ export default {
                 })
             }
         })
-    }
+    },
+      back() {
+          this.$router.replace({path: '/login'})
+      }
   }
 }
 </script>

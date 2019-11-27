@@ -1,7 +1,5 @@
 <template>
-  <script src="//unpkg.com/vue/dist/vue.js"></script>
-  <script src="//unpkg.com/element-ui@2.12.0/lib/index.js"></script>
-  <div id="app">
+  <div id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <el-form ref="form" :model="form" label-width="80px">
       <el-header style="text-align: center; font-size: 30px; background-color: lightsteelblue">
         <span style="letter-spacing: 30px; ">创建社团</span>
@@ -21,15 +19,15 @@
       <el-form-item label="社长学号">
         <el-input style="width: 150px"
                   placeholder="31701052"
-                  v-model="input"
-                  :disabled="true">
+                  v-model="form.input"
+                  :disabled="false">
         </el-input>
       </el-form-item>
       <el-form-item label="申请理由" >
         <el-input  type="textarea"v-model="form.desc" style="width: 500px":autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容,200字以内" maxlength="200" show-word-limit>></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" v-on:click="onSubmit">立即创建</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -37,8 +35,28 @@
 </template>
 
 <script>
-export default {name: "clone"
-}
+    // src="//unpkg.com/vue/dist/vue.js"
+    // src="//unpkg.com/element-ui@2.12.0/lib/index.js"
+    export default {
+      name: 'clone',
+        data() {
+            return {
+                form: {
+                    name: '',
+                    input:'',
+                    region: '',
+                    desc:''
+                },
+                responseResult: []
+            }
+        },
+        methods: {
+            onSubmit(){
+
+            }
+        }
+    }
+
 </script>
 
 <style scoped>
