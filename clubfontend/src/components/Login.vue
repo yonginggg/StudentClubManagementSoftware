@@ -66,12 +66,16 @@
                         data: dataObj, // 直接提交转换后的数据即可
                     },
                 ).then(successResponse => {
-                    console.log(successResponse.data);
-                        if (successResponse.data.port === 200) {
-                            this.$router.replace({path: '/index'})
-                        }
-                    })
-
+                    // console.log(successResponse.data);
+                    if (successResponse.data.port === 200) {
+                        this.$router.replace({path: '/index'})
+                    }
+                    if(successResponse.data.port === 401){
+                        this.$alert(successResponse.data.ErrorResult, '登录失败', {
+                            confirmButtonText: '确定',
+                        })
+                    }
+                })
             },
             registered() {
                 this.$router
