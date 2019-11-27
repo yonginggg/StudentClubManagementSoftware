@@ -2,7 +2,7 @@
   <body id="poster">
   <el-form class="register-container" label-position="left"
            label-width="0px">
-    <h3 class="login_title">用户注册</h3>
+    <h3 class="register_title">用户注册</h3>
     <el-form-item>
       <el-input type="text" v-model="Registered.userId"
                 auto-complete="off" placeholder="学号"></el-input>
@@ -12,8 +12,12 @@
                 auto-complete="off" placeholder="名字"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-input type="password" v-model="Registered.userPwd"
+      <el-input type="password" v-model="Registered.newPwd"
                 auto-complete="off" placeholder="密码"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-input type="password" v-model="Registered.oldPwd"
+                auto-complete="off" placeholder="请重复密码"></el-input>
     </el-form-item>
     <el-form-item>
       <el-input type="text" v-model="Registered.userSex"
@@ -39,6 +43,7 @@
 </template>
 
 <script>
+  import  qs from 'qs'
 export default {
   name: 'Registered',
   data () {
@@ -46,7 +51,8 @@ export default {
       Registered: {
         userId: '',
         userName: '',
-        userPwd: '',
+        newPwd: '',
+        oldPwd:'',
         userSex: '',
         userMajor: '',
         userClass: '',
@@ -56,8 +62,27 @@ export default {
     }
   },
   methods: {
+
     registered () {
-      this.$router.replace({path: '/login'})
+        var dataObj = qs.stringify(this.Registered);
+        this.$axios({
+                method: 'post',
+                url: '/register',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: dataObj, // 直接提交转换后的数据即可
+            },
+        ).then(successResponse => {
+            if (successResponse.data.port === 200) {
+                this.$router.replace({path: '/login'})
+            }
+            if(successResponse.data.port ===401){
+                this.$alert(successResponse.data.ErrorResult, '注册失败', {
+                    confirmButtonText: '确定',
+                })
+            }
+        })
     }
   }
 }
@@ -67,7 +92,7 @@ export default {
   .register-container {
     border-radius: 15px;
     background-clip: padding-box;
-    margin: 90px auto;
+    margin: 40px auto;
     width: 350px;
     padding: 35px 35px 15px 35px;
     background: #fff;
@@ -75,8 +100,8 @@ export default {
     box-shadow: 0 0 25px #cac6c6;
   }
 
-  .login_title {
-    margin: 0px auto 40px auto;
+  .register_title {
+    margin: 0px auto 20px auto;
     text-align: center;
     color: #505458;
   }
