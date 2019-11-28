@@ -21,6 +21,7 @@ import Create_Announcement from '../components/announcement/Create_Announcement'
 import Query_Announcement from '../components/announcement/Query_Announcement'
 import ViewActivityUser from "../components/activity/ViewActivityUser";
 import clone from "../components/association/clone";
+import UserManager from "../components/user/UserManager";
 Vue.use(Router)
 
 export default new Router({
@@ -96,6 +97,14 @@ export default new Router({
       // home页面并不需要被访问
       redirect: '/AdminIndex',
       children: [
+        {
+          path: '/usermanager',
+          name: 'UserManager',
+          component: UserManager,
+          meta: {
+            requireAuth: true
+          }
+        },
         {
           path: '/Audit_Activity',
           name: 'Audit_Activity',

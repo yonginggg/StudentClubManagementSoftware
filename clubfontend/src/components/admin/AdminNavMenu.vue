@@ -8,6 +8,12 @@
     @open="handleOpen"
     @close="handleClose">
     <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+    <el-menu-item index="usermanager">
+      <template slot="title">
+        <i class="el-icon-menu"></i>
+        <span>人员管理</span>
+      </template>
+    </el-menu-item>
     <el-submenu index="5">
       <template slot="title">
         <i class="el-icon-menu"></i>
