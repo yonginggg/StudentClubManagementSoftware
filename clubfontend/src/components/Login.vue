@@ -14,7 +14,7 @@
       <el-input type="password" v-model="loginForm.userPwd"
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    
+
     <el-form-item >
       <el-select v-model="loginForm.type" placeholder="登录用户">
         <el-option label="学生" value="学生"></el-option>
@@ -66,7 +66,8 @@
                 ).then(successResponse => {
                     // console.log(successResponse.data);
                     if (successResponse.data.port === 200) {
-                        _this.$store.commit('login', _this.loginForm)
+                      console.log(successResponse.data)
+                        // _this.$store.commit('login', _this.loginForm)
                         this.$router.replace({path: '/index'})
                     }
                     if(successResponse.data.port === 401){

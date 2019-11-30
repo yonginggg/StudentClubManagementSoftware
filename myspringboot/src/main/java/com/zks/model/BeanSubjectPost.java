@@ -5,6 +5,8 @@ import java.util.Date;
 public class BeanSubjectPost {
     private Integer subjectpostid;
 
+    private String subjectposttitle;
+
     private String subjectpostcontent;
 
     private Date subjectposttime;
@@ -21,6 +23,14 @@ public class BeanSubjectPost {
 
     public void setSubjectpostid(Integer subjectpostid) {
         this.subjectpostid = subjectpostid;
+    }
+
+    public String getSubjectposttitle() {
+        return subjectposttitle;
+    }
+
+    public void setSubjectposttitle(String subjectposttitle) {
+        this.subjectposttitle = subjectposttitle == null ? null : subjectposttitle.trim();
     }
 
     public String getSubjectpostcontent() {

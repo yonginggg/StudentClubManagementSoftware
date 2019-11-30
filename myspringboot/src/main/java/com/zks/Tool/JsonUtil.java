@@ -1,6 +1,8 @@
 package com.zks.Tool;
 
 import com.zks.model.BeanActivity;
+import com.zks.model.BeanManager;
+import com.zks.model.BeanSubjectPost;
 import com.zks.model.BeanUser;
 import com.alibaba.fastjson.JSONObject;
 
@@ -27,6 +29,17 @@ public class JsonUtil {
         return jsonObject;
     }
 
+    public static JSONObject ManagerResult(int port, BeanManager manager){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("managerid",manager.getManagerid());
+        jsonObject.put("managerpwd",manager.getManagerpwd());
+        jsonObject.put("managername",manager.getManagername());
+        jsonObject.put("managerpalce",manager.getManagerpalce());
+        jsonObject.put("managertel",manager.getManagertel());
+        return jsonObject;
+    }
+
     public static JSONObject ActivityResult(int port, BeanActivity activity){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -43,6 +56,19 @@ public class JsonUtil {
         jsonObject.put("departmentid",activity.getDepartmentid());
         jsonObject.put("activitiesapplicationtime",activity.getActivitiesapplicationtime());
         jsonObject.put("activitiesapplicationstate",activity.getActivitiesapplicationstate());
+        return jsonObject;
+    }
+
+    public static JSONObject SubjectPostResult(int port, BeanSubjectPost subjectPost){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("subjectpostid",subjectPost.getSubjectpostid());
+        jsonObject.put("subjectposttitle",subjectPost.getSubjectposttitle());
+        jsonObject.put("subjectpostcontent",subjectPost.getSubjectpostcontent());
+        jsonObject.put("subjectposttime",subjectPost.getSubjectposttime());
+        jsonObject.put("collectnum",subjectPost.getCollectnum());
+        jsonObject.put("looknum",subjectPost.getLooknum());
+        jsonObject.put("userid",subjectPost.getUserid());
         return jsonObject;
     }
 }

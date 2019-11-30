@@ -3,6 +3,8 @@ package com.zks.service;
 import com.zks.model.BeanActivity;
 import com.alibaba.fastjson.JSONObject;
 import com.zks.Tool.JsonUtil;
+import com.zks.model.BeanAssociations;
+import com.zks.model.BeanDepartment;
 import org.apache.ibatis.session.SqlSession;
 import com.zks.Tool.MybatiesSession;
 import org.springframework.context.annotation.Bean;
@@ -100,12 +102,14 @@ public class ActivityService {
     }
 
     // 显示社团活动
-    public List<JSONObject> loadActivityByAssociation(int associationId) throws Exception {
+    public List<JSONObject> loadActivityByAssociation(String associationName) throws Exception {
         List<BeanActivity> activityList = null;
         JSONObject jsonObject = null;
         List<JSONObject> list = new ArrayList<JSONObject>();
 
         SqlSession session = MybatiesSession.getSession();
+        BeanAssociations association = session.selectOne("selectAssociationsByName",associationName);
+        int associationId = association.getAssociationsid();
         activityList = session.selectList("selectActivityByAssociation",associationId);
 
         for(int i=0;i<activityList.size();i++) {
@@ -118,12 +122,14 @@ public class ActivityService {
     }
 
     // 显示部门活动
-    public List<JSONObject> loadActivityByDepartment(int departmentId) throws Exception {
+    public List<JSONObject> loadActivityByDepartment(String departmentName) throws Exception {
         List<BeanActivity> activityList = null;
         JSONObject jsonObject = null;
         List<JSONObject> list = new ArrayList<JSONObject>();
 
         SqlSession session = MybatiesSession.getSession();
+        BeanDepartment department = session.selectOne("selectDepartmentByName",departmentName);
+        int departmentId = department.getDepartmentid();
         activityList = session.selectList("selectActivityByDepartment",departmentId);
 
         for(int i=0;i<activityList.size();i++) {
@@ -157,7 +163,11 @@ public class ActivityService {
             return false;
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        ActivityService a = new ActivityService();
+        Date date = new Date();
+        JSONObject zs = a.createActivity("部门内","football","222",date ,date ,date ,date ,1,1,1);
+//        JSONObject zs = a.register("311","22","1233","1233","nan","yixue","1702","13429590334");
+        System.out.println(zs);
     }
 }

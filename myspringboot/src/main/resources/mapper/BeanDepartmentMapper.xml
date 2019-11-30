@@ -16,6 +16,12 @@
     from department
     where departmentId = #{departmentid,jdbcType=INTEGER}
   </select>
+  <select id="selectDepartmentByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where departmentName = #{departmentName,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from department
     where departmentId = #{departmentid,jdbcType=INTEGER}

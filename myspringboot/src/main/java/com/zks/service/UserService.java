@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zks.Tool.JsonUtil;
 import com.zks.Tool.MybatiesSession;
 import com.zks.dao.BeanUserMapper;
+import com.zks.model.BeanManager;
 import com.zks.model.BeanUser;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.util.DigestUtils;
@@ -13,20 +14,37 @@ import java.util.List;
 
 public class UserService {
     // 登陆
-    public JSONObject login(String userId, String userPwd) throws Exception{
+    public JSONObject login(String type, String userId, String userPwd) throws Exception{
         BeanUser user = null;
+        BeanManager manager = null;
         JSONObject jsonObject = null;
 
         SqlSession session = MybatiesSession.getSession();
-        user = session.selectOne("selectUser", userId);
+        if("学生".equals(type))
+            user = session.selectOne("selectUser", userId);
+        else if ("管理员".equals(type))
+            manager = session.selectOne("selectManager", userId);
+
         String regex = "^1[3|4|5|8][0-9]\\d{8}$";
         String md5Pwd = DigestUtils.md5DigestAsHex(userPwd.getBytes());
-        if(user == null){
-            jsonObject = JsonUtil.errorResult(401,"学号不存在");
-        } else if(!user.getUserpwd().equals(md5Pwd)){
-            jsonObject = JsonUtil.errorResult(401, "密码错误");
-        } else {
-            jsonObject = JsonUtil.UserResult(200, user);
+
+        if("学生".equals(type)) {
+            if (user == null) {
+                jsonObject = JsonUtil.errorResult(401, "账号不存在");
+            } else if (!user.getUserpwd().equals(md5Pwd)) {
+                jsonObject = JsonUtil.errorResult(401, "密码错误");
+            } else {
+                jsonObject = JsonUtil.UserResult(200, user);
+            }
+        }
+        else if ("管理员".equals(type)){
+            if (manager == null) {
+                jsonObject = JsonUtil.errorResult(401, "账号不存在");
+            } else if (!manager.getManagerpwd().equals(md5Pwd)) {
+                jsonObject = JsonUtil.errorResult(401, "密码错误");
+            } else {
+                jsonObject = JsonUtil.ManagerResult(200, manager);
+            }
         }
 
         session.commit();
@@ -72,16 +90,17 @@ public class UserService {
         return jsonObject;
     }
 
-    // 修改密码
-    public JSONObject changePwd(BeanUser user, String oldPwd, String newPwd, String newPwd2) throws Exception {
+    // 学生修改密码
+    public JSONObject changePwd(String  userId, String oldPwd, String newPwd, String newPwd2) throws Exception {
         JSONObject jsonObject = null;
 
         SqlSession session = MybatiesSession.getSession();
+        BeanUser user = session.selectOne("selectUser", userId);
         String regex = "^1[3|4|5|8][0-9]\\d{8}$";
 
         if (oldPwd.equals("") || newPwd.equals("")|| newPwd2.equals("")) {
             jsonObject = JsonUtil.errorResult(401, "密码不得为空");
-        } else if (!oldPwd.equals(user.getUserpwd())) {
+        } else if (!DigestUtils.md5DigestAsHex(oldPwd.getBytes()).equals(user.getUserpwd())) {
             jsonObject = JsonUtil.errorResult(401, "原密码错误");
         } else if (!newPwd.equals(newPwd2)) {
             jsonObject = JsonUtil.errorResult(401, "两次密码不同");
@@ -100,11 +119,41 @@ public class UserService {
         return jsonObject;
     }
 
-    // 编辑个人信息
-    public JSONObject upadateUser(BeanUser user, String userName, String userSex, String userMajor, String userClass, String userTel) throws Exception {
+    // 管理员修改密码
+    public JSONObject changeManagerPwd(String  userId, String oldPwd, String newPwd, String newPwd2) throws Exception {
         JSONObject jsonObject = null;
 
         SqlSession session = MybatiesSession.getSession();
+        BeanManager manager = session.selectOne("selectManager", userId);
+        String regex = "^1[3|4|5|8][0-9]\\d{8}$";
+
+        if (oldPwd.equals("") || newPwd.equals("")|| newPwd2.equals("")) {
+            jsonObject = JsonUtil.errorResult(401, "密码不得为空");
+        } else if (!DigestUtils.md5DigestAsHex(oldPwd.getBytes()).equals(manager.getManagerpwd())) {
+            jsonObject = JsonUtil.errorResult(401, "原密码错误");
+        } else if (!newPwd.equals(newPwd2)) {
+            jsonObject = JsonUtil.errorResult(401, "两次密码不同");
+        } else if (newPwd.equals(oldPwd)) {
+            jsonObject = JsonUtil.errorResult(401, "与原密码相同");
+        } else {
+            //密码加密
+            String md5Pwd = DigestUtils.md5DigestAsHex(newPwd.getBytes());
+            manager.setManagerpwd(md5Pwd);
+
+            session.update("updateManager", manager);
+            jsonObject = JsonUtil.ManagerResult(200, manager);
+        }
+
+        session.commit();
+        return jsonObject;
+    }
+
+    // 编辑个人信息
+    public JSONObject upadateUser(String userId, String userName, String userSex, String userMajor, String userClass, String userTel) throws Exception {
+        JSONObject jsonObject = null;
+
+        SqlSession session = MybatiesSession.getSession();
+        BeanUser user = session.selectOne("selectUser", userId);
         String regex = "^1[3|4|5|8][0-9]\\d{8}$";
         if (userName.equals("") || userSex.equals("") || userMajor.equals("") || userClass.equals("") || userTel.equals("")) {
             jsonObject = JsonUtil.errorResult(401, "请完善个人信息");
@@ -127,11 +176,11 @@ public class UserService {
     }
 
     // 删除
-    public JSONObject deleteUser(BeanUser user) throws Exception {
+    public JSONObject deleteUser(String userId) throws Exception {
         JSONObject jsonObject = null;
 
         SqlSession session = MybatiesSession.getSession();
-        session.delete("deleteUser",user.getUserid());
+        session.delete("deleteUser",userId);
         session.commit();
         return jsonObject;
     }
@@ -194,8 +243,9 @@ public class UserService {
     public static void main(String[] args) throws Exception {
         UserService a = new UserService();
 
-        JSONObject zs = a.register("317973","zss","12333","12333","女","yixue","1702","134331");
-
+//        List<JSONObject> zs = a.searchUserByName("zss");
+        JSONObject zs = a.register("311111","22","1233","1233","nan","yixue","1702","13429590334");
+        System.out.println(zs);
     }
 
 }

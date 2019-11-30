@@ -3,6 +3,8 @@ package com.zks.model;
 public class BeanManager {
     private String managerid;
 
+    private String managerpwd;
+
     private String managername;
 
     private String managerpalce;
@@ -15,6 +17,14 @@ public class BeanManager {
 
     public void setManagerid(String managerid) {
         this.managerid = managerid == null ? null : managerid.trim();
+    }
+
+    public String getManagerpwd() {
+        return managerpwd;
+    }
+
+    public void setManagerpwd(String managerpwd) {
+        this.managerpwd = managerpwd == null ? null : managerpwd.trim();
     }
 
     public String getManagername() {
