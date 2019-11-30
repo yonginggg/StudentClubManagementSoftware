@@ -1,132 +1,64 @@
 <template>
-  <el-container style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
-    <el-header style="text-align: center; font-size: 20px; background-color: lightsteelblue">
-      <span style="letter-spacing: 20px; ">创建社团</span>
-    </el-header>
-    <el-main >
-      <el-form label-width="100px">
-        <el-form-item label="社团名称">
-          <el-input placeholder="请输入社团名称" v-model="formInline.associationsName" type="text">
-          </el-input>
-        </el-form-item>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="成立人">
-              <el-input v-model="formInline.userName1" placeholder="请输入内容"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-select v-model="formInline.memberPost1" placeholder="职务">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="成立人">
-              <el-input v-model="formInline.userName2" placeholder="请输入内容"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-select v-model="formInline.memberPost2" placeholder="职务">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="成立人">
-              <el-input v-model="formInline.userName3" placeholder="请输入内容"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-select v-model="formInline.memberPost3" placeholder="职务">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-form-item label="社团类型" label-width="115px">
-          <el-radio-group v-model="formInline.radioGroup">
-            <el-radio label="学术类" border>学术类</el-radio>
-            <el-radio label="体育类" border>体育类</el-radio>
-            <el-radio label=" 艺术类" border>艺术类</el-radio>
-            <el-radio label="公益类" border>公益类</el-radio>
-            <el-radio label="科技类" border>科技类</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-row justify="center">
-          <el-col :span="15" :offset="2" >
-            <el-input v-model="formInline.associationsIntroduction" placeholder="请输入社团描述内容" type="textarea" show-word-limit>
-            </el-input>
-          </el-col>
-        </el-row>
-        <el-form-item>
-          <el-row>
-            <el-col :span="12">
-              <el-button type="primary" :native-type="submit">提交</el-button>
-            </el-col>
-            <el-col :span="12">
-              <el-button >取消</el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-      </el-form>
-    </el-main>
-  </el-container>
+  <div id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-header style="text-align: center; font-size: 30px; background-color: lightsteelblue">
+        <span style="letter-spacing: 30px; ">创建社团</span>
+      </el-header>
+      <el-form-item label="社团名称" style="width: 400px" >
+        <el-input v-model="form.name"  placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
+      </el-form-item>
+      <el-form-item label="社团类型">
+        <el-select v-model="form.region" placeholder="请选择社团类型" >
+          <el-option label="学术类" value="xueshu"></el-option>
+          <el-option label="体育类" value="tiyu"></el-option>
+          <el-option label="艺术类" value="yishu"></el-option>
+          <el-option label="公益类" value="gongyi"></el-option>
+          <el-option label="科技类" value="keji"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="社长学号">
+        <el-input style="width: 150px"
+                  placeholder="31701052"
+                  v-model="form.input"
+                  :disabled="false">
+        </el-input>
+      </el-form-item>
+      <el-form-item label="申请理由" >
+        <el-input  type="textarea"v-model="form.desc" style="width: 500px":autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入内容,200字以内" maxlength="200" show-word-limit>></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" v-on:click="onSubmit">立即创建</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'AssociationIndex',
-  data () {
-    return {
-      formInline: {
-        userId: '',
-        userName1: '',
-        userName2: '',
-        userName3: '',
-        memberPost1: '',
-        memberPost2: '',
-        memberPost3: '',
-        associationsName1: '',
-        associationsIntroduction: '',
-        radioGroup: ''
-      },
-      options: [{
-        value: '选项1',
-        label: '宣传部部长'
-      }, {
-        value: '选项2',
-        label: '组织部部长'
-      }, {
-        value: '选项3',
-        label: '财务部部长'
-      }],
-      value: ''
+    // src="//unpkg.com/vue/dist/vue.js"
+    // src="//unpkg.com/element-ui@2.12.0/lib/index.js"
+    export default {
+        name: 'clone',
+        data() {
+            return {
+                form: {
+                    name: '',
+                    input:'',
+                    region: '',
+                    desc:''
+                },
+                responseResult: []
+            }
+        },
+        methods: {
+            onSubmit(){
+
+            }
+        }
     }
-  }
-  // methods: {
-  //   onSubmit () {
-  //     console.log('submit!')
-  //   }
-  // }
-}
+
 </script>
 
 <style scoped>
+
 </style>

@@ -22,6 +22,7 @@ import Query_Announcement from '../components/announcement/Query_Announcement'
 import ViewActivityUser from "../components/activity/ViewActivityUser";
 import clone from "../components/association/clone";
 import UserManager from "../components/user/UserManager";
+import RecruitNotice from "../components/association/RecruitNotice";
 Vue.use(Router)
 
 export default new Router({
@@ -60,6 +61,14 @@ export default new Router({
           path: '/personal',
           name: 'Personal',
           component: PersonalIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/recruitnotice',
+          name: 'RecruitNotice',
+          component: RecruitNotice,
           meta: {
             requireAuth: true
           }

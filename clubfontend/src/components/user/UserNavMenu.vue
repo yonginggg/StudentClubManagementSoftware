@@ -7,7 +7,7 @@
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" ></el-avatar>
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-menu"></i>
@@ -15,9 +15,9 @@
           </template>
           <el-menu-item index="personal">个人信息</el-menu-item>
           <el-menu-item index="1-2">讨论区</el-menu-item>
-          <el-menu-item index="1-3">社团招新</el-menu-item>
+          <el-menu-item index="recruitnotice">社团招新</el-menu-item>
           <el-menu-item index="createAssociation">社团创建</el-menu-item>
-          <el-menu-item index="viewActivityUser">所有活动</el-menu-item>
+          <el-menu-item index="viewActivityUser">全校活动</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
