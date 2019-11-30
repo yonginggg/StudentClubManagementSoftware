@@ -3,6 +3,9 @@
   <el-form class="login-container" label-position="left"
            label-width="0px">
     <h3 class="login_title">系统登录</h3>
+
+
+
     <el-form-item>
       <el-input type="text" v-model="loginForm.userId"
                 auto-complete="off" placeholder="账号"></el-input>
@@ -11,6 +14,14 @@
       <el-input type="password" v-model="loginForm.userPwd"
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
+    
+    <el-form-item >
+      <el-select v-model="loginForm.type" placeholder="登录用户">
+        <el-option label="学生" value="学生"></el-option>
+        <el-option label="管理员" value="管理员"></el-option>
+      </el-select>
+    </el-form-item>
+
     <el-form-item style="width: 100%">
       <el-button type="primary" style="width: 100%;background: #505458;border: none; float: left" v-on:click="login">
         登录
@@ -34,9 +45,9 @@
             return {
                 loginForm: {
                     userId: '',
-                    userPwd: ''
+                    userPwd: '',
+                    type:''
                 },
-                responseResult: []
             }
         },
         methods: {
