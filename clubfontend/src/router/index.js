@@ -7,6 +7,7 @@ import Home from '@/components/UserHome'
 
 // eslint-disable-next-line no-unused-vars
 import PersonalIndex from '../components/personal/PersonalIndex'
+import PasswordIndex from "../components/changePwd/PasswordIndex";
 import CreateAssociation from '../components/association/CreateAssociation'
 import AdminHome from '../components/AdminHome'
 // eslint-disable-next-line camelcase
@@ -61,6 +62,14 @@ export default new Router({
           path: '/personal',
           name: 'Personal',
           component: PersonalIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/changePwd',
+          name: 'Password',
+          component: PasswordIndex,
           meta: {
             requireAuth: true
           }

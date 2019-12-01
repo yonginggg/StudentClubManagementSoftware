@@ -35,6 +35,7 @@
 
     <mappers>
         <mapper resource="mapper/BeanUserMapper.xml"/>
+        <mapper resource="mapper/BeanManagerMapper.xml"/>
         <mapper resource="mapper/BeanActivityMapper.xml"/>
         <mapper resource="mapper/BeanSubjectPostMapper.xml"/>
         <mapper resource="mapper/BeanAssociationsMapper.xml"/>

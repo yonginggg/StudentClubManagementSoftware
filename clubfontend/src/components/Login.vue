@@ -66,9 +66,15 @@
                 ).then(successResponse => {
                     // console.log(successResponse.data);
                     if (successResponse.data.port === 200) {
-                      console.log(successResponse.data)
-                        // _this.$store.commit('login', _this.loginForm)
+                      // console.log(successResponse.data)
+                        _this.$store.commit('login', _this.loginForm)
+                      if(this.loginForm.type ==='学生'){
                         this.$router.replace({path: '/index'})
+                      }
+                      if(this.loginForm.type ==='管理员'){
+                        this.$router.replace({path: '/usermanager'})
+                      }
+
                     }
                     if(successResponse.data.port === 401){
                         this.$alert(successResponse.data.ErrorResult, '登录失败', {

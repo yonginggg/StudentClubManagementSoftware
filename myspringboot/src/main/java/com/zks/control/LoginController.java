@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JSONObject login(@RequestParam("type") String type,@RequestParam("userId") String userid, @RequestParam("userPwd") String userpwd) throws Exception {
+    public JSONObject login(@RequestParam("type") String type, @RequestParam("userId") String userid, @RequestParam("userPwd") String userpwd) throws Exception {
         UserService userService = new UserService();
-        JSONObject result = userService.login(type,userid, userpwd);
+        JSONObject result = userService.login(type, userid, userpwd);
         return result;
     }
 

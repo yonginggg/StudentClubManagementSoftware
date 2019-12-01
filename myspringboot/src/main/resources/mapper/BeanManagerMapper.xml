@@ -9,13 +9,18 @@
     <result column="managerTel" property="managertel" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    managerId, managerName, managerPalce, managerTel
+    managerId, managerPwd, managerName, managerPalce, managerTel
   </sql>
   <select id="selectManager" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from manager
     where managerId = #{managerid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllManager" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from manager
   </select>
   <update id="updateManager" parameterType="com.zks.model.BeanManager" >
     update manager

@@ -9,6 +9,7 @@ import com.zks.model.BeanUser;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.util.DigestUtils;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class UserService {
             }
         }
         else if ("管理员".equals(type)){
+//            System.out.println("管理员"+manager);
+            System.out.println(manager.getManagerid());
+            System.out.println(manager.getManagerpwd());
             if (manager == null) {
                 jsonObject = JsonUtil.errorResult(401, "账号不存在");
             } else if (!manager.getManagerpwd().equals(md5Pwd)) {
@@ -203,6 +207,24 @@ public class UserService {
         return list;
     }
 
+    // 显示所有管理员
+    public List<JSONObject> loadManager() throws Exception {
+        List<BeanManager> managerList = null;
+        JSONObject jsonObject = null;
+        List<JSONObject> list = new ArrayList<JSONObject>();
+
+        SqlSession session = MybatiesSession.getSession();
+        managerList = session.selectList("selectAllManager");
+
+        for(int i=0;i<managerList.size();i++) {
+            jsonObject = JsonUtil.ManagerResult(200, managerList.get(i));
+            list.add(jsonObject);
+        }
+
+        session.commit();
+        return list;
+    }
+
     // 学号查找学生
     public JSONObject searchUserById(String userId) throws Exception {
         BeanUser user = null;
@@ -244,8 +266,10 @@ public class UserService {
         UserService a = new UserService();
 
 //        List<JSONObject> zs = a.searchUserByName("zss");
-        JSONObject zs = a.register("311111","22","1233","1233","nan","yixue","1702","13429590334");
+//         JSONObject zs = a.login("学生","3","1234");
+        JSONObject zs = a.login("管理员","3170","1234");
         System.out.println(zs);
+
     }
 
 }
