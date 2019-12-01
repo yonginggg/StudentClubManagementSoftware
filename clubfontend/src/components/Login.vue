@@ -4,8 +4,6 @@
            label-width="0px">
     <h3 class="login_title">系统登录</h3>
 
-
-
     <el-form-item>
       <el-input type="text" v-model="loginForm.userId"
                 auto-complete="off" placeholder="账号"></el-input>
@@ -16,7 +14,7 @@
     </el-form-item>
 
     <el-form-item >
-      <el-select v-model="loginForm.type" placeholder="登录用户">
+      <el-select v-model="loginForm.type" placeholder="登录用户" style="width: 100%">
         <el-option label="学生" value="学生"></el-option>
         <el-option label="管理员" value="管理员"></el-option>
       </el-select>

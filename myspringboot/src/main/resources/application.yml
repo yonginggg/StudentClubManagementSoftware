@@ -10,11 +10,11 @@ spring:
     druid:
       #监控统计拦截的filters
       filters: stat
-      driver-class-name: com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
       #基本属性
       url: jdbc:mysql://127.0.0.1:3306/社团管理?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
       username: root
-      password: Zs990618
+      password:
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
