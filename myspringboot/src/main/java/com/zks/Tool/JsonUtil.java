@@ -1,9 +1,6 @@
 package com.zks.Tool;
 
-import com.zks.model.BeanActivity;
-import com.zks.model.BeanManager;
-import com.zks.model.BeanSubjectPost;
-import com.zks.model.BeanUser;
+import com.zks.model.*;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
@@ -71,6 +68,18 @@ public class JsonUtil {
         jsonObject.put("userid",subjectPost.getUserid());
         return jsonObject;
     }
-
+    public static JSONObject NoticeResult(int port, BeanNotice notice){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("noticeid",notice.getNoticeid());
+        jsonObject.put("noticerange",notice.getNoticerange());
+        jsonObject.put("noticename",notice.getNoticename());
+        jsonObject.put("noticetcontent",notice.getNoticecontent());
+        jsonObject.put("noticetime",notice.getNoticetime());
+        jsonObject.put("associationsid",notice.getAssociationsid());
+        jsonObject.put("departmentid",notice.getDepartmentid());
+        jsonObject.put("noticestate",notice.getNoticestate());
+        return jsonObject;
+    }
 
 }

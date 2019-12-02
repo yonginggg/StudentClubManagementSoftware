@@ -40,5 +40,6 @@
         <mapper resource="mapper/BeanSubjectPostMapper.xml"/>
         <mapper resource="mapper/BeanAssociationsMapper.xml"/>
         <mapper resource="mapper/BeanDepartmentMapper.xml"/>
+        <mapper resource="mapper/BeanNoticeMapper.xml"/>
     </mappers>
 </configuration>

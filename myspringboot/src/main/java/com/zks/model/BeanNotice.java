@@ -7,13 +7,17 @@ public class BeanNotice {
 
     private String noticerange;
 
+    private String noticename;
+
     private String noticecontent;
 
     private Date noticetime;
 
     private Integer associationsid;
 
-    private Boolean noticestate;
+    private Integer departmentid;
+
+    private String noticestate;
 
     public Integer getNoticeid() {
         return noticeid;
@@ -31,6 +35,12 @@ public class BeanNotice {
         this.noticerange = noticerange == null ? null : noticerange.trim();
     }
 
+    public String getNoticename() {
+        return noticename;
+    }
+    public void setNoticename(String noticename) {
+        this.noticename = noticename == null ? null : noticename.trim();
+    }
     public String getNoticecontent() {
         return noticecontent;
     }
@@ -55,11 +65,19 @@ public class BeanNotice {
         this.associationsid = associationsid;
     }
 
-    public Boolean getNoticestate() {
+    public Integer getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
+    }
+
+    public String getNoticestate() {
         return noticestate;
     }
 
-    public void setNoticestate(Boolean noticestate) {
+    public void setNoticestate(String noticestate) {
         this.noticestate = noticestate;
     }
 }
