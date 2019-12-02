@@ -1,26 +1,33 @@
 <template>
   <el-table
-    :data="tableData"
-    height="250"
-    border
+    :data="tableData.filter(data => !search || data.noticename.toLowerCase().includes(search.toLowerCase()))"
+    stripe
     style="width: 100%">
     <el-table-column
-      prop="date"
-      label="日期"
-      width="180">
+      label="公告名称"
+      prop="noticename">
     </el-table-column>
     <el-table-column
-      prop="name"
-      label="活动名称"
-      width="180">
+      label="公告内容"
+      prop="noticetcontent">
     </el-table-column>
     <el-table-column
-      prop="address"
-      label="活动地址">
+      label="发布时间"
+      prop="noticetime">
     </el-table-column>
     <el-table-column
-      prop="introduction"
-      label="活动内容">
+      align="right">
+      <template slot="header" slot-scope="scope">
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="输入关键字搜索"/>
+      </template>
+<!--      <template slot-scope="scope">-->
+<!--        <el-button-->
+<!--          size="middle"-->
+<!--          @click="handleEdit(scope.$index, scope.row)">重置密码</el-button>-->
+<!--      </template>-->
     </el-table-column>
   </el-table>
 </template>
@@ -30,18 +37,16 @@
         name: "AllActivity",
         data() {
             return {
-                tableData: [{
-                    date: '2016-05-03',
-                    name: '踏青',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    introduction: '去胡同踏青'
-                }, {
-                    date: '2016-05-02',
-                    name: '郊游',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                    introduction: '去郊游'
-                }]
+                tableData: [],
+                search: ''
             }
+        },
+        mounted() {
+            this.$axios.get("/noticebyschool")
+                .then(response => {
+                    this.tableData = response.data.noticebyschool
+                    console.log(this.tableData)
+                })
         }
 
     }

@@ -2,7 +2,8 @@
   <div id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <template>
       <el-table
-        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+        :data="tableData.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
+        stripe
         style="width: 100%">
         <el-table-column
           label="学号"
@@ -30,7 +31,7 @@
             <el-input
               v-model="search"
               size="mini"
-              placeholder="输入关键字搜索"/>
+              placeholder="用户名字查询"/>
           </template>
           <template slot-scope="scope">
             <el-button
