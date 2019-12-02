@@ -14,4 +14,6 @@ public interface BeanAssociationsMapper {
     int updateByPrimaryKeySelective(BeanAssociations record);
 
     int updateByPrimaryKey(BeanAssociations record);
+
+    BeanAssociations insertAssociation(String name, String type, String introduction,  String leader);
 }

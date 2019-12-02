@@ -7,17 +7,17 @@
     <result column="associationsTime" property="associationstime" jdbcType="TIMESTAMP" />
     <result column="associationsType" property="associationstype" jdbcType="VARCHAR" />
     <result column="associationsIntroduction" property="associationsintroduction" jdbcType="VARCHAR" />
-    <result column="associationsNumber" property="associationsnumber" jdbcType="VARCHAR" />
+    <result column="associationsNumber" property="associationsnumber" jdbcType="INTEGER" />
     <result column="associationsLeader" property="associationsleader" jdbcType="VARCHAR" />
     <result column="associationsApplicationTime" property="associationsapplicationtime" jdbcType="TIMESTAMP" />
     <result column="associationsApplicationState" property="associationsapplicationstate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    associationsId, associationsName, associationsTime, associationsType, associationsIntroduction, 
+    associationsId, associationsName, associationsTime, associationsType, associationsIntroduction,
     associationsNumber, associationsLeader, associationsApplicationTime, associationsApplicationState
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from associations
     where associationsId = #{associationsid,jdbcType=INTEGER}
@@ -26,21 +26,21 @@
     select
     <include refid="Base_Column_List" />
     from associations
-    where associationsName = #{associationsNumber,jdbcType=VARCHAR}
+    where associationsName = #{associationsNumber,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from associations
     where associationsId = #{associationsid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zks.model.BeanAssociations" >
-    insert into associations (associationsId, associationsName, 
-      associationsTime, associationsType, associationsIntroduction, 
-      associationsNumber, associationsLeader, 
+  <insert id="insertAssociation" parameterType="com.zks.model.BeanAssociations" >
+    insert into associations (associationsName,
+      associationsTime, associationsType, associationsIntroduction,
+      associationsNumber, associationsLeader,
       associationsApplicationTime, associationsApplicationState
       )
-    values (#{associationsid,jdbcType=INTEGER}, #{associationsname,jdbcType=VARCHAR}, 
-      #{associationstime,jdbcType=TIMESTAMP}, #{associationstype,jdbcType=VARCHAR}, #{associationsintroduction,jdbcType=VARCHAR}, 
-      #{associationsnumber,jdbcType=VARCHAR}, #{associationsleader,jdbcType=VARCHAR}, 
+    values ( #{associationsname,jdbcType=VARCHAR},
+      #{associationstime,jdbcType=TIMESTAMP}, #{associationstype,jdbcType=VARCHAR}, #{associationsintroduction,jdbcType=VARCHAR},
+      #{associationsnumber,jdbcType=INTEGER}, #{associationsleader,jdbcType=VARCHAR},
       #{associationsapplicationtime,jdbcType=TIMESTAMP}, #{associationsapplicationstate,jdbcType=VARCHAR}
       )
   </insert>
@@ -92,7 +92,7 @@
         #{associationsintroduction,jdbcType=VARCHAR},
       </if>
       <if test="associationsnumber != null" >
-        #{associationsnumber,jdbcType=VARCHAR},
+        #{associationsnumber,jdbcType=INTEGER},
       </if>
       <if test="associationsleader != null" >
         #{associationsleader,jdbcType=VARCHAR},
@@ -121,7 +121,7 @@
         associationsIntroduction = #{associationsintroduction,jdbcType=VARCHAR},
       </if>
       <if test="associationsnumber != null" >
-        associationsNumber = #{associationsnumber,jdbcType=VARCHAR},
+        associationsNumber = #{associationsnumber,jdbcType=INTEGER},
       </if>
       <if test="associationsleader != null" >
         associationsLeader = #{associationsleader,jdbcType=VARCHAR},
@@ -141,7 +141,7 @@
       associationsTime = #{associationstime,jdbcType=TIMESTAMP},
       associationsType = #{associationstype,jdbcType=VARCHAR},
       associationsIntroduction = #{associationsintroduction,jdbcType=VARCHAR},
-      associationsNumber = #{associationsnumber,jdbcType=VARCHAR},
+      associationsNumber = #{associationsnumber,jdbcType=INTEGER},
       associationsLeader = #{associationsleader,jdbcType=VARCHAR},
       associationsApplicationTime = #{associationsapplicationtime,jdbcType=TIMESTAMP},
       associationsApplicationState = #{associationsapplicationstate,jdbcType=VARCHAR}

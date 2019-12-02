@@ -81,5 +81,20 @@ public class JsonUtil {
         jsonObject.put("noticestate",notice.getNoticestate());
         return jsonObject;
     }
+    //社团
+    public static JSONObject AssociationResult(int port, BeanAssociations associations){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("associationsId",associations.getAssociationsid());
+        jsonObject.put("associationsName",associations.getAssociationsname());
+        jsonObject.put("associationsTime",associations.getAssociationstime());
+        jsonObject.put("associationsType",associations.getAssociationstype());
+        jsonObject.put("associationsIntroduction",associations.getAssociationsintroduction());
+        jsonObject.put("associationsNumber",associations.getAssociationsnumber());
+        jsonObject.put("associationsLeader",associations.getAssociationsleader());
+        jsonObject.put("associationsApplicationTime",associations.getAssociationsapplicationtime());
+        jsonObject.put("associationsApplicationState",associations.getAssociationsapplicationstate());
+        return jsonObject;
+    }
 
 }

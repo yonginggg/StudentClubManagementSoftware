@@ -18,6 +18,7 @@
           <el-menu-item index="recruitnotice">社团招新</el-menu-item>
           <el-menu-item index="createAssociation">社团创建</el-menu-item>
           <el-menu-item index="viewActivityUser">全校活动</el-menu-item>
+          <el-menu-item index="ViewAnnouncementUser">全校公告</el-menu-item>
           <el-menu-item index="changePwd">修改密码</el-menu-item>
         </el-submenu>
         <el-submenu index="2">

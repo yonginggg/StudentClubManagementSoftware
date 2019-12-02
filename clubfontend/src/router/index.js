@@ -24,6 +24,7 @@ import ViewActivityUser from "../components/activity/ViewActivityUser";
 import clone from "../components/association/clone";
 import UserManager from "../components/user/UserManager";
 import RecruitNotice from "../components/association/RecruitNotice";
+import ViewAnnouncementUser from "../components/announcement/ViewAnnouncementUser";
 Vue.use(Router)
 
 export default new Router({
@@ -91,17 +92,17 @@ export default new Router({
           }
         },
         {
-          path: '/clone',
-          name: 'clone',
-          component: clone,
+          path: '/viewActivityUser',
+          name: 'ViewActivityUser',
+          component: ViewActivityUser,
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/viewActivityUser',
-          name: 'ViewActivityUser',
-          component: ViewActivityUser,
+          path: '/ViewAnnouncementUser',
+          name: 'ViewAnnouncementUser',
+          component: ViewAnnouncementUser,
           meta: {
             requireAuth: true
           }

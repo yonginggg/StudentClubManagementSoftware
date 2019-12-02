@@ -13,7 +13,7 @@ public class BeanAssociations {
 
     private String associationsintroduction;
 
-    private String associationsnumber;
+    private Integer associationsnumber;
 
     private String associationsleader;
 
@@ -61,12 +61,12 @@ public class BeanAssociations {
         this.associationsintroduction = associationsintroduction == null ? null : associationsintroduction.trim();
     }
 
-    public String getAssociationsnumber() {
+    public Integer getAssociationsnumber() {
         return associationsnumber;
     }
 
-    public void setAssociationsnumber(String associationsnumber) {
-        this.associationsnumber = associationsnumber == null ? null : associationsnumber.trim();
+    public void setAssociationsnumber(Integer associationsnumber) {
+        this.associationsnumber = associationsnumber;
     }
 
     public String getAssociationsleader() {
