@@ -20,12 +20,28 @@
                 auto-complete="off" placeholder="请重复密码"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-input type="text" v-model="Registered.userSex"
-                auto-complete="off" placeholder="性别"></el-input>
+      <el-select v-model="Registered.userSex" auto-complete="off" placeholder="请选择性别" style="width: 100%">
+        <el-option
+          v-for="item in sex"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
     </el-form-item>
+<!--    <el-form-item>-->
+<!--      <el-input type="text" v-model="Registered.userMajor"-->
+<!--                auto-complete="off" placeholder="专业"></el-input>-->
+<!--    </el-form-item>-->
     <el-form-item>
-      <el-input type="text" v-model="Registered.userMajor"
-                auto-complete="off" placeholder="专业"></el-input>
+      <el-select v-model="Registered.userMajor" auto-complete="off" placeholder="请选择专业" style="width: 100%">
+        <el-option
+          v-for="item in major"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
     </el-form-item>
     <el-form-item>
       <el-input type="text" v-model="Registered.userClass"
@@ -36,60 +52,84 @@
                 auto-complete="off" placeholder="电话"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 48%;background: #505458;border: none; float: left" v-on:click="registered">注册</el-button>
-      <el-button type="primary" style="width: 48%;background: #505458;border: none; float: left" v-on:click="back">返回</el-button>
+      <el-button type="primary" style="width: 48%;background: #505458;border: none; float: left"
+                 v-on:click="registered">注册
+      </el-button>
+      <el-button type="primary" style="width: 48%;background: #505458;border: none; float: left" v-on:click="back">返回
+      </el-button>
     </el-form-item>
   </el-form>
   </body>
 </template>
 
 <script>
-  import  qs from 'qs'
-export default {
-  name: 'Registered',
-  data () {
-    return {
-      Registered: {
-        userId: '',
-        userName: '',
-        newPwd: '',
-        oldPwd:'',
-        userSex: '',
-        userMajor: '',
-        userClass: '',
-        userTel: ''
-      },
-      responseResult: []
-    }
-  },
-  methods: {
+    import qs from 'qs'
 
-    registered () {
-        var dataObj = qs.stringify(this.Registered);
-        this.$axios({
-                method: 'post',
-                url: '/register',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+    export default {
+        name: 'Registered',
+        data() {
+            return {
+                Registered: {
+                    userId: '',
+                    userName: '',
+                    newPwd: '',
+                    oldPwd: '',
+                    userSex: '',
+                    userMajor: '',
+                    userClass: '',
+                    userTel: ''
                 },
-                data: dataObj, // 直接提交转换后的数据即可
+                sex: [{
+                    value: '男',
+                    label: '男'
+                }, {
+                    value: '女',
+                    label: '女'
+                }],
+                major: [{
+                    value: '计算',
+                    label: '计算'
+                }, {
+                    value: '软工',
+                    label: '软工'
+                }, {
+                    value: '信管',
+                    label: '信管'
+                }, {
+                    value: '统计',
+                    label: '统计'
+                }],
+                responseResult: []
+            }
+        },
+        methods: {
+
+            registered() {
+                var dataObj = qs.stringify(this.Registered);
+                this.$axios({
+                        method: 'post',
+                        url: '/register',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: dataObj, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    if (successResponse.data.port === 200) {
+                        this.$router.replace({path: '/login'})
+                    }
+                    if (successResponse.data.port === 401) {
+                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
+                            confirmButtonText: '确定',
+                        })
+                    }
+                })
             },
-        ).then(successResponse => {
-            if (successResponse.data.port === 200) {
+            back() {
                 this.$router.replace({path: '/login'})
             }
-            if(successResponse.data.port ===401){
-                this.$alert(successResponse.data.ErrorResult, '注册失败', {
-                    confirmButtonText: '确定',
-                })
-            }
-        })
-    },
-      back() {
-          this.$router.replace({path: '/login'})
-      }
-  }
-}
+        }
+    }
 </script>
 
 <style>
@@ -111,14 +151,15 @@ export default {
   }
 
   #poster {
-    background:url("../assets/batman.jpg") no-repeat;
+    background: url("../assets/batman.jpg") no-repeat;
     background-position: center;
     height: 100%;
     width: 100%;
     background-size: cover;
     position: fixed;
   }
-  body{
+
+  body {
     margin: 0px;
   }
 </style>

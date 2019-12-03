@@ -97,4 +97,16 @@ public class JsonUtil {
         return jsonObject;
     }
 
+    //招新申请
+    public static JSONObject RecruitSignResult(int port, BeanRecruitSign recruitSign){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("recruitSignId",recruitSign.getRecruitsignid());
+        jsonObject.put("recruitSignTime",recruitSign.getRecruitsigntime());
+        jsonObject.put("userId",recruitSign.getUserid());
+        jsonObject.put("associationsId",recruitSign.getAssociationsid());
+        jsonObject.put("recruitSignContent ",recruitSign.getRecruitSignContent());
+        jsonObject.put("recruitSignApplicationState",recruitSign.getRecruitSignApplicationState());
+        return jsonObject;
+    }
 }

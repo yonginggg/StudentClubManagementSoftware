@@ -1,6 +1,7 @@
 package com.zks.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class BeanRecruitSign {
     private Integer recruitsignid;
@@ -10,6 +11,12 @@ public class BeanRecruitSign {
     private String userid;
 
     private Integer associationsid;
+
+    private String recruitSignContent;
+
+    private String recruitSignApplicationState;
+
+    private List<BeanAssociations> association;
 
     public Integer getRecruitsignid() {
         return recruitsignid;
@@ -42,4 +49,19 @@ public class BeanRecruitSign {
     public void setAssociationsid(Integer associationsid) {
         this.associationsid = associationsid;
     }
+
+    public String getRecruitSignContent() {
+        return recruitSignContent;
+    }
+
+    public void setRecruitSignContent(String recruitSignContent) {
+        this.recruitSignContent = recruitSignContent;
+    }
+
+    public String getRecruitSignApplicationState() {
+        return recruitSignApplicationState;
+    }
+
+    public void setRecruitSignApplicationState(String recruitSignApplicationState) { this.recruitSignApplicationState = recruitSignApplicationState; }
+
 }
