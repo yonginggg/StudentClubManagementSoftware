@@ -1,9 +1,7 @@
+<!--社团通讯录-->
 <template>
-  <el-container id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
-    <el-header style="text-align: center; font-size: 20px; height: 50px;line-height: 50px; background-color: lightsteelblue">
-      <span style="letter-spacing: 20px; ">用户管理</span>
-    </el-header>
-    <el-main>
+  <div id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
+    <template>
       <el-table
         :data="tableData.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
         stripe
@@ -43,26 +41,13 @@
           </template>
         </el-table-column>
       </el-table>
-    </el-main>
-  </el-container>
+    </template>
+  </div>
 </template>
 
 <script>
     export default {
-        name: "UserManager",
-        data() {
-            return {
-                tableData: [],
-                search: ''
-            }
-        },
-        mounted() {
-            this.$axios.get("/alluser")
-                .then(response => {
-                    this.tableData = response.data.alluser
-                    console.log(this.tableData)
-                })
-        }
+        name: "AssociationUser"
     }
 </script>
 

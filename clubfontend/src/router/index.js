@@ -27,6 +27,11 @@ import RecruitNotice from "../components/association/RecruitNotice";
 import ViewAnnouncementUser from "../components/announcement/ViewAnnouncementUser";
 import clubIndex from "../components/association/clubIndex";
 import clubnotice from "../components/notice/clubnotice";
+import ViewActivityAdmin from "../components/activity/ViewActivityAdmin";
+import clubManagement from "../components/association/clubManagement";
+import applyClub from "../components/association/applyClub";
+import AssociationUser from "../components/association/AssociationUser";
+
 Vue.use(Router)
 
 export default new Router({
@@ -54,6 +59,7 @@ export default new Router({
       redirect: '/index',
       children: [
         {
+          // 首页
           path: '/index',
           name: 'AppIndex',
           component: AppIndex,
@@ -62,6 +68,7 @@ export default new Router({
           }
         },
         {
+          // 个人信息
           path: '/personal',
           name: 'Personal',
           component: PersonalIndex,
@@ -70,6 +77,7 @@ export default new Router({
           }
         },
         {
+          // 修改密码
           path: '/changePwd',
           name: 'Password',
           component: PasswordIndex,
@@ -78,6 +86,7 @@ export default new Router({
           }
         },
         {
+          // 招新界面
           path: '/recruitnotice',
           name: 'RecruitNotice',
           component: RecruitNotice,
@@ -86,6 +95,7 @@ export default new Router({
           }
         },
         {
+          // 创建社团
           path: '/createAssociation',
           name: 'CreateAssociation',
           component: CreateAssociation,
@@ -94,6 +104,7 @@ export default new Router({
           }
         },
         {
+          // 用户查看学校活动
           path: '/viewActivityUser',
           name: 'ViewActivityUser',
           component: ViewActivityUser,
@@ -102,6 +113,7 @@ export default new Router({
           }
         },
         {
+          // 用户查看学校公告
           path: '/ViewAnnouncementUser',
           name: 'ViewAnnouncementUser',
           component: ViewAnnouncementUser,
@@ -110,6 +122,7 @@ export default new Router({
           }
         },
         {
+          // 社团主界面
           path: '/clubIndex',
           name: 'clubIndex',
           component: clubIndex,
@@ -118,9 +131,19 @@ export default new Router({
           }
         },
         {
+          // 社团公告
           path: '/clubnotice',
           name: 'clubnotice',
           component: clubnotice,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          // 社团查看通讯录
+          path: '/AssociationUser',
+          name: 'AssociationUser',
+          component: AssociationUser,
           meta: {
             requireAuth: true
           }
@@ -135,6 +158,7 @@ export default new Router({
       redirect: '/AdminIndex',
       children: [
         {
+          // 管理员用户管理
           path: '/usermanager',
           name: 'UserManager',
           component: UserManager,
@@ -143,6 +167,25 @@ export default new Router({
           }
         },
         {
+          // 管理员查看社团,社团管理
+          path:'/clubManagement',
+          name: 'clubManagement',
+          component: clubManagement,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          // 审核社团申请
+          path:'/applyClub',
+          name: 'applyClub',
+          component: applyClub,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          // 审核活动申请
           path: '/Audit_Activity',
           name: 'Audit_Activity',
           component: Audit_Activity,
@@ -151,6 +194,7 @@ export default new Router({
           }
         },
         {
+          // 修改活动
           path: '/Modify_Activity',
           name: 'Modify_Activity',
           component: Modify_Activity,
@@ -167,6 +211,16 @@ export default new Router({
           }
         },
         {
+          // 管理员查看活动
+          path: '/ViewActivityAdmin',
+          name: 'ViewActivityAdmin',
+          component: ViewActivityAdmin,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          // 管理员发布公告
           path: '/Create_Announcement',
           name: 'Create_Announcement',
           component: Create_Announcement,
@@ -175,6 +229,7 @@ export default new Router({
           }
         },
         {
+          // 管理员查看公告
           path: '/Query_Announcement',
           name: 'Query_Announcement',
           component: Query_Announcement,

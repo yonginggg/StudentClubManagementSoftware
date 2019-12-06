@@ -14,7 +14,7 @@
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="公告内容">
-                <span>{{ props.row.shop }}</span>
+                <span>{{ props.row.noticetcontent}}</span>
               </el-form-item>
             </el-form>
           </template>
@@ -70,7 +70,7 @@
             return {
                 associationData: [
                     {noticename:'222',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
+                    {noticename:'111',noticetcontent:'1111'},
                     {noticename:'111',noticetcontent:'2222'},
                     {noticename:'111',noticetcontent:'2222'},
                     {noticename:'111',noticetcontent:'2222'},
