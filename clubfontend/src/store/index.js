@@ -7,12 +7,19 @@ export default new Vuex.Store({
   state: {
     user: {
       userId: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userId
+    },
+    association:{
+      associationname:window.localStorage.getItem('association' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('association' || '[]')).associationname
     }
   },
   mutations: {
     login (state, user) {
       state.user = user
       window.localStorage.setItem('user', JSON.stringify(user))
+    },
+    association (state, associationname) {
+      state.association.associationname = associationname
+      window.localStorage.setItem('associationname', JSON.stringify(associationname))
     }
   }
 })

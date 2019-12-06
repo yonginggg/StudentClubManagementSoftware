@@ -25,6 +25,8 @@ import clone from "../components/association/clone";
 import UserManager from "../components/user/UserManager";
 import RecruitNotice from "../components/association/RecruitNotice";
 import ViewAnnouncementUser from "../components/announcement/ViewAnnouncementUser";
+import clubIndex from "../components/association/clubIndex";
+import clubnotice from "../components/notice/clubnotice";
 Vue.use(Router)
 
 export default new Router({
@@ -103,6 +105,22 @@ export default new Router({
           path: '/ViewAnnouncementUser',
           name: 'ViewAnnouncementUser',
           component: ViewAnnouncementUser,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/clubIndex',
+          name: 'clubIndex',
+          component: clubIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/clubnotice',
+          name: 'clubnotice',
+          component: clubnotice,
           meta: {
             requireAuth: true
           }

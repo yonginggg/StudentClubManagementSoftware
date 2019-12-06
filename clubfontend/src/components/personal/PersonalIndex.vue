@@ -3,7 +3,7 @@
     <el-header style="text-align: center; font-size: 20px; height: 50px;line-height: 50px; background-color: lightsteelblue">
       <span style="letter-spacing: 20px; ">个人信息</span>
     </el-header>
-    <el-main>
+    <el-main >
        <per-information></per-information>
     </el-main>
   </el-container>

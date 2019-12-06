@@ -12,21 +12,42 @@
     <result column="associationsApplicationTime" property="associationsapplicationtime" jdbcType="TIMESTAMP" />
     <result column="associationsApplicationState" property="associationsapplicationstate" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="membermap" type="com.zks.model.BeanMember" >
+    <id column="memberId" property="memberid" jdbcType="INTEGER" />
+    <result column="memberPost" property="memberpost" jdbcType="VARCHAR" />
+    <result column="memberTime" property="membertime" jdbcType="TIMESTAMP" />
+    <result column="memberIntroduction" property="memberintroduction" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     associationsId, associationsName, associationsTime, associationsType, associationsIntroduction,
     associationsNumber, associationsLeader, associationsApplicationTime, associationsApplicationState
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
+  <select id="selectAllAssociations" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
     from associations
-    where associationsId = #{associationsid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAssociationsByState" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from associations
+    where associationsApplicationState = #{associationsapplicationstate,jdbcType=VARCHAR}
   </select>
   <select id="selectAssociationsByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from associations
     where associationsName = #{associationsNumber,jdbcType=INTEGER}
+  </select>
+  <select id="selectAssociationIdByUserId" resultMap="membermap" parameterType="java.lang.String" >
+    select associationsId
+    from member
+    where userId = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAssociationById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from associations
+    where associationsId = #{associationsid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from associations
@@ -42,6 +63,14 @@
       #{associationstime,jdbcType=TIMESTAMP}, #{associationstype,jdbcType=VARCHAR}, #{associationsintroduction,jdbcType=VARCHAR},
       #{associationsnumber,jdbcType=INTEGER}, #{associationsleader,jdbcType=VARCHAR},
       #{associationsapplicationtime,jdbcType=TIMESTAMP}, #{associationsapplicationstate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertMemberInAs" parameterType="com.zks.model.BeanMember" >
+    insert into member (memberId, memberPost, memberTime,
+      memberIntroduction, userId, associationsId
+      )
+    values (#{memberid,jdbcType=INTEGER}, #{memberpost,jdbcType=VARCHAR}, #{membertime,jdbcType=TIMESTAMP},
+      #{memberintroduction,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{associationsid,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zks.model.BeanAssociations" >
@@ -135,7 +164,7 @@
     </set>
     where associationsId = #{associationsid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zks.model.BeanAssociations" >
+  <update id="updateByAssociationsId" parameterType="com.zks.model.BeanAssociations" >
     update associations
     set associationsName = #{associationsname,jdbcType=VARCHAR},
       associationsTime = #{associationstime,jdbcType=TIMESTAMP},

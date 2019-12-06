@@ -52,11 +52,11 @@
   <!--    </el-aside>-->
   <!--  </el-container>-->
 </template>
-
+<script>
 export default {
 name: `AdminNavMenu`
 }
-
+</script>
 <style scoped>
   .el-menu-vertical-demo {
     position: fixed;
