@@ -39,7 +39,7 @@
           <template slot-scope="scope">
             <el-button
               size="middle"
-              @click="handleEdit(scope.$index, scope.row)">重置密码</el-button>
+              @click.native.console="console(scope.$index, scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,8 +60,13 @@
             this.$axios.get("/alluser")
                 .then(response => {
                     this.tableData = response.data.alluser
-                    console.log(this.tableData)
+                    // console.log(this.tableData)
                 })
+        },
+        methods : {
+            console(index, rows) {
+                console.log(rows.userid)
+            }
         }
     }
 </script>
