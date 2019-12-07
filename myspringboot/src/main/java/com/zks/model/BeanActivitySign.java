@@ -7,9 +7,11 @@ public class BeanActivitySign {
 
     private Date studentsigntime;
 
+    private String activitysignstate;
+
     private String userid;
 
-    private Integer associationsid;
+    private Integer activityId;
 
     public Integer getActivitysignid() {
         return activitysignid;
@@ -27,6 +29,14 @@ public class BeanActivitySign {
         this.studentsigntime = studentsigntime;
     }
 
+    public String getActivitysignstate() {
+        return activitysignstate;
+    }
+
+    public void setActivitysignstate(String activitysignstate) {
+        this.activitysignstate = activitysignstate == null ? null : activitysignstate.trim();
+    }
+
     public String getUserid() {
         return userid;
     }
@@ -35,11 +45,11 @@ public class BeanActivitySign {
         this.userid = userid == null ? null : userid.trim();
     }
 
-    public Integer getAssociationsid() {
-        return associationsid;
+    public Integer getActivityid() {
+        return activityId;
     }
 
-    public void setAssociationsid(Integer associationsid) {
-        this.associationsid = associationsid;
+    public void setActivityid(Integer activityId) {
+        this.activityId = activityId;
     }
 }

@@ -2,10 +2,15 @@ package com.zks.Tool;
 
 import com.zks.model.*;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.session.SqlSession;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class JsonUtil {
+
+    static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public static JSONObject errorResult(int port, String ErrorResult){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -38,21 +43,38 @@ public class JsonUtil {
     }
 
     public static JSONObject ActivityResult(int port, BeanActivity activity){
+        SqlSession session = MybatiesSession.getSession();
+        BeanAssociations a = session.selectOne("selectAssociations",activity.getAssociationsid());
+        BeanDepartment d = session.selectOne("selectDepartment",activity.getDepartmentid());
+
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
         jsonObject.put("activityid",activity.getActivityid());
         jsonObject.put("activityrange",activity.getActivityrange());
         jsonObject.put("activityname",activity.getActivityname());
         jsonObject.put("activityintroduction",activity.getActivityintroduction());
-        jsonObject.put("activitystarttime",activity.getActivitystarttime());
-        jsonObject.put("activityendtime",activity.getActivityendtime());
-        jsonObject.put("activityreleasetime",activity.getActivityreleasetime());
-        jsonObject.put("activitydeadline",activity.getActivitydeadline());
+        jsonObject.put("activitystarttime",df.format(activity.getActivitystarttime()));
+        jsonObject.put("activityendtime",df.format(activity.getActivityendtime()));
+        jsonObject.put("activityreleasetime",df.format(activity.getActivityreleasetime()));
+        jsonObject.put("activitydeadline",df.format(activity.getActivitydeadline()));
         jsonObject.put("activitypalce",activity.getActivitypalce());
         jsonObject.put("associationsid",activity.getAssociationsid());
+        jsonObject.put("associationsname",a.getAssociationsname());
         jsonObject.put("departmentid",activity.getDepartmentid());
-        jsonObject.put("activitiesapplicationtime",activity.getActivitiesapplicationtime());
+        jsonObject.put("departmentname",d.getDepartmentname());
+        jsonObject.put("activitiesapplicationtime",df.format(activity.getActivitiesapplicationtime()));
         jsonObject.put("activitiesapplicationstate",activity.getActivitiesapplicationstate());
+        return jsonObject;
+    }
+
+    public static JSONObject ActivitySignResult(int port, BeanActivitySign activitySign){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("activitysignid",activitySign.getActivitysignid());
+        jsonObject.put("studentsigntime",df.format(activitySign.getStudentsigntime()));
+        jsonObject.put("activitysignstate",activitySign.getActivitysignstate());
+        jsonObject.put("userid",activitySign.getUserid());
+        jsonObject.put("activityid",activitySign.getActivityid());
         return jsonObject;
     }
 

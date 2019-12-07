@@ -33,6 +33,7 @@
         <span>活动管理</span>
       </template>
       <el-menu-item index="Audit_Activity">审核活动申请</el-menu-item>
+
 <!--      <el-menu-item index="Modify_Activity">审核活动修改</el-menu-item>-->
       <el-menu-item index="ViewActivityAdmin">查看活动</el-menu-item>
     </el-submenu>

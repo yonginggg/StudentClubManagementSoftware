@@ -28,6 +28,12 @@
     select *
     from associations
   </select>
+  <select id="selectAssociations" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from associations
+    where associationsId = #{associationsid,jdbcType=INTEGER}
+  </select>
   <select id="selectAssociationsByState" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select *
     from associations

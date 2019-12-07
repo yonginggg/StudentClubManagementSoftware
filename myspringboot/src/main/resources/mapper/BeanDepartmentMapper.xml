@@ -11,7 +11,13 @@
     departmentId, departmentName, departmentLeader, associationsId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where departmentId = #{departmentid,jdbcType=INTEGER}
+  </select>
+  <select id="selectDepartment" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
     <include refid="Base_Column_List" />
     from department
     where departmentId = #{departmentid,jdbcType=INTEGER}
@@ -27,9 +33,9 @@
     where departmentId = #{departmentid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zks.model.BeanDepartment" >
-    insert into department (departmentId, departmentName, departmentLeader, 
+    insert into department (departmentId, departmentName, departmentLeader,
       associationsId)
-    values (#{departmentid,jdbcType=INTEGER}, #{departmentname,jdbcType=VARCHAR}, #{departmentleader,jdbcType=VARCHAR}, 
+    values (#{departmentid,jdbcType=INTEGER}, #{departmentname,jdbcType=VARCHAR}, #{departmentleader,jdbcType=VARCHAR},
       #{associationsid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zks.model.BeanDepartment" >

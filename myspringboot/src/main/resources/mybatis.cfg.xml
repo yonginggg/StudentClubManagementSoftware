@@ -42,5 +42,6 @@
         <mapper resource="mapper/BeanDepartmentMapper.xml"/>
         <mapper resource="mapper/BeanNoticeMapper.xml"/>
         <mapper resource="mapper/BeanRecruitSignMapper.xml"/>
+        <mapper resource="mapper/BeanActivitySignMapper.xml"/>
     </mappers>
 </configuration>

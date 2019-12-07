@@ -17,52 +17,71 @@
     <result column="activitiesApplicationState" property="activitiesapplicationstate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    activityId, activityRange, activityName, activityIntroduction, activityStartTime, 
-    activityEndTime, activityReleaseTime, activityDeadLine, activityPalce, associationsId, 
+    activityId, activityRange, activityName, activityIntroduction, activityStartTime,
+    activityEndTime, activityReleaseTime, activityDeadLine, activityPalce, associationsId,
     departmentId, activitiesApplicationTime, activitiesApplicationState
   </sql>
-  <select id="selectAllActivity" resultMap="BaseResultMap" >
-    select 
+  <select id="selectActivity" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
     <include refid="Base_Column_List" />
     from activity
     where activityId = #{activityid,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAllActivity" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+  </select>
+
+  <select id="selectActivityByState" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+    where activitiesApplicationState = #{activitiesApplicationState,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectActivityByAssociation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from activity
     where associationsId = #{associationsId,jdbcType=INTEGER}
   </select>
+
   <select id="selectActivityByDepartment" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from activity
     where departmentId = #{departmentId,jdbcType=INTEGER}
   </select>
+
   <select id="selectActivityByPlace" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from activity
     where activityPalce = #{activityPalce,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from activity
     where activityId = #{activityid,jdbcType=INTEGER}
   </delete>
+
   <insert id="insertActivity" parameterType="com.zks.model.BeanActivity" >
-    insert into activity (activityId, activityRange, activityName, 
-      activityIntroduction, activityStartTime, 
-      activityEndTime, activityReleaseTime, 
-      activityDeadLine, activityPalce, associationsId, 
-      departmentId, activitiesApplicationTime, 
+    insert into activity (activityId, activityRange, activityName,
+      activityIntroduction, activityStartTime,
+      activityEndTime, activityReleaseTime,
+      activityDeadLine, activityPalce, associationsId,
+      departmentId, activitiesApplicationTime,
       activitiesApplicationState)
-    values (#{activityid,jdbcType=INTEGER}, #{activityrange,jdbcType=VARCHAR}, #{activityname,jdbcType=VARCHAR}, 
-      #{activityintroduction,jdbcType=VARCHAR}, #{activitystarttime,jdbcType=TIMESTAMP}, 
-      #{activityendtime,jdbcType=TIMESTAMP}, #{activityreleasetime,jdbcType=TIMESTAMP}, 
-      #{activitydeadline,jdbcType=TIMESTAMP}, #{activitypalce,jdbcType=INTEGER}, #{associationsid,jdbcType=INTEGER}, 
-      #{departmentid,jdbcType=INTEGER}, #{activitiesapplicationtime,jdbcType=TIMESTAMP}, 
+    values (#{activityid,jdbcType=INTEGER}, #{activityrange,jdbcType=VARCHAR}, #{activityname,jdbcType=VARCHAR},
+      #{activityintroduction,jdbcType=VARCHAR}, #{activitystarttime,jdbcType=TIMESTAMP},
+      #{activityendtime,jdbcType=TIMESTAMP}, #{activityreleasetime,jdbcType=TIMESTAMP},
+      #{activitydeadline,jdbcType=TIMESTAMP}, #{activitypalce,jdbcType=INTEGER}, #{associationsid,jdbcType=INTEGER},
+      #{departmentid,jdbcType=INTEGER}, #{activitiesapplicationtime,jdbcType=TIMESTAMP},
       #{activitiesapplicationstate,jdbcType=VARCHAR})
   </insert>
+
   <update id="updateActivity" parameterType="com.zks.model.BeanActivity" >
     update activity
     set activityRange = #{activityrange,jdbcType=VARCHAR},
@@ -79,4 +98,5 @@
       activitiesApplicationState = #{activitiesapplicationstate,jdbcType=VARCHAR}
     where activityId = #{activityid,jdbcType=INTEGER}
   </update>
+
 </mapper>

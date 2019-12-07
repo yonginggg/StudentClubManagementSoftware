@@ -39,7 +39,7 @@
           <template slot-scope="scope">
             <el-button
               size="middle"
-              @click.native.console="console(scope.$index, scope.row)">重置密码</el-button>
+              @click.native.console="resetpwd(scope.$index, scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+    import qs from 'qs'
     export default {
         name: "UserManager",
         data() {
@@ -64,8 +65,33 @@
                 })
         },
         methods : {
-            console(index, rows) {
-                console.log(rows.userid)
+
+            resetpwd(index, rows) {
+                var dataObj = qs.stringify(rows);
+                // console.log(dataObj)
+                this.$axios({
+                        method: 'post',
+                        url: '/resetPwd',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: dataObj, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    if (successResponse.data.port === 200) {
+                        // this.$router.replace({path: '/login'})
+                        // console.log("success")
+                        this.$message({
+                            message: '密码修改成功',
+                            type: 'success'
+                        });
+                    }
+                    if (successResponse.data.port === 401) {
+                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
+                            confirmButtonText: '确定',
+                        })
+                    }
+                })
             }
         }
     }

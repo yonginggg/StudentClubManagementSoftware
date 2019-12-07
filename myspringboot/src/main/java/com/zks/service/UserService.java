@@ -123,6 +123,30 @@ public class UserService {
         return jsonObject;
     }
 
+    //管理员重置学生密码
+    public JSONObject resetPwd(String  userId) throws Exception {
+        JSONObject jsonObject = null;
+        BeanUser user = null;
+
+        SqlSession session = MybatiesSession.getSession();
+        user = session.selectOne("selectUser", userId);
+        String regex = "^1[3|4|5|8][0-9]\\d{8}$";
+
+        if ( user == null) {
+            jsonObject = JsonUtil.errorResult(401, "学生不存在");
+        }  else {
+            //密码加密
+            String md5Pwd = DigestUtils.md5DigestAsHex("123456".getBytes());
+            user.setUserpwd(md5Pwd);
+
+            session.update("updateUser", user);
+            jsonObject = JsonUtil.UserResult(200, user);
+        }
+
+        session.commit();
+        return jsonObject;
+    }
+
     // 管理员修改密码
     public JSONObject changeManagerPwd(String  userId, String oldPwd, String newPwd, String newPwd2) throws Exception {
         JSONObject jsonObject = null;
@@ -271,5 +295,7 @@ public class UserService {
         System.out.println(zs);
 
     }
+
+
 
 }
