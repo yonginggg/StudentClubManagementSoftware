@@ -1,3 +1,4 @@
+<!--社团公告-->
 <template>
   <el-container style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <el-header style="text-align: center; font-size: 20px; height: 50px;line-height: 50px; background-color: lightsteelblue">
@@ -18,6 +19,8 @@
               </el-form-item>
             </el-form>
           </template>
+        </el-table-column>
+        <el-table-column  type="index" label="编号" width="300">
         </el-table-column>
         <el-table-column
           label="公告名称"
@@ -44,6 +47,8 @@
               </el-form-item>
             </el-form>
           </template>
+        </el-table-column>
+        <el-table-column  type="index" label="编号" width="300">
         </el-table-column>
         <el-table-column
           label="公告名称"

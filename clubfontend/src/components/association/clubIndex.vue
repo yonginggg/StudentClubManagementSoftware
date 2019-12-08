@@ -6,7 +6,9 @@
     </el-header>
     <el-main>
       <el-row style="height: 30%">
-        <el-button plain type="primary" icon="el-icon-message-solid" style="width: 20% ;height: 70%;font-size: 30px">
+        <el-button plain type="primary" icon="el-icon-message-solid"
+                   style="width: 20% ;height: 70%;font-size: 30px"
+                    v-on:click="tonotice">
           公告
         </el-button>
         <el-button plain type="success" icon="el-icon-s-order" style="width: 20% ;height: 70%;font-size: 30px">活动
@@ -57,6 +59,11 @@
                     user: ''
                 },
                 formLabelWidth: '120px'
+            }
+        },
+        methods : {
+            tonotice(){
+                this.$router.replace({path: '/clubnotice'})
             }
         }
     }

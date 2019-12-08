@@ -1,3 +1,4 @@
+<!--学生查看全校活动-->
 <template>
   <el-table
     :data="tableData.filter(data => !search || data.noticename.toLowerCase().includes(search.toLowerCase()))"
@@ -23,11 +24,6 @@
           size="mini"
           placeholder="输入关键字搜索"/>
       </template>
-      <!--      <template slot-scope="scope">-->
-      <!--        <el-button-->
-      <!--          size="middle"-->
-      <!--          @click="handleEdit(scope.$index, scope.row)">重置密码</el-button>-->
-      <!--      </template>-->
     </el-table-column>
   </el-table>
 </template>

@@ -16,10 +16,11 @@
             <i class="el-icon-menu"></i>
             <span>基本功能</span>
           </template>
-          <el-menu-item index="personal">个人信息</el-menu-item>
+<!--          <el-menu-item index="personal">个人信息</el-menu-item>-->
           <el-menu-item index="recruitnotice">社团招新</el-menu-item>
           <el-menu-item index="createAssociation">社团创建</el-menu-item>
           <el-menu-item index="viewActivityUser">全校活动</el-menu-item>
+          <el-menu-item index="SignedActivity">已报名的活动</el-menu-item>
           <el-menu-item index="ViewAnnouncementUser">全校公告</el-menu-item>
           <el-menu-item index="changePwd">修改密码</el-menu-item>
         </el-submenu>
@@ -29,9 +30,10 @@
             <span>我的社团</span>
           </template>
           <template v-for="ass in association">
-                <el-menu-item index="clubIndex" v-on:click="shetuan">{{ass.associationname}}</el-menu-item>
+                <el-menu-item index="clubIndex" @click.native.console="club(scope.row)">{{ass.associationname}}</el-menu-item>
           </template>
         </el-submenu>
+        <el-button id="back" type="primary" icon="el-icon-back" v-on:click="back" >退出登录</el-button>
       </el-menu>
 <!--    </el-aside>-->
 <!--  </el-container>-->
@@ -77,11 +79,15 @@ export default {
       // console.log(this.$store.state.user.userId)
   },
   methods:{
-      shetuan(){
+      club(rows){
           // var _this = this
           // _this.$store.commit('association', _this.association.associationname)
           // console.log(this.$store.state.association.associationname)
-          console.log(this.associationname)
+          // console.log(this.associationname)
+          console.log(rows)
+      },
+      back(){
+          this.$router.replace({path: '/login'})
       }
   }
 
@@ -97,6 +103,12 @@ export default {
     width: 15%;
     height: 100%;
     overflow: scroll;
+  }
+
+  #back{
+    position: fixed;
+    left: 55px;
+    top:90%
   }
 </style>
 <!--<template>-->

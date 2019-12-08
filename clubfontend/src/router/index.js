@@ -31,7 +31,7 @@ import ViewActivityAdmin from "../components/activity/ViewActivityAdmin";
 import clubManagement from "../components/association/clubManagement";
 import applyClub from "../components/association/applyClub";
 import AssociationUser from "../components/association/AssociationUser";
-
+import SignedActivity from "../components/activity/SignedActivity";
 Vue.use(Router)
 
 export default new Router({
@@ -108,6 +108,15 @@ export default new Router({
           path: '/viewActivityUser',
           name: 'ViewActivityUser',
           component: ViewActivityUser,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          // 用户查看学校活动
+          path: '/SignedActivity',
+          name: 'SignedActivity',
+          component: SignedActivity,
           meta: {
             requireAuth: true
           }

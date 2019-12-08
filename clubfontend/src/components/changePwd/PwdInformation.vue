@@ -1,6 +1,5 @@
 <template>
-  <el-container >
-    <div style="margin: 20px;"></div>
+  <el-container id="shuru">
     <el-form :label-position="left" label-width="150px" :model="pwdInformation">
       <el-form-item label="原密码: ">
         <el-input v-model="pwdInformation.userPwd" placeholder="请输入新密码" type="password"></el-input>
@@ -73,4 +72,7 @@
 </script>
 
 <style>
+  #shuru{
+    margin: 20px; margin-left: 350px; margin-top: 200px
+  }
 </style>

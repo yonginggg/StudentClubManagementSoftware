@@ -21,7 +21,7 @@
   <select id="selectNoticeBySchool" resultMap="BaseResultMap">
     select *
     from notice
-    where noticeRange ="全校"
+    where noticeRange ="全校" and noticeState ="审核通过"
   </select>
   <select id="selectNoticeByAssociation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select *

@@ -1,3 +1,4 @@
+<!--创建社团-->
 <template>
   <div id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
     <el-form ref="form" :model="form" label-width="80px">
