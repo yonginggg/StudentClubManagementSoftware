@@ -73,6 +73,9 @@ public class ActivityService {
         if(activity == null){
             jsonObject = JsonUtil.errorResult(401,"活动不存在");
         }
+        else if (!placeAvailability(activity.getActivitypalce(),activity.getActivitystarttime(),activity.getActivityendtime())){
+            jsonObject = JsonUtil.errorResult(401, "场地已被占用");
+        }
         else {
             if(answer == true){
                 activity.setActivityreleasetime(now);
@@ -161,45 +164,6 @@ public class ActivityService {
         return list;
     }
 
-//    // 社长显示社团活动
-//    public List<JSONObject> loadActivityByLeader(String associationName) throws Exception {
-//        List<BeanActivity> activityList = null;
-//        JSONObject jsonObject = null;
-//        List<JSONObject> list = new ArrayList<JSONObject>();
-//
-//        SqlSession session = MybatiesSession.getSession();
-//        BeanAssociations association = session.selectOne("selectAssociationsByName",associationName);
-//        int associationId = association.getAssociationsid();
-//        activityList = session.selectList("selectActivityByAssociation",associationId);
-//
-//        for(int i=0;i<activityList.size();i++) {
-//            jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
-//            list.add(jsonObject);
-//        }
-//
-//        session.commit();
-//        return list;
-//    }
-
-//    // 显示部门活动
-//    public List<JSONObject> loadActivityByDepartment(String departmentName) throws Exception {
-//        List<BeanActivity> activityList = null;
-//        JSONObject jsonObject = null;
-//        List<JSONObject> list = new ArrayList<JSONObject>();
-//
-//        SqlSession session = MybatiesSession.getSession();
-//        BeanDepartment department = session.selectOne("selectDepartmentByName",departmentName);
-//        int departmentId = department.getDepartmentid();
-//        activityList = session.selectList("selectActivityByDepartment",departmentId);
-//
-//        for(int i=0;i<activityList.size();i++) {
-//            jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
-//            list.add(jsonObject);
-//        }
-//
-//        session.commit();
-//        return list;
-//    }
 
     // 判断场地是否可用
     public Boolean placeAvailability(int placeId, Date startTime, Date endTime) throws Exception {

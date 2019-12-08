@@ -38,4 +38,15 @@ public class ActivitySignController {
         result.put("loadactivitysignbystate",array);
         return result;
     }
+
+    //显示学生报名通过的活动
+    @RequestMapping(value = "/myactivity", method = RequestMethod.POST)
+    public JSONObject myActivity(@RequestParam("userId") String userId) throws Exception {
+        ActivitySignService activitySignService = new ActivitySignService();
+        String myactivity = JSON.toJSONString( activitySignService.loadMyActivity(userId));
+        JSONArray array= JSONArray.parseArray(myactivity);
+        JSONObject result = new JSONObject();
+        result.put("myactivity",array);
+        return result;
+    }
 }

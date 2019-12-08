@@ -37,7 +37,7 @@
       confirm() {
         var dataObj = qs.stringify(this.pwdInformation);
         var _this = this
-        console.log(this.pwdInformation)
+        // console.log(this.pwdInformation)
         this.$axios({
             method: 'post',
             url: '/changePwd',

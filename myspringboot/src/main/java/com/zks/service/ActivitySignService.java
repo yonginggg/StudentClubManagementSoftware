@@ -43,7 +43,7 @@ public class ActivitySignService {
         else{
             BeanActivitySign activitySign = new BeanActivitySign();
             activitySign.setStudentsigntime(now);
-            activitySign.setActivitysignstate("等待审核");
+            activitySign.setActivitysignstate("审核通过");
             activitySign.setUserid(userId);
             activitySign.setActivityid(activityId);
 
@@ -95,6 +95,31 @@ public class ActivitySignService {
             if(activitySignList.get(i).getActivityid() == activityId) {
                 jsonObject = JsonUtil.ActivitySignResult(200, activitySignList.get(i));
                 list.add(jsonObject);
+            }
+        }
+
+        session.commit();
+        return list;
+    }
+
+    //显示学生报名通过的活动
+    public List<JSONObject> loadMyActivity(String userId) throws Exception {
+        List<BeanActivity> activityList = null;
+        List<BeanActivitySign> activitySignList = null;
+        JSONObject jsonObject = null;
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        Date now = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        SqlSession session = MybatiesSession.getSession();
+        activitySignList = session.selectList("selectActivitySignByState","审核通过");
+
+        for(int i=0;i<activitySignList.size();i++) {
+            if(activitySignList.get(i).getUserid().equals(userId)) {
+                BeanActivity activity = session.selectOne("selectActivity",activitySignList.get(i).getActivityid());
+                if(activity.getActivityendtime().after(now)) {
+                    jsonObject = JsonUtil.ActivityResult(200, activity);
+                    list.add(jsonObject);
+                }
             }
         }
 

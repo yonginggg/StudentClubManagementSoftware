@@ -6,20 +6,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      userId: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userId
+      userId: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userId,
+      userPwd: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userPwd
     },
-    association:{
-      associationname:window.localStorage.getItem('association' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('association' || '[]')).associationname
-    }
+    associationId:2,
+    associationName:'篮球社'
   },
   mutations: {
     login (state, user) {
       state.user = user
       window.localStorage.setItem('user', JSON.stringify(user))
-    },
-    association (state, associationname) {
-      state.association.associationname = associationname
-      window.localStorage.setItem('associationname', JSON.stringify(associationname))
     }
   }
 })

@@ -21,7 +21,6 @@ import Create_Announcement from '../components/announcement/Create_Announcement'
 // eslint-disable-next-line camelcase
 import Query_Announcement from '../components/announcement/Query_Announcement'
 import ViewActivityUser from "../components/activity/ViewActivityUser";
-import clone from "../components/association/clone";
 import UserManager from "../components/user/UserManager";
 import RecruitNotice from "../components/association/RecruitNotice";
 import ViewAnnouncementUser from "../components/announcement/ViewAnnouncementUser";
@@ -32,6 +31,7 @@ import clubManagement from "../components/association/clubManagement";
 import applyClub from "../components/association/applyClub";
 import AssociationUser from "../components/association/AssociationUser";
 import SignedActivity from "../components/activity/SignedActivity";
+
 Vue.use(Router)
 
 export default new Router({

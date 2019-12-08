@@ -45,13 +45,41 @@
 </template>
 
 <script>
+    import qs from 'qs'
     export default {
         name: "SignedActivity",
         data() {
             return {
                 tableData: [],
-                search: ''
+                search: '',
+                // user:{
+                //     userId:this.$store.state.user.userId
+                // }
             }
+        },
+        mounted() {
+            var dataobj = qs.stringify({userId:this.$store.state.user.userId})
+            // console.log(dataobj)
+            this.$axios({
+                    method: 'post',
+                    url: '/myactivity',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: dataobj, // 直接提交转换后的数据即可
+                },
+            ).then(successResponse => {
+                // console.log(successResponse.data.myactivity[0].port)
+                if (successResponse.data.myactivity[0].port === 200) {
+                    // this.tableData = successResponse.data.myactivity[0]
+                    console.log(successResponse.data.myactivity[0])
+                }
+                if(successResponse.data.port === 401){
+                    this.$alert(successResponse.data.ErrorResult, '登录失败', {
+                        confirmButtonText: '确定',
+                    })
+                }
+            })
         },
     }
 </script>
