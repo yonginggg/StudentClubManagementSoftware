@@ -79,8 +79,11 @@ public class AssociationService {
         List<BeanAssociations> associations = session.selectList("selectAssociationsByState",state);
 
         for (int i = 0; i < associations.size(); i++){
-            jsonObject = JsonUtil.AssociationResult(200,associations.get(i));
-            list.add(jsonObject);
+            if (associations.get(i).getAssociationsid() > 0) {
+                jsonObject = JsonUtil.AssociationResult(200,associations.get(i));
+                list.add(jsonObject);
+            }
+
         }
         session.commit();
         return list;
@@ -102,11 +105,14 @@ public class AssociationService {
     public void modifyMemberInsertLeader(String userid, int assid){
         SqlSession session = MybatiesSession.getSession();
         BeanMember member = new BeanMember();
+        member.setUserid(userid);
         member.setAssociationsid(assid);
         member.setMemberintroduction("Leader");
         member.setMembertime(new Date());
         member.setMemberpost("社长");
-        session.insert("insertMemberInAs",member);
+        member.setDepartmentid(0);
+        session.insert("insertMember",member);
+        session.commit();
     }
 
     public JSONObject modifyAssociationsState(int id, String state) throws Exception{

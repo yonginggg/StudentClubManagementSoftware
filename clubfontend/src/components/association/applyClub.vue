@@ -28,26 +28,28 @@
       </el-table-column>
       <el-table-column
         label="社团编号"
-        prop="id">
+        prop="associationsId">
       </el-table-column>
       <el-table-column
         label="社团名称"
-        prop="name">
+        prop="associationsName">
       </el-table-column>
       <el-table-column
         label="申请人学号"
-        prop="applicant">
+        prop="associationsLeader">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="success"
-            @click="handleEdit(scope.$index, scope.row)">通过</el-button>
+            @click="ok(scope.$index, scope.row)">通过
+          </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">不通过</el-button>
+            @click="no(scope.$index, scope.row)">不通过
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -55,65 +57,82 @@
 </template>
 
 <script>
-export default {
-  name: 'applyClub',
-  data () {
-    return {
-      Registered: {
-        id: '',
-        name: '',
-        applicant: '',
-        category: '',
-        content: ''
-      }
-    }
-  },
-  methods: {
-    confirm () {
-      var dataObj = 1
-      // eslint-disable-next-line no-unused-vars
-      var _this = this
-      console.log(this.pwdInformation)
-      this.$axios({
-        method: 'post',
-        url: '/',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+    import qs from 'qs'
+
+    export default {
+
+        name: 'applyClub',
+        data() {
+            return {
+                tableData: [],
+                search: ''
+            }
         },
-        data: dataObj // 直接提交转换后的数据即可
-      }
-      ).then(successResponse => {
-        if (successResponse.data.port === 200) {
-          // _this.$store.commit('login', _this.loginForm)
-          this.$alert('请重新登陆', '修改成功', {
-            confirmButtonText: '确定'
-          }).then(() => {
-            this.$router.replace({path: '/login'})
-          })
+        mounted() {
+            var dataObj = qs.stringify({associationstate: '等待审核'});
+            this.$axios({
+                    method: 'post',
+                    url: '/allassociationsbystate',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: dataObj, // 直接提交转换后的数据即可
+                },
+            ).then(successResponse => {
+                // console.log(successResponse.data.allassociationsbystate[0].port);
+                if (successResponse.data.allassociationsbystate[0].port === 200) {
+                    this.tableData = successResponse.data.allassociationsbystate
+                }
+                if (successResponse.data.port === 401) {
+                    this.$message.error('获取社团申请失败');
+                }
+            })
+        },
+        methods: {
+            ok(index, rows) {
+                rows.associationstate = '审核通过'
+                // console.log(rows)
+                var data = qs.stringify(rows);
+                // console.log(data)
+                this.$axios({
+                        method: 'post',
+                        url: '/modifyassociationsstatebyid',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: data, // 直接提交转换后的数据即可
+                    },
+                )
+            },
+            no(index, rows) {
+                rows.associationstate = '审核失败'
+                // console.log(rows)
+                var data = qs.stringify(rows);
+                // console.log(data)
+                this.$axios({
+                        method: 'post',
+                        url: '/modifyassociationsstatebyid',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: data, // 直接提交转换后的数据即可
+                    },
+                )
+            }
         }
-        if (successResponse.data.port === 401) {
-          this.$alert(successResponse.data.ErrorResult, '修改失败', {
-            confirmButtonText: '确定'
-          })
-        }
-      })
-    },
-    cancel () {
-      this.$router
-        .replace({path: '/index'})
     }
-  }
-}
 </script>
 
 <style>
   .demo-table-expand {
     font-size: 0;
   }
+
   .demo-table-expand label {
     width: 90px;
     color: #99a9bf;
   }
+
   .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;

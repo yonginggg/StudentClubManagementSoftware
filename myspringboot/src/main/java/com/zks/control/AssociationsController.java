@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zks.service.AssociationService;
 import com.zks.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+//@Controller
 @RequestMapping("/api")
 @CrossOrigin
 @ResponseBody
@@ -52,7 +54,7 @@ public class AssociationsController {
     //更改社团状态（比如说：已删除，正在审核，审核通过，审核失败）
     //审核通过之后，更改社团创立时间
     @RequestMapping(value = "/modifyassociationsstatebyid", method = RequestMethod.POST)
-    public JSONObject modifyAssociationsStateById(@RequestParam("associationsid")int assid,@RequestParam("associationstate") String state) throws Exception {
+    public JSONObject modifyAssociationsStateById(@RequestParam("associationsId") int assid,@RequestParam("associationstate") String state) throws Exception {
         AssociationService associationService = new AssociationService();
         JSONObject result = associationService.modifyAssociationsState(assid,state);
         result.put("modifyassociationsstatebyid",result);

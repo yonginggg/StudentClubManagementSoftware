@@ -11,35 +11,22 @@
         style="width: 100%">
         <el-table-column
           label="社团编号"
-          prop="id">
+          prop="associationsId">
         </el-table-column>
         <el-table-column
           label="社团名称"
-          prop="name">
+          prop="associationsName">
         </el-table-column>
         <el-table-column
           label="建立时间"
-          prop="time"
+          prop="associationsApplicationTime"
           sortable>
         </el-table-column>
         <el-table-column
           label="社团类别"
-          prop="category"
+          prop="associationsType"
           :filters="[{text: '学术类', value: '学术类'}, {text: '体育类', value: '体育类'}, {text: '艺术类', value: '艺术类'}, {text: '公益类', value: '公益类'}, {text: '科技类', value: '科技类'}]"
           :filter-method="filterRange">
-        </el-table-column>
-        <el-table-column
-          align="right">
-          <template slot-scope="scope">
-            <el-button
-              size="middle"
-              type="primary" plain
-              @click="handleEdit(scope.$index, scope.row)">同意</el-button>
-            <el-button
-              size="middle"
-              type="danger" plain
-              @click="handleEdit(scope.$index, scope.row)">拒绝</el-button>
-          </template>
         </el-table-column>
       </el-table>
     </el-main>
@@ -47,6 +34,7 @@
 </template>
 
 <script>
+  import qs from 'qs'
 export default {
   name: 'clubManagement',
   data () {
@@ -55,10 +43,21 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get('/allnotice')
-      .then(response => {
-        this.tableData = response.data.allnotice
-        console.log(this.tableData)
+      var data = qs.stringify({associationstate:'审核通过'});
+      // console.log(data)
+      this.$axios({
+              method: 'post',
+              url: '/allassociationsbystate',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data: data, // 直接提交转换后的数据即可
+          },
+      ).then(successResponse => {
+          // console.log(successResponse.data.allassociationsbystate[0].port)
+          if (successResponse.data.allassociationsbystate[0].port) {
+              this.tableData = successResponse.data.allassociationsbystate
+          }
       })
   },
   methods: {
