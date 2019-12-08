@@ -10,15 +10,19 @@
           style="width: 100%">
           <el-table-column
             label="社团名字"
-            prop="userid">
+            prop="associationsName">
           </el-table-column>
           <el-table-column
             label="招新内容"
-            prop="username">
+            prop="recruitNoticeContent">
+          </el-table-column>
+          <el-table-column
+            label="招新开始时间"
+            prop="recruitNoticeStartTime">
           </el-table-column>
           <el-table-column
             label="招新截止时间"
-            prop="usermajor">
+            prop="recruitNoticeEndTime">
           </el-table-column>
           <el-table-column
             align="right">
@@ -31,7 +35,8 @@
             <template slot-scope="scope">
               <el-button
                 size="middle"
-                @click="handleEdit(scope.$index, scope.row)">报名</el-button>
+                type="primary"
+                @click.native.console="signin(scope.$index, scope.row)">报名社团</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -41,6 +46,7 @@
 </template>
 
 <script>
+  import qs from 'qs'
     export default {
         name: "RecruitNotice",
         data() {
@@ -50,11 +56,42 @@
             }
         },
         mounted() {
-            this.$axios.get("/allrecruitnotice ")
+            this.$axios.get("/allrecruitnotice1")
                 .then(response => {
-                    this.tableData = response.data.alluser
-                    console.log(this.tableData)
+                    this.tableData = response.data.allrecruitnotice1
+                    // console.log(this.tableData)
                 })
+        },
+        methods : {
+            signin(index, rows){
+                rows.userId = this.$store.state.user.userId
+                rows.recruitSignContent = '这是个人介绍'
+                var dataObj = qs.stringify(rows);
+
+                // console.log(dataObj)
+                this.$axios({
+                        method: 'post',
+                        url: '/createrecruitsign',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: dataObj, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    // console.log(successResponse.data);
+                    if (successResponse.data.port === 200) {
+                        this.$message({
+                            message: '报名成功',
+                            type: 'success'
+                        });
+                    }
+                    if(successResponse.data.port === 401){
+                        this.$alert(successResponse.data.ErrorResult, '登录失败', {
+                            confirmButtonText: '确定',
+                        })
+                    }
+                })
+            }
         }
     }
 </script>

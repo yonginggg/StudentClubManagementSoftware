@@ -9,27 +9,56 @@
     <result column="recruitNoticeReleaseTime" property="recruitnoticereleasetime" jdbcType="TIMESTAMP" />
     <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="BaseResultMap_association" type="com.zks.model.BeanAssociations" >
+    <id column="associationsId" property="associationsid" jdbcType="INTEGER" />
+    <result column="associationsName" property="associationsname" jdbcType="VARCHAR" />
+    <result column="associationsTime" property="associationstime" jdbcType="TIMESTAMP" />
+    <result column="associationsType" property="associationstype" jdbcType="VARCHAR" />
+    <result column="associationsIntroduction" property="associationsintroduction" jdbcType="VARCHAR" />
+    <result column="associationsNumber" property="associationsnumber" jdbcType="INTEGER" />
+    <result column="associationsLeader" property="associationsleader" jdbcType="VARCHAR" />
+    <result column="associationsApplicationTime" property="associationsapplicationtime" jdbcType="TIMESTAMP" />
+    <result column="associationsApplicationState" property="associationsapplicationstate" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    recruitNoticeId, recruitNoticeContent, recruitNoticeStartTime, recruitNoticeEndTime, 
+    recruitNoticeId, recruitNoticeContent, recruitNoticeStartTime, recruitNoticeEndTime,
     recruitNoticeReleaseTime, associationsId
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <sql id="Base_Column_List_association" >
+    associationsId, associationsName, associationsTime, associationsType, associationsIntroduction,
+    associationsNumber, associationsLeader, associationsApplicationTime, associationsApplicationState
+  </sql>
+  <select id="selectAllRecruitNotice" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
     <include refid="Base_Column_List" />
     from recruitNotice
-    where recruitNoticeId = #{recruitnoticeid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="selectAssociationName_one" resultMap="BaseResultMap_association" parameterType="java.lang.Integer" >
+    select *
+    from associations
+    where associationsId = #{associationsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteRecruitNotice" parameterType="java.lang.Integer" >
     delete from recruitNotice
     where recruitNoticeId = #{recruitnoticeid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zks.model.BeanRecruitNotice" >
-    insert into recruitNotice (recruitNoticeId, recruitNoticeContent, 
-      recruitNoticeStartTime, recruitNoticeEndTime, 
+    insert into recruitNotice (recruitNoticeId, recruitNoticeContent,
+      recruitNoticeStartTime, recruitNoticeEndTime,
       recruitNoticeReleaseTime, associationsId
       )
-    values (#{recruitnoticeid,jdbcType=INTEGER}, #{recruitnoticecontent,jdbcType=VARCHAR}, 
-      #{recruitnoticestarttime,jdbcType=TIMESTAMP}, #{recruitnoticeendtime,jdbcType=TIMESTAMP}, 
+    values (#{recruitnoticeid,jdbcType=INTEGER}, #{recruitnoticecontent,jdbcType=VARCHAR},
+      #{recruitnoticestarttime,jdbcType=TIMESTAMP}, #{recruitnoticeendtime,jdbcType=TIMESTAMP},
+      #{recruitnoticereleasetime,jdbcType=TIMESTAMP}, #{associationsid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertRecruitNotice" parameterType="com.zks.model.BeanRecruitNotice" >
+    insert into recruitNotice (recruitNoticeContent,
+      recruitNoticeStartTime, recruitNoticeEndTime,
+      recruitNoticeReleaseTime, associationsId
+      )
+    values (#{recruitnoticecontent,jdbcType=VARCHAR},
+      #{recruitnoticestarttime,jdbcType=TIMESTAMP}, #{recruitnoticeendtime,jdbcType=TIMESTAMP},
       #{recruitnoticereleasetime,jdbcType=TIMESTAMP}, #{associationsid,jdbcType=INTEGER}
       )
   </insert>

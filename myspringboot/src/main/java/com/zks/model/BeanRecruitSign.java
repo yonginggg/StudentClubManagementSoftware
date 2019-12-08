@@ -17,6 +17,7 @@ public class BeanRecruitSign {
     private String recruitSignApplicationState;
 
     private List<BeanAssociations> association;
+    private List<BeanMember> member;
 
     public Integer getRecruitsignid() {
         return recruitsignid;

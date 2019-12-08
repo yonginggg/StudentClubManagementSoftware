@@ -8,12 +8,13 @@
     <result column="memberIntroduction" property="memberintroduction" jdbcType="VARCHAR" />
     <result column="userId" property="userid" jdbcType="VARCHAR" />
     <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
+    <result column="departmentId" property="departmentid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     memberId, memberPost, memberTime, memberIntroduction, userId, associationsId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from member
     where memberId = #{memberid,jdbcType=INTEGER}
@@ -22,12 +23,12 @@
     delete from member
     where memberId = #{memberid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zks.model.BeanMember" >
-    insert into member (memberId, memberPost, memberTime, 
-      memberIntroduction, userId, associationsId
-      )
-    values (#{memberid,jdbcType=INTEGER}, #{memberpost,jdbcType=VARCHAR}, #{membertime,jdbcType=TIMESTAMP}, 
-      #{memberintroduction,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{associationsid,jdbcType=INTEGER}
+  <insert id="insertMember" parameterType="com.zks.model.BeanMember" >
+    insert into member (memberPost, memberTime,
+      memberIntroduction, userId, associationsId, departmentId)
+    values (#{memberpost,jdbcType=VARCHAR}, #{membertime,jdbcType=TIMESTAMP},
+      #{memberintroduction,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{associationsid,jdbcType=INTEGER},
+      #{departmentid,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zks.model.BeanMember" >

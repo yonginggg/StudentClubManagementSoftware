@@ -84,7 +84,7 @@ public class JsonUtil {
         jsonObject.put("subjectpostid",subjectPost.getSubjectpostid());
         jsonObject.put("subjectposttitle",subjectPost.getSubjectposttitle());
         jsonObject.put("subjectpostcontent",subjectPost.getSubjectpostcontent());
-        jsonObject.put("subjectposttime",subjectPost.getSubjectposttime());
+        jsonObject.put("subjectposttime",df.format(subjectPost.getSubjectposttime()));
         jsonObject.put("collectnum",subjectPost.getCollectnum());
         jsonObject.put("looknum",subjectPost.getLooknum());
         jsonObject.put("userid",subjectPost.getUserid());
@@ -97,7 +97,7 @@ public class JsonUtil {
         jsonObject.put("noticerange",notice.getNoticerange());
         jsonObject.put("noticename",notice.getNoticename());
         jsonObject.put("noticetcontent",notice.getNoticecontent());
-        jsonObject.put("noticetime",notice.getNoticetime());
+        jsonObject.put("noticetime",df.format(notice.getNoticetime()));
         jsonObject.put("associationsid",notice.getAssociationsid());
         jsonObject.put("departmentid",notice.getDepartmentid());
         jsonObject.put("noticestate",notice.getNoticestate());
@@ -109,26 +109,66 @@ public class JsonUtil {
         jsonObject.put("port",port);
         jsonObject.put("associationsId",associations.getAssociationsid());
         jsonObject.put("associationsName",associations.getAssociationsname());
-        jsonObject.put("associationsTime",associations.getAssociationstime());
+        jsonObject.put("associationsTime",df.format(associations.getAssociationstime()));
         jsonObject.put("associationsType",associations.getAssociationstype());
         jsonObject.put("associationsIntroduction",associations.getAssociationsintroduction());
         jsonObject.put("associationsNumber",associations.getAssociationsnumber());
         jsonObject.put("associationsLeader",associations.getAssociationsleader());
-        jsonObject.put("associationsApplicationTime",associations.getAssociationsapplicationtime());
+        jsonObject.put("associationsApplicationTime",df.format(associations.getAssociationsapplicationtime()));
         jsonObject.put("associationsApplicationState",associations.getAssociationsapplicationstate());
         return jsonObject;
     }
+
 
     //招新申请
     public static JSONObject RecruitSignResult(int port, BeanRecruitSign recruitSign){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
         jsonObject.put("recruitSignId",recruitSign.getRecruitsignid());
-        jsonObject.put("recruitSignTime",recruitSign.getRecruitsigntime());
+        jsonObject.put("recruitSignTime",df.format(recruitSign.getRecruitsigntime()));
         jsonObject.put("userId",recruitSign.getUserid());
         jsonObject.put("associationsId",recruitSign.getAssociationsid());
         jsonObject.put("recruitSignContent ",recruitSign.getRecruitSignContent());
         jsonObject.put("recruitSignApplicationState",recruitSign.getRecruitSignApplicationState());
+        return jsonObject;
+    }
+
+    public static JSONObject MemberResult(int port, BeanMember member){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("memberId",member.getMemberid());
+        jsonObject.put("memberPost",member.getMemberpost());
+        jsonObject.put("memberTime",df.format(member.getMembertime()));
+        jsonObject.put("memberIntroduction",member.getMemberintroduction());
+        jsonObject.put("userId ",member.getUserid());
+        jsonObject.put("associationsId",member.getAssociationsid());
+        return jsonObject;
+    }
+
+    //招新表
+    public static JSONObject RecruitNoticeResult(int port, BeanRecruitNotice recruitNotice){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("recruitNoticeId",recruitNotice.getRecruitnoticeid());
+        jsonObject.put("recruitNoticeContent",recruitNotice.getRecruitnoticecontent());
+        jsonObject.put("recruitNoticeStartTime",df.format(recruitNotice.getRecruitnoticestarttime()));
+        jsonObject.put("recruitNoticeEndTime",df.format(recruitNotice.getRecruitnoticeendtime()));
+        jsonObject.put("recruitNoticeReleaseTime",df.format(recruitNotice.getRecruitnoticereleasetime()));
+        jsonObject.put("associationsId",recruitNotice.getAssociationsid());
+        return jsonObject;
+    }
+
+    public static JSONObject TwoRecruitNoticeResult(int port, BeanRecruitNotice recruitNotice, String associationsName){
+        JSONObject jsonObject = new JSONObject(true);
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        jsonObject.put("port",port);
+        jsonObject.put("recruitNoticeId",recruitNotice.getRecruitnoticeid());
+        jsonObject.put("recruitNoticeContent",recruitNotice.getRecruitnoticecontent());
+        jsonObject.put("recruitNoticeStartTime",df.format(recruitNotice.getRecruitnoticestarttime()));
+        jsonObject.put("recruitNoticeEndTime",df.format(recruitNotice.getRecruitnoticeendtime()));
+        jsonObject.put("recruitNoticeReleaseTime",df.format(recruitNotice.getRecruitnoticereleasetime()));
+        jsonObject.put("associationsId",recruitNotice.getAssociationsid());
+        jsonObject.put("associationsName",associationsName);
         return jsonObject;
     }
 }

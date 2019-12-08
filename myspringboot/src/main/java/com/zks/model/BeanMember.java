@@ -15,6 +15,16 @@ public class BeanMember {
 
     private Integer associationsid;
 
+    private  Integer departmentid;
+
+    public void setDepartmentid(Integer departmentid) {
+        this.departmentid = departmentid;
+    }
+
+    public Integer getDepartmentid() {
+        return departmentid;
+    }
+
     public Integer getMemberid() {
         return memberid;
     }

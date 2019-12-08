@@ -9,13 +9,12 @@
     <result column="recruitSignContent" property="recruitSignContent" jdbcType="VARCHAR" />
     <result column="recruitSignApplicationState" property="recruitSignApplicationState" jdbcType="VARCHAR" />
     <collection property="association" ofType="com.zks.model.BeanAssociations" javaType="java.util.ArrayList">
-      <!-- 配置主键，是关联Order的唯一标识 -->
       <id column="associationsId" property="associationsid" jdbcType="INTEGER" />
       <result column="associationsName" property="associationsname" jdbcType="VARCHAR" />
       <result column="associationsTime" property="associationstime" jdbcType="TIMESTAMP" />
       <result column="associationsType" property="associationstype" jdbcType="VARCHAR" />
       <result column="associationsIntroduction" property="associationsintroduction" jdbcType="VARCHAR" />
-      <result column="associationsNumber" property="associationsnumber" jdbcType="VARCHAR" />
+      <result column="associationsNumber" property="associationsnumber" jdbcType="INTEGER" />
       <result column="associationsLeader" property="associationsleader" jdbcType="VARCHAR" />
       <result column="associationsApplicationTime" property="associationsapplicationtime" jdbcType="TIMESTAMP" />
       <result column="associationsApplicationState" property="associationsapplicationstate" jdbcType="VARCHAR" />
@@ -32,11 +31,14 @@
     <result column="associationsApplicationTime" property="associationsapplicationtime" jdbcType="TIMESTAMP" />
     <result column="associationsApplicationState" property="associationsapplicationstate" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="BaseResultMap_department" type="com.zks.model.BeanDepartment" >
-    <id column="departmentId" property="departmentid" jdbcType="INTEGER" />
-    <result column="departmentName" property="departmentname" jdbcType="VARCHAR" />
-    <result column="departmentLeader" property="departmentleader" jdbcType="VARCHAR" />
+  <resultMap id="BaseResultMap_member" type="com.zks.model.BeanMember" >
+    <id column="memberId" property="memberid" jdbcType="INTEGER" />
+    <result column="memberPost" property="memberpost" jdbcType="VARCHAR" />
+    <result column="memberTime" property="membertime" jdbcType="TIMESTAMP" />
+    <result column="memberIntroduction" property="memberintroduction" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
     <result column="associationsId" property="associationsid" jdbcType="INTEGER" />
+    <result column="departmentId" property="departmentid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     recruitSignId, recruitSignTime, userId, associationsId, recruitSignContent, recruitSignApplicationState
@@ -45,19 +47,16 @@
     associationsId, associationsName, associationsTime, associationsType, associationsIntroduction,
     associationsNumber, associationsLeader, associationsApplicationTime, associationsApplicationState
   </sql>
+  <sql id="Base_Column_List_member" >
+    memberId, memberPost, memberTime, memberIntroduction, userId, associationsId,departmentId
+  </sql>
   <select id="selectAllRecruitSign" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from recruitsign
   </select>
-  <select id="selectAllRecruitSignByAssociation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from recruitsign
-    where associationsId = #{associationsId,jdbcType=INTEGER}
-  </select>
-  <select id="selectRecruitSignByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select associationsId
+  <select id="selectResult" resultMap="BaseResultMap"  >
+    select *
     from recruitsign
     where userId = #{userId,jdbcType=VARCHAR}
   </select>
@@ -68,33 +67,40 @@
     where associationsId in(select associationsId from associations
     where associationsLeader =#{associationsLeader,jdbcType=VARCHAR})
   </select>
-  <select id="selectRecruitSignByUserid" resultMap="BaseResultMap" >
+  <select id="selectRecruitSignBySignid" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from recruitsign
-    where associationsId = #{associationsId,jdbcType=INTEGER}
+    where recruitSignId = #{recruitSignId,jdbcType=INTEGER}
   </select>
-  <select id="selectRecruitSignByU" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select associationsId
-    from recruitsign
-    where userId = #{userId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectRecruitSignByUAndAId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectMemberBySignid" resultMap="BaseResultMap" >
     select
-    <include refid="Base_Column_List" />
-    from recruitsign
-    where userId = #{userId,jdbcType=VARCHAR} and associationsId = #{associationsId,jdbcType=INTEGER}
+    <include refid="Base_Column_List_member" />
+    from member
+    where userId in(select userId from recruitsign where recruitSignId =#{recruitSignId,jdbcType=INTEGER})
   </select>
-  <select id="selectAssociation" resultMap="BaseResultMap_association" >
+  <select id="selectMemberByUid" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List_member" />
+    from member
+    where userId =#{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectMemberByMid" resultMap="BaseResultMap_member" >
+    select
+    <include refid="Base_Column_List_member" />
+    from member
+    where memberId =#{memberId,jdbcType=INTEGER}
+  </select>
+  <select id="selectContent" resultMap="BaseResultMap" >
+    select recruitSignContent
+    from recruitSign
+    where recruitSignId =#{recruitSignId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAssociation_test" resultMap="BaseResultMap_association" >
     select
     <include refid="Base_Column_List_association" />
     from associations
     where associationsId = #{associationsId,jdbcType=INTEGER}
-  </select>
-  <select id="selectLeader" resultMap="BaseResultMap_association" parameterType="java.lang.Integer">
-    select associationsId
-    from associations
-    where associationsLeader = #{associationsLeader,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from recruitsign
@@ -158,4 +164,22 @@
     set  recruitSignApplicationState = #{recruitSignApplicationState,jdbcType=VARCHAR}
     where userid = #{userid,jdbcType=VARCHAR}
   </update>
+  <update id="updateAssociation_member" parameterType="com.zks.model.BeanAssociations" >
+    update associations
+    set  associationsNumber = #{associationsnumber,jdbcType=INTEGER}
+    where associationsId = #{associationsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateMemberDepartment" parameterType="com.zks.model.BeanMember" >
+    update member
+    set  departmentid = #{departmentid,jdbcType=INTEGER}
+    where memberid = #{memberid,jdbcType=INTEGER}
+  </update>
+  <insert id="insertMember_test" parameterType="com.zks.model.BeanMember" >
+    insert into member (memberPost, memberTime,
+      memberIntroduction, userId, associationsId, departmentId)
+    values (#{memberpost,jdbcType=VARCHAR}, #{membertime,jdbcType=TIMESTAMP},
+      #{memberintroduction,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{associationsid,jdbcType=INTEGER},
+      #{departmentid,jdbcType=INTEGER}
+      )
+  </insert>
 </mapper>

@@ -2,9 +2,17 @@ package com.zks.control;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.zks.model.BeanUser;
 import com.zks.service.RecruitSignService;
+import com.zks.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
+import com.alibaba.fastjson.JSONObject;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -18,7 +26,7 @@ public class RecruitSignController {
         String allRecruitSign = JSON.toJSONString( recruitSign.loadAllRecruitSign());
         JSONArray array= JSONArray.parseArray(allRecruitSign);
         JSONObject result = new JSONObject();
-        result.put("allrecruitSign",array);
+        result.put("allrecruitnotice",array);
         return result;
     }
     //显示该社团下所有申请表
@@ -28,7 +36,30 @@ public class RecruitSignController {
         String allRecruitSign = JSON.toJSONString( recruitSign.loadAllRecruitSignByAssociation(userId));
         JSONArray array= JSONArray.parseArray(allRecruitSign);
         JSONObject result = new JSONObject();
-        result.put("allrecruitSignByAssociation",array);
+        result.put("allassociationrecruit",array);
+        return result;
+    }
+    //创建招新申请表(招新报名)
+    @RequestMapping(value = "/createrecruitsign", method = RequestMethod.POST)
+    public JSONObject createRecruitSign(@RequestParam("userId") String userId, @RequestParam("associationsId") int associationsId,
+                                        @RequestParam("recruitSignContent") String recruitSignContent) throws Exception {
+        RecruitSignService recruitSign = new RecruitSignService();
+        JSONObject result = recruitSign.insertrecruit(userId, associationsId, recruitSignContent);
+        return result;
+    }
+    //审核招新报名表(postman报错
+    @RequestMapping(value = "/changerecruitnotice", method = RequestMethod.POST)
+    public JSONObject changeRecruitSignState(@RequestParam("recruitSignId") int recruitSignId,
+                                             @RequestParam("recruitSignApplicationState") String recruitSignApplicationState) throws Exception {
+        RecruitSignService recruitSignState = new RecruitSignService();
+        JSONObject result = recruitSignState.changeState(recruitSignId,recruitSignApplicationState);
+        return result;
+    }
+    //社长分配部门
+    @RequestMapping(value = "/changedepartment", method = RequestMethod.POST)
+    public JSONObject changedepartment(@RequestParam("memberId") int memberId, @RequestParam("associationsId") int associationsId) throws Exception {
+        RecruitSignService member = new RecruitSignService();
+        JSONObject result = member.changeDepartment(memberId, associationsId);
         return result;
     }
 }

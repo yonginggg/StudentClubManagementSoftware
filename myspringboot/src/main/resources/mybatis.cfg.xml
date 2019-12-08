@@ -26,7 +26,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://127.0.0.1:3306/社团管理?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"/>
+                          value="jdbc:mysql://127.0.0.1:3306/社团管理2?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true"/>
                 <property name="username" value="root"/>
                 <property name="password" value=""/>
             </dataSource>
@@ -43,5 +43,7 @@
         <mapper resource="mapper/BeanNoticeMapper.xml"/>
         <mapper resource="mapper/BeanRecruitSignMapper.xml"/>
         <mapper resource="mapper/BeanActivitySignMapper.xml"/>
+        <mapper resource="mapper/BeanMemberMapper.xml"/>
+        <mapper resource="mapper/BeanRecruitNoticeMapper.xml"/>
     </mappers>
 </configuration>

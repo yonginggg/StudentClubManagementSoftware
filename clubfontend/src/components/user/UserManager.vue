@@ -39,6 +39,7 @@
           <template slot-scope="scope">
             <el-button
               size="middle"
+              type="primary"
               @click.native.console="resetpwd(scope.$index, scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
