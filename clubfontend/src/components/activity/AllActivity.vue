@@ -65,6 +65,7 @@
             }
         },
         mounted() {
+            // console.log(this.$store.state.associationName),
             this.$axios.get("/schoolactivity")
                 .then(response => {
                     this.tableData = response.data.schoolactivity

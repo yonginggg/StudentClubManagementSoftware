@@ -41,7 +41,7 @@
             this.$axios.get("/noticebyschool")
                 .then(response => {
                     this.tableData = response.data.noticebyschool
-                    console.log(this.tableData)
+                    // console.log(this.tableData)
                 })
         }
 

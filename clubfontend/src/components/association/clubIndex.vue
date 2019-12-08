@@ -67,7 +67,6 @@
             }
         },
         mounted() {
-            // console.log(this.$store.state.user.userPwd)
             document.getElementById("assName").innerHTML = this.$store.state.associationName;
         }
     }

@@ -29,7 +29,7 @@
         <span>我的社团</span>
       </template>
       <template v-for="ass in association">
-        <el-menu-item index="clubIndex" v-on:click="get(ass.associationid)" >{{ass.associationname}}</el-menu-item>
+        <el-menu-item v-on:click="get(ass.associationname,ass.associationid)" >{{ass.associationname}}</el-menu-item>
       </template>
     </el-submenu>
     <el-button id="back" type="primary" icon="el-icon-back" v-on:click="back">退出登录</el-button>
@@ -71,18 +71,16 @@
             })
         },
         methods: {
-            club(rows) {
-                // var _this = this
-                // _this.$store.commit('association', _this.association.associationname)
-                // console.log(this.$store.state.association.associationname)
-                // console.log(this.associationname)
-                console.log(rows)
-            },
             back() {
                 this.$router.replace({path: '/login'})
             },
-            get(message){
-                console.log(message)
+            get(name,id){
+                // console.log(name)
+                // console.log(id)
+                this.$store.commit('associationName',name)
+                this.$store.commit('associationId',id)
+                // console.log(this.$store.state.associationName)
+                this.$router.replace({path : "/clubindex" })
             }
         }
 
