@@ -21,7 +21,7 @@ public class MemberService {
         member.setAssociationsid(associationid);
 
        member1 =session.selectList("selectMember",member);
-       
+
         if(member1==null){
             jsonObject = JsonUtil.errorResult(401, "用户信息不存在");
         }

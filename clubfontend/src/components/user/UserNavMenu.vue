@@ -82,6 +82,29 @@
                 this.$store.commit('associationName',name)
                 this.$store.commit('associationId',id)
                 this.$store.commit('associationsIntroduction',introduction)
+
+                var dataobj = qs.stringify({userId:this.$store.state.user.userId,
+                    associationId:this.$store.state.associationId})
+                this.$axios({
+                        method: 'post',
+                        url: '/member',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: dataobj, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    // console.log(successResponse.data.member[0].departmentid);
+                    this.$store.commit('departmentId',successResponse.data.member[0].departmentid)
+                    this.$store.commit('memberPost',successResponse.data.member[0].memberpost)
+                    // if (successResponse.data.port === 200) {
+                    //
+                    // }
+                    // if(successResponse.data.port === 401){
+                    //
+                    // }
+                })
+                console.log(this.$store.state.memberPost)
                 // console.log(this.$store.state.associationName)
                 this.$router.replace({path : "/clubindex" })
             }

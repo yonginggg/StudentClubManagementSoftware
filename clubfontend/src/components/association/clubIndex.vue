@@ -52,7 +52,7 @@
               <el-input v-model="createActivity.name" placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
             </el-form-item>
             <el-form-item label="活动范围" style="width: 400px">
-              <el-select v-model="createActivity.rangevalue" placeholder="请选择" style="width: 400px">
+              <el-select v-model="createActivity.range" placeholder="请选择" style="width: 400px">
                 <el-option
                   v-for="item in createActivity.rangeoption"
                   :key="item.value"
@@ -60,24 +60,6 @@
                   :value="item.value">
                 </el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item label="活动时间" style="width: 400px">
-              <el-date-picker
-                v-model="createActivity.valuetime1"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                style="width: 400px">
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="活动报名截止时间" style="width: 400px">
-              <el-date-picker
-                v-model="createActivity.deadLine"
-                type="datetime"
-                placeholder="活动报名截止时间"
-                style="width: 400px">
-              </el-date-picker>
             </el-form-item>
             <el-form-item label="活动地点" style="width: 400px">
               <el-select v-model="createActivity.palaceid" placeholder="请选择" style="width: 400px">
@@ -89,6 +71,41 @@
                 </el-option>
               </el-select>
             </el-form-item>
+<!--            <el-form-item label="活动时间" style="width: 400px">-->
+<!--              <el-date-picker-->
+<!--                v-model="createActivity.valuetime1"-->
+<!--                type="daterange"-->
+<!--                range-separator="至"-->
+<!--                start-placeholder="开始日期"-->
+<!--                end-placeholder="结束日期"-->
+<!--                style="width: 400px">-->
+<!--              </el-date-picker>-->
+<!--            </el-form-item>-->
+            <el-form-item label="活动开始时间" style="width: 400px">
+              <el-date-picker
+                v-model="createActivity.startTime"
+                type="datetime"
+                placeholder="活动开始时间"
+                style="width: 400px">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="活动结束时间" style="width: 400px">
+              <el-date-picker
+                v-model="createActivity.endTime"
+                type="datetime"
+                placeholder="活动结束时间"
+                style="width: 400px">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="活动报名截止时间" style="width: 400px">
+              <el-date-picker
+                v-model="createActivity.deadLine"
+                type="datetime"
+                placeholder="活动报名截止时间"
+                style="width: 400px">
+              </el-date-picker>
+            </el-form-item>
+
             <el-form-item label="活动内容">
               <el-input type="textarea" v-model="createActivity.introduction" :autosize="{ minRows: 5, maxRows: 10}"
                         placeholder="请输入内容,200字以内" maxlength="200" show-word-limit>>
@@ -192,7 +209,8 @@
                     date: '',
                     place: '',
                     introduction: '',
-                    valuetime1: '',
+                    startTime:'',
+                    endTime:'',
                     deadLine:'',
                     rangeoption: [{
                         value: '全校',
@@ -204,7 +222,7 @@
                         value: '部门',
                         label: '部门'
                     }],
-                    rangevalue: '',
+                    range: '',
                     place:[
                         {
                             value: '1',
@@ -237,6 +255,29 @@
             },
             createactivity(){
 
+                this.createActivity.associationid = this.$store.state.associationId
+                this.createActivity.departmentid = this.$store.state.departmentId
+                console.log(this.createActivity)
+                var ca = qs.stringify(this.createActivity)
+
+                this.$axios({
+                        method: 'post',
+                        url: '/createActivity',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: ca, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    // console.log(successResponse.data);
+                    if (successResponse.data.port === 200) {
+
+
+                    }
+                    if(successResponse.data.port === 401){
+
+                    }
+                })
             }
         },
         mounted() {
