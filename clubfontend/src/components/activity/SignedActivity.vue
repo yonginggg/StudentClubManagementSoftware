@@ -52,9 +52,6 @@
             return {
                 tableData: [],
                 search: '',
-                // user:{
-                //     userId:this.$store.state.user.userId
-                // }
             }
         },
         mounted() {
@@ -71,8 +68,8 @@
             ).then(successResponse => {
                 // console.log(successResponse.data.myactivity[0].port)
                 if (successResponse.data.myactivity[0].port === 200) {
-                    // this.tableData = successResponse.data.myactivity[0]
-                    console.log(successResponse.data.myactivity[0])
+                    this.tableData = successResponse.data.myactivity
+                    console.log(successResponse.data.myactivity)
                 }
                 if(successResponse.data.port === 401){
                     this.$alert(successResponse.data.ErrorResult, '登录失败', {

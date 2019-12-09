@@ -192,7 +192,8 @@ public class ActivityService {
         Date date = new Date();
 //        JSONObject zs = a.createActivity("全校","football","222",date ,date ,date ,date ,1,2,2);
 //        JSONObject zs = a.register("311","22","1233","1233","nan","yixue","1702","13429590334");
-        JSONObject zs = a.changeState(2,true);
-        System.out.println(zs);
+//        JSONObject zs = a.changeState(2,true);
+//        JSONObject zs = (JSONObject) a.loadActivityBySchool();
+//        System.out.println(zs);
     }
 }
