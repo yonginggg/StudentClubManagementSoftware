@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zks.service.RecruitNoticeService;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -17,10 +18,12 @@ public class RecruitNoticeController {
     //创建招新表
     @RequestMapping(value = "/createrecruitnotice", method = RequestMethod.POST)
     public JSONObject createrecruiteNotice(@RequestParam("userId") int userId, @RequestParam("recruitNoticeContent") String recruitNoticeContent,
-                                           @RequestParam("recruitNoticeStartTime") Date recruitNoticeStartTime, @RequestParam("recruitNoticeEndTime") Date recruitNoticeEndTime,
-                                           @RequestParam("recruitNoticeReleaseTime") Date recruitNoticeReleaseTime, @RequestParam("associationsId") int associationsId) throws Exception {
+                                           @RequestParam("recruitNoticeStartTime") String recruitNoticeStartTime, @RequestParam("recruitNoticeEndTime") String recruitNoticeEndTime,
+                                           @RequestParam("associationsId") int associationsId) throws Exception {
         RecruitNoticeService recruitNotice = new RecruitNoticeService();
-        JSONObject result = recruitNotice.createRecruitNotice(userId,recruitNoticeContent,recruitNoticeStartTime,recruitNoticeEndTime,recruitNoticeReleaseTime,associationsId);
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
+        Date now = new Date();
+        JSONObject result = recruitNotice.createRecruitNotice(userId,recruitNoticeContent,formatter.parse(recruitNoticeStartTime),formatter.parse(recruitNoticeEndTime),now,associationsId);
         return result;
     }
     //显示所有招新表

@@ -77,16 +77,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <!--            <el-form-item label="活动时间" style="width: 400px">-->
-            <!--              <el-date-picker-->
-            <!--                v-model="createActivity.valuetime1"-->
-            <!--                type="daterange"-->
-            <!--                range-separator="至"-->
-            <!--                start-placeholder="开始日期"-->
-            <!--                end-placeholder="结束日期"-->
-            <!--                style="width: 400px">-->
-            <!--              </el-date-picker>-->
-            <!--            </el-form-item>-->
             <el-form-item label="活动开始时间" style="width: 400px">
               <el-date-picker
                 v-model="createActivity.startTime"
@@ -128,15 +118,15 @@
                    :modal-append-to-body="false">
           <el-form :model="form3">
             <el-form-item label="部门名称" :label-width="formLabelWidth">
-              <el-input v-model="departmentuser.departmentLeader" autocomplete="off" style="width: 200px"></el-input>
+              <el-input v-model="departmentuser.departmentName" autocomplete="off" style="width: 200px"></el-input>
             </el-form-item>
             <el-form-item label="学生id" :label-width="formLabelWidth">
-              <el-input v-model="departmentuser.departmentName" autocomplete="off" style="width: 200px"></el-input>
+              <el-input v-model="departmentuser.departmentLeader" autocomplete="off" style="width: 200px"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="createdepartment = false">取 消</el-button>
-            <el-button type="primary" @click="createdepartment = false">确 定</el-button>
+            <el-button type="primary" v-on:click="createDepartment">确 定</el-button>
           </div>
         </el-dialog>
         <!--招新审核-->
@@ -304,7 +294,6 @@
 
                 this.createActivity.associationid = this.$store.state.associationId
                 this.createActivity.departmentid = this.$store.state.departmentId
-                console.log(this.createActivity)
                 var ca = qs.stringify(this.createActivity)
                 // console.log(ca)
                 this.$axios({
@@ -331,8 +320,41 @@
                         window.location.reload();//页面刷新
                     },1000);
 
+                })
+
+            },
+            createDepartment() {
+
+                this.departmentuser.associationId = this.$store.state.associationId
+                // console.log(this.createActivity)
+                var cd = qs.stringify(this.departmentuser)
+                // console.log(ca)
+                this.$axios({
+                        method: 'post',
+                        url: '/createdepartment',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: cd, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    // console.log(successResponse.data);
+                    if (successResponse.data.port === 200) {
+                        this.$message({
+                            message: '审核通过',
+                            type: 'success'
+                        });
+
+                    }
+                    if (successResponse.data.port === 401) {
+
+                    }
+                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                    },1000);
 
                 })
+
             }
         },
         mounted() {

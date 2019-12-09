@@ -14,9 +14,9 @@ public class DepartmentController {
     //创建部门
     @RequestMapping(value = "/createdepartment", method = RequestMethod.POST)
     public JSONObject createDepartment(@RequestParam("departmentName") String departmentName,  @RequestParam("departmentLeader") String departmentLeader,
-                                       @RequestParam("associationId") Integer associationId) throws Exception {
+                                       @RequestParam("associationId") String associationId) throws Exception {
         DepartmentService departmentService = new DepartmentService();
-        JSONObject result = departmentService.createDepartment(departmentName, departmentLeader, associationId);
+        JSONObject result = departmentService.createDepartment(departmentName, departmentLeader, Integer.valueOf(associationId));
         return result;
     }
     //查找用户所在部门id与部门名字

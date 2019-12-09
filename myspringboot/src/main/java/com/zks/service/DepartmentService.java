@@ -51,8 +51,8 @@ public class DepartmentService {
 
         session.commit();
         return jsonObject;
-
     }
+
     // 解散部门
     public JSONObject deleteDepartment(int departmentid) throws Exception {
         JSONObject jsonObject = null;
@@ -61,8 +61,8 @@ public class DepartmentService {
         session.delete("deleteDepartment", departmentid );
         session.commit();
         return jsonObject;
-
     }
+
     //职务改变
     public JSONObject updateDepartmentLeader(int departmentid,String departmentleader) throws Exception {
         JSONObject jsonObject = null;
