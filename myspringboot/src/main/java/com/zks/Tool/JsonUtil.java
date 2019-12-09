@@ -171,4 +171,13 @@ public class JsonUtil {
         jsonObject.put("associationsName",associationsName);
         return jsonObject;
     }
+    public static JSONObject DepartmentResult(int port, BeanDepartment department){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("departmentid",department.getDepartmentid());
+        jsonObject.put("departmentname",department.getDepartmentname());
+        jsonObject.put("departmentleader",department.getDepartmentleader());
+        jsonObject.put("associationsid",department.getAssociationsid());
+        return jsonObject;
+    }
 }

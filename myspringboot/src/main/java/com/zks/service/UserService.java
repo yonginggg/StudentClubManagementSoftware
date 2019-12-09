@@ -223,8 +223,11 @@ public class UserService {
         userList = session.selectList("selectAllUser");
 
         for(int i=0;i<userList.size();i++) {
-            jsonObject = JsonUtil.UserResult(200, userList.get(i));
-            list.add(jsonObject);
+            if(!userList.get(i).getUserid().equals("0")){
+                jsonObject = JsonUtil.UserResult(200, userList.get(i));
+                list.add(jsonObject);
+            }
+
         }
 
         session.commit();

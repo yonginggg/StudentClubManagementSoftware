@@ -29,7 +29,7 @@
         <span>我的社团</span>
       </template>
       <template v-for="ass in association">
-        <el-menu-item v-on:click="get(ass.associationname,ass.associationid)" >{{ass.associationname}}</el-menu-item>
+        <el-menu-item v-on:click="get(ass.associationname,ass.associationid,ass.associationsIntroduction)" >{{ass.associationname}}</el-menu-item>
       </template>
     </el-submenu>
     <el-button id="back" type="primary" icon="el-icon-back" v-on:click="back">退出登录</el-button>
@@ -64,7 +64,8 @@
                 for (var i = 0; i < successResponse.data.allassociationbyuserid.length; i++) {
                     this.association.push({
                         associationname: successResponse.data.allassociationbyuserid[i].associationsName,
-                        associationid: successResponse.data.allassociationbyuserid[i].associationsId
+                        associationid: successResponse.data.allassociationbyuserid[i].associationsId,
+                        associationsIntroduction: successResponse.data.allassociationbyuserid[i].associationsIntroduction
                     })
                 }
 
@@ -74,11 +75,13 @@
             back() {
                 this.$router.replace({path: '/login'})
             },
-            get(name,id){
+            get(name,id,introduction){
                 // console.log(name)
                 // console.log(id)
+                // console.log(introduction)
                 this.$store.commit('associationName',name)
                 this.$store.commit('associationId',id)
+                this.$store.commit('associationsIntroduction',introduction)
                 // console.log(this.$store.state.associationName)
                 this.$router.replace({path : "/clubindex" })
             }

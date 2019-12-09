@@ -10,32 +10,34 @@
   <sql id="Base_Column_List" >
     departmentId, departmentName, departmentLeader, associationsId
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
+  <select id="selectde" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
     from department
     where departmentId = #{departmentid,jdbcType=INTEGER}
   </select>
-  <select id="selectDepartment" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
+  <select id="selectDeIdbyname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
     from department
-    where departmentId = #{departmentid,jdbcType=INTEGER}
+    where departmentName= #{departmentname,jdbcType=VARCHAR}
   </select>
-  <select id="selectDepartmentByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from department
-    where departmentName = #{departmentName,jdbcType=VARCHAR}
+  <select id="selectdepartmentid" resultMap="BaseResultMap" >
+    select *
+    from member
+    where userId = #{userid} and associationsId = #{associationsid}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="selectDepartmentByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select a.departmentid,a.departmentname
+    from department a,member b
+    where a.departmentId = b.departmentId and userId=#{userid,jdbcType=VARCHAR} and a.departmentid !=0
+  </select>
+  <delete id="deleteDepartment" parameterType="java.lang.Integer" >
     delete from department
-    where departmentId = #{departmentid,jdbcType=INTEGER}
+    where departmentId = #{departmentname,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zks.model.BeanDepartment" >
-    insert into department (departmentId, departmentName, departmentLeader,
+  <insert id="insertDepartment" parameterType="com.zks.model.BeanDepartment" >
+    insert into department ( departmentName, departmentLeader,
       associationsId)
-    values (#{departmentid,jdbcType=INTEGER}, #{departmentname,jdbcType=VARCHAR}, #{departmentleader,jdbcType=VARCHAR},
+    values  (#{departmentname,jdbcType=VARCHAR}, #{departmentleader,jdbcType=VARCHAR},
       #{associationsid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zks.model.BeanDepartment" >
@@ -90,5 +92,23 @@
       departmentLeader = #{departmentleader,jdbcType=VARCHAR},
       associationsId = #{associationsid,jdbcType=INTEGER}
     where departmentId = #{departmentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateDepartmentLeader" parameterType="com.zks.model.BeanDepartment" >
+    update department
+    set
+      departmentLeader = #{departmentleader,jdbcType=VARCHAR}
+    where departmentId = #{departmentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateDepartmentName" parameterType="com.zks.model.BeanDepartment" >
+    update department
+    set
+      departmentName = #{departmentname,jdbcType=VARCHAR}
+    where departmentId = #{departmentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateMember" parameterType="com.zks.model.BeanMember" >
+    update member
+    set
+      departmentId = 0
+    where departmentId=#{departmentid,jdbcType=INTEGER}
   </update>
 </mapper>

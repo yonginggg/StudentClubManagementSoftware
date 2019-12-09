@@ -9,8 +9,9 @@ export default new Vuex.Store({
       userId: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userId,
       userPwd: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).userPwd
     },
-    associationId:2,
-    associationName:'篮球社'
+    associationId:1,
+    associationName:'luoluo',
+    associationsIntroduction:'hahaha'
   },
   mutations: {
     login (state, user) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     associationId(state, associationId){
       state.associationId = associationId
+    },
+    associationsIntroduction(state,associationsIntroduction){
+      state.associationsIntroduction = associationsIntroduction
     }
   }
 })

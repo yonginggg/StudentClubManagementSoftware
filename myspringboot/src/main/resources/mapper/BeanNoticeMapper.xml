@@ -18,30 +18,40 @@
     select *
     from notice
   </select>
+  <select id="selectNotice" resultMap="BaseResultMap">
+    select *
+    from notice
+    where noticeId =#{noticeId}
+  </select>
   <select id="selectNoticeBySchool" resultMap="BaseResultMap">
     select *
     from notice
-    where noticeRange ="全校" and noticeState ="审核通过"
+    where noticeRange ="全校"
   </select>
-  <select id="selectNoticeByAssociation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectNoticeByAssociation" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select noticeId,noticeRange,noticeName,noticeContent,noticeTime,noticeState
+    from notice a,associations b
+    where a.associationsId= b.associationsId and associationsName = #{associationsName} and noticeRange = "全社"
+  </select>
+  <select id="selectDepartmentid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select noticeId,noticeRange,noticeName,noticeContent,noticeTime,noticeState
+    from notice a,associations b
+    where a.associationsId= b.associationsId and associationsName = #{associationsName} and noticeRange = "部门"
+  </select>
+  <select id="selectNoticeByDepartment" resultMap="BaseResultMap"  >
     select *
     from notice
-    where associationsId = #{associationsId,jdbcType=INTEGER}
-  </select>
-  <select id="selectNoticeByDepartment" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select *
-    from notice
-    where departmentId = #{departmentId,jdbcType=INTEGER}
+    where  departmentId= #{departmentId} and noticeRange = "部门"
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from notice
     where noticeId = #{noticeid,jdbcType=INTEGER}
   </delete>
-  <insert id="insertNotice" parameterType="com.zks.model.BeanNotice" >
-    insert into notice (noticeId, noticeRange,noticeName, noticeContent,
+  <insert id="insertNotice" parameterType="com.zks.model.BeanNotice">
+    insert into notice (noticeRange,noticeName, noticeContent,
       noticeTime, associationsId, departmentId,noticeState
       )
-    values (#{noticeid,jdbcType=INTEGER}, #{noticerange,jdbcType=VARCHAR},#{noticename,jdbcType=VARCHAR}, #{noticecontent,jdbcType=VARCHAR},
+    values ( #{noticerange,jdbcType=VARCHAR},#{noticename,jdbcType=VARCHAR}, #{noticecontent,jdbcType=VARCHAR},
       #{noticetime,jdbcType=TIMESTAMP}, #{associationsid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER},#{noticestate,jdbcType=VARCHAR}
       )
   </insert>

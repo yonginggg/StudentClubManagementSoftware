@@ -31,7 +31,8 @@ import clubManagement from "../components/association/clubManagement";
 import applyClub from "../components/association/applyClub";
 import AssociationUser from "../components/association/AssociationUser";
 import SignedActivity from "../components/activity/SignedActivity";
-
+import contacts from "../components/member/contacts";
+import ClubActivity from "../components/activity/ClubActivity";
 Vue.use(Router)
 
 export default new Router({
@@ -150,9 +151,18 @@ export default new Router({
         },
         {
           // 社团查看通讯录
-          path: '/AssociationUser',
-          name: 'AssociationUser',
-          component: AssociationUser,
+          path: '/contacts',
+          name: 'contacts',
+          component: contacts,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          // 社团活动
+          path: '/ClubActivity',
+          name: 'ClubActivity',
+          component: ClubActivity,
           meta: {
             requireAuth: true
           }
