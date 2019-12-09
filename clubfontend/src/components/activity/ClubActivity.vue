@@ -13,21 +13,28 @@
             <el-form-item label="活动名称">
               <span>{{ props.row.activityname }}</span>
             </el-form-item>
+            <el-form-item label="活动内容">
+              <span>{{ props.row.activityintroduction }}</span>
+            </el-form-item>
             <el-form-item label="活动社团">
               <span>{{ props.row.associationsname }}</span>
             </el-form-item>
-            <el-form-item label="活动时间">
+            <el-form-item label="活动部门">
+              <span>{{ props.row.departmentname }}</span>
+            </el-form-item>
+            <el-form-item label="活动开始时间">
               <span>{{ props.row.activitystarttime }}</span>
             </el-form-item>
-            <el-form-item label="发布时间">
-              <span>{{ props.row.activitiesapplicationtime }}</span>
+            <el-form-item label="活动结束时间">
+              <span>{{ props.row.activityendtime }}</span>
+            </el-form-item>
+            <el-form-item label="报名截止时间">
+              <span>{{ props.row.activityreleasetime }}</span>
             </el-form-item>
             <el-form-item label="活动地点">
               <span>{{ props.row.activitypalce}}</span>
             </el-form-item>
-            <el-form-item label="活动内容">
-              <span>{{ props.row.activityintroduction }}</span>
-            </el-form-item>
+
           </el-form>
         </template>
       </el-table-column>

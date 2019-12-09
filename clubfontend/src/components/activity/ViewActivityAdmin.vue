@@ -34,26 +34,26 @@
       </el-table-column>
       <el-table-column
         label="活动编号"
-        prop="id">
+        prop="activityid">
       </el-table-column>
       <el-table-column
         label="活动名称"
-        prop="name">
+        prop="activityname">
       </el-table-column>
       <el-table-column
         label="申请社团"
-        prop="club">
+        prop="associationsname">
       </el-table-column>
       <el-table-column
         label="审核状态"
-        prop="noticestate"
-        :filters="[{text: '等待审核', value: '等待审核'}, {text: '审核通过', value: '审核通过'}, {text: '审核未通过', value: '审核未通过'}]"
+        prop="activitiesapplicationstate"
+        :filters="[{text: '等待审核', value: '等待审核'}, {text: '审核通过', value: '审核通过'}, {text: '审核拒绝', value: '审核拒绝'}]"
         :filter-method="filterState"
         filter-placement="bottom-end">
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.noticestate === '等待审核' ? 'danger' : 'success'"
-            disable-transitions>{{scope.row.noticestate}}</el-tag>
+            :type="scope.row.activitiesapplicationstate === '审核拒绝' ? 'danger' : 'success'"
+            disable-transitions>{{scope.row.activitiesapplicationstate}}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -61,72 +61,46 @@
 </template>
 
 <script>
+  import qs from 'qs'
 export default {
   name: 'ViewActivityAdmin',
   data () {
     return {
-      /* tableData: [{
-                    id: '12987122',
-                    name: '足球赛',
-                    club: '足球社',
-                    activityTime: '2019-1-20',
-                    releaseTime: '2019-1-10',
-                    place: '足球场',
-                    content: '足球比赛'
-                },{
-                id: '12987122',
-                    name: '足球赛',
-                    club: '足球社',
-                    activityTime: '2019-1-20',
-                    releaseTime: '2019-1-10',
-                    place: '足球场',
-                    content: '足球比赛'
-            }]    */
-      Registered: {
-        id: '',
-        name: '',
-        club: '',
-        activityTime: '',
-        releaseTime: '',
-        deadline: '',
-        content: ''
-      }
+        data:{
+
+        },
+        tableData: [],
     }
   },
-  methods: {
-    confirm () {
-      var dataObj = 1
-      // eslint-disable-next-line no-unused-vars
-      var _this = this
-      console.log(this.pwdInformation)
-      this.$axios({
-        method: 'post',
-        url: '/',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data: dataObj // 直接提交转换后的数据即可
-      }
-      ).then(successResponse => {
-        if (successResponse.data.port === 200) {
-          // _this.$store.commit('login', _this.loginForm)
-          this.$alert('请重新登陆', '修改成功', {
-            confirmButtonText: '确定'
-          }).then(() => {
-            this.$router.replace({path: '/login'})
-          })
-        }
-        if (successResponse.data.port === 401) {
-          this.$alert(successResponse.data.ErrorResult, '修改失败', {
-            confirmButtonText: '确定'
-          })
-        }
-      })
+    mounted() {
+        this.data.type= 2
+        var dataObj = qs.stringify(this.data)
+        console.log(dataObj)
+        this.$axios({
+                method: 'post',
+                url: '/allactivity',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: dataObj, // 直接提交转换后的数据即可
+            },
+        ).then(successResponse => {
+            // console.log(successResponse.data.allactivity[0].port)
+            if (successResponse.data.allactivity[0].port === 200) {
+                this.tableData = successResponse.data.allactivity
+                this.$message({
+                    message: '获取数据成功',
+                    type: 'success'
+                });
+            }
+            if (successResponse.data.port === 401) {
+                this.$message.error({
+                    message: '获取数据失败'
+                });
+            }
+        })
     },
-    cancel () {
-      this.$router
-        .replace({path: '/index'})
-    }
+  methods: {
   }
 }
 </script>
