@@ -46,6 +46,17 @@ public class JsonUtil {
         SqlSession session = MybatiesSession.getSession();
         BeanAssociations a = session.selectOne("selectAssociations",activity.getAssociationsid());
         BeanDepartment d = session.selectOne("selectDepartment",activity.getDepartmentid());
+        String place = " ";
+        if(activity.getActivitypalce()==1)
+            place = "理四1楼大教室";
+        else if(activity.getActivitypalce()==2)
+            place = "南校操场";
+        else if(activity.getActivitypalce()==3)
+            place = "北校操场";
+        else if(activity.getActivitypalce()==4)
+            place = "风雨操场";
+        else if(activity.getActivitypalce()==5)
+            place = "科技楼";
 
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -57,7 +68,7 @@ public class JsonUtil {
         jsonObject.put("activityendtime",df.format(activity.getActivityendtime()));
         jsonObject.put("activityreleasetime",df.format(activity.getActivityreleasetime()));
         jsonObject.put("activitydeadline",df.format(activity.getActivitydeadline()));
-        jsonObject.put("activitypalce",activity.getActivitypalce());
+        jsonObject.put("activitypalce",place);
         jsonObject.put("associationsid",activity.getAssociationsid());
         jsonObject.put("associationsname",a.getAssociationsname());
         jsonObject.put("departmentid",activity.getDepartmentid());

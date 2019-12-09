@@ -7,6 +7,7 @@ import com.zks.service.ActivityService;
 import com.zks.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 @RestController
 @RequestMapping("/api")
@@ -54,12 +55,21 @@ public class ActivityController {
         return result;
     }
 
+//    // 创建活动
+//    @RequestMapping(value = "/createActivity", method = RequestMethod.POST)
+//    public JSONObject createActivity(@RequestParam("range") String range,@RequestParam("name") String name,@RequestParam("introduction") String introduction,@RequestParam("startTime") Date startTime,@RequestParam("endTime") Date endTime,@RequestParam("deadLine") Date deadLine,@RequestParam("palaceid") int palaceid,@RequestParam("associationid") int associationid,@RequestParam("departmentid") int departmentid) throws Exception {
+//        ActivityService activityService = new ActivityService();
+//        JSONObject result = activityService.createActivity(range,name,introduction,startTime, endTime, deadLine,palaceid,associationid,departmentid);
+//        return result;
+//    }
+
+
     // 创建活动
     @RequestMapping(value = "/createActivity", method = RequestMethod.POST)
-    public JSONObject createActivity(@RequestParam("range") String range,@RequestParam("name") String name,@RequestParam("introduction") String introduction,@RequestParam("startTime") Date startTime,@RequestParam("endTime") Date endTime,@RequestParam("deadLine") Date deadLine,@RequestParam("palaceid") int palaceid,@RequestParam("associationid") int associationid,@RequestParam("departmentid") int departmentid) throws Exception {
+    public JSONObject createActivity(@RequestParam("range") String range,@RequestParam("name") String name,@RequestParam("introduction") String introduction,@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("deadLine") String deadLine,@RequestParam("palaceid") int palaceid,@RequestParam("associationid") int associationid,@RequestParam("departmentid") int departmentid) throws Exception {
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
         ActivityService activityService = new ActivityService();
-        JSONObject result = activityService.createActivity(range,name,introduction,startTime, endTime, deadLine,palaceid,associationid,departmentid);
+        JSONObject result = activityService.createActivity(range,name,introduction,formatter.parse(startTime), formatter.parse(endTime), formatter.parse(deadLine),palaceid,associationid,departmentid);
         return result;
     }
-
 }

@@ -168,6 +168,7 @@
                         message: '获取数据失败'
                     });
                 }
+
             })
         },
         methods : {
@@ -196,6 +197,9 @@
                             confirmButtonText: '确定',
                         })
                     }
+                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                    },1000);
                 })
             }
         }

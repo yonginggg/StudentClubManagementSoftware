@@ -24,10 +24,10 @@ public class ActivityService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         if(startTime.after(endTime)){
             jsonObject = JsonUtil.errorResult(401, "结束时间不得早于开始时间");
-        } else if(startTime.after(now)){
+        } else if(startTime.before(now)){
             jsonObject = JsonUtil.errorResult(401, "开始时间不得早于当前时间");
-        } else if(deadLine.after(now)){
-            jsonObject = JsonUtil.errorResult(401, "报名截止时间不得早于当前时间");
+        } else if(deadLine.after(startTime)){
+            jsonObject = JsonUtil.errorResult(401, "报名截止时间不得晚于开始时间");
         } else if (!placeAvailability(palaceid,startTime,endTime)){
             jsonObject = JsonUtil.errorResult(401, "场地已被占用");
         }
@@ -73,7 +73,7 @@ public class ActivityService {
         if(activity == null){
             jsonObject = JsonUtil.errorResult(401,"活动不存在");
         }
-        else if (!placeAvailability(activity.getActivitypalce(),activity.getActivitystarttime(),activity.getActivityendtime())){
+        else if (answer == true && !placeAvailability(activity.getActivitypalce(),activity.getActivitystarttime(),activity.getActivityendtime())){
             jsonObject = JsonUtil.errorResult(401, "场地已被占用");
         }
         else {
@@ -168,6 +168,7 @@ public class ActivityService {
     // 判断场地是否可用
     public Boolean placeAvailability(int placeId, Date startTime, Date endTime) throws Exception {
         List<BeanActivity> activityList = null;
+        List<BeanActivity> activityList1 = new ArrayList <BeanActivity>();
         BeanActivity activity = null;
         Date now = new Date();
 
@@ -177,11 +178,19 @@ public class ActivityService {
         int sum = 0;
         for(int i=0;i<activityList.size();i++) {
             activity = activityList.get(i);
+            if (activity.getActivitiesapplicationstate().equals("审核通过")) {
+                activityList1.add(activity);
+            }
+        }
+
+        for(int i=0;i<activityList1.size();i++) {
+            activity = activityList1.get(i);
             if (activity.getActivitystarttime().after(endTime) || activity.getActivityendtime().before(startTime)) {
                 sum = sum + 1;
             }
         }
-        if(sum == activityList.size())
+
+        if(sum == activityList1.size())
             return true;
         else
             return false;

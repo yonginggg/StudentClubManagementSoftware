@@ -20,16 +20,19 @@
         <el-button plain type="danger" icon="el-icon-s-tools" style="width: 20% ;height: 70%;font-size: 30px"
                    @click="operation = true">社团操作
         </el-button>
-        <el-dialog title="社团操作" :visible.sync="operation" style="width:1000px;margin-left: 250px" :modal-append-to-body="false">
+        <el-dialog title="社团操作" :visible.sync="operation" style="width:1200px;margin-left: 250px"
+                   :modal-append-to-body="false">
           <el-row>
             <el-button type="primary" plain @click="announcement = true">公告发布</el-button>
             <el-button type="success" plain @click="activityreleased = true">活动发布</el-button>
             <el-button type="info" plain @click="createdepartment = true">部门创建</el-button>
             <el-button type="warning" plain @click="audit = true">招新审核</el-button>
+            <el-button type="danger" plain @click="RecruitNotice = true">招新发布</el-button>
           </el-row>
         </el-dialog>
         <!--公告发布-->
-        <el-dialog title="公告发布" :visible.sync="announcement" style="width:1000px;margin-left: 250px" :modal-append-to-body="false">
+        <el-dialog title="公告发布" :visible.sync="announcement" style="width:1000px;margin-left: 250px"
+                   :modal-append-to-body="false">
           <el-form :model="form">
             <el-form-item label="公告名称" style="width: 400px">
               <el-input v-model="form.name" placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
@@ -46,10 +49,13 @@
           </div>
         </el-dialog>
         <!--活动发布-->
-        <el-dialog title="活动发布" :visible.sync="activityreleased" style="height:800px; width:1000px;margin-left: 250px;margin-top: -100px" :modal-append-to-body="false">
+        <el-dialog title="活动发布" :visible.sync="activityreleased"
+                   style="height:800px; width:1000px;margin-left: 250px;margin-top: -100px"
+                   :modal-append-to-body="false">
           <el-form :model="form2">
             <el-form-item label="活动名称" style="width: 400px">
-              <el-input v-model="createActivity.name" placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
+              <el-input v-model="createActivity.name" placeholder="请输入内容 10字以内" maxlength="10"
+                        show-word-limit></el-input>
             </el-form-item>
             <el-form-item label="活动范围" style="width: 400px">
               <el-select v-model="createActivity.range" placeholder="请选择" style="width: 400px">
@@ -71,16 +77,16 @@
                 </el-option>
               </el-select>
             </el-form-item>
-<!--            <el-form-item label="活动时间" style="width: 400px">-->
-<!--              <el-date-picker-->
-<!--                v-model="createActivity.valuetime1"-->
-<!--                type="daterange"-->
-<!--                range-separator="至"-->
-<!--                start-placeholder="开始日期"-->
-<!--                end-placeholder="结束日期"-->
-<!--                style="width: 400px">-->
-<!--              </el-date-picker>-->
-<!--            </el-form-item>-->
+            <!--            <el-form-item label="活动时间" style="width: 400px">-->
+            <!--              <el-date-picker-->
+            <!--                v-model="createActivity.valuetime1"-->
+            <!--                type="daterange"-->
+            <!--                range-separator="至"-->
+            <!--                start-placeholder="开始日期"-->
+            <!--                end-placeholder="结束日期"-->
+            <!--                style="width: 400px">-->
+            <!--              </el-date-picker>-->
+            <!--            </el-form-item>-->
             <el-form-item label="活动开始时间" style="width: 400px">
               <el-date-picker
                 v-model="createActivity.startTime"
@@ -118,16 +124,14 @@
           </div>
         </el-dialog>
         <!--部门创建-->
-        <el-dialog title="部门创建" :visible.sync="createdepartment" style="width:1000px;margin-left: 250px" :modal-append-to-body="false">
+        <el-dialog title="部门创建" :visible.sync="createdepartment" style="width:1000px;margin-left: 250px"
+                   :modal-append-to-body="false">
           <el-form :model="form3">
             <el-form-item label="部门名称" :label-width="formLabelWidth">
-              <el-input v-model="form3.name" autocomplete="off" style="width: 200px"></el-input>
+              <el-input v-model="departmentuser.departmentLeader" autocomplete="off" style="width: 200px"></el-input>
             </el-form-item>
-            <el-form-item label="候选人" :label-width="formLabelWidth">
-              <el-select v-model="form3.user" placeholder="请选择活动区域" style="width: 200px">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+            <el-form-item label="学生id" :label-width="formLabelWidth">
+              <el-input v-model="departmentuser.departmentName" autocomplete="off" style="width: 200px"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -136,7 +140,8 @@
           </div>
         </el-dialog>
         <!--招新审核-->
-        <el-dialog title="招新审核" :visible.sync="audit" style="width:1000px;margin-left: 250px" :modal-append-to-body="false">
+        <el-dialog title="招新审核" :visible.sync="audit" style="width:1000px;margin-left: 250px"
+                   :modal-append-to-body="false">
           <el-table :data="gridData">
             <el-table-column property="id" label="学号" width="150"></el-table-column>
             <el-table-column property="name" label="姓名" width="150"></el-table-column>
@@ -160,13 +165,45 @@
             <el-button type="primary" @click="createdepartment = false">确 定</el-button>
           </div>
         </el-dialog>
+        <!--招新发布-->
+        <el-dialog title="招新发布" :visible.sync="RecruitNotice"
+                   style="height:800px; width:1000px;margin-left: 250px;margin-top: -100px"
+                   :modal-append-to-body="false">
+          <el-form :model="form4">
+            <el-form-item label="招新开始时间" style="width: 400px">
+              <el-date-picker
+                v-model="RecruitNotice.startTime"
+                type="datetime"
+                placeholder="招新开始时间"
+                style="width: 400px">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="招新结束时间" style="width: 400px">
+              <el-date-picker
+                v-model="RecruitNotice.endTime"
+                type="datetime"
+                placeholder="活动结束时间"
+                style="width: 400px">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="招新内容">
+              <el-input type="textarea" v-model="RecruitNotice.introduction" :autosize="{ minRows: 5, maxRows: 10}"
+                        placeholder="请输入内容,200字以内" maxlength="200" show-word-limit>>
+              </el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="createdepartment = false">取 消</el-button>
+            <el-button type="primary" v-on:click="createactivity">确 定</el-button>
+          </div>
+        </el-dialog>
       </el-row>
       <el-card style="font-size: 20px;text-align: left">
         <div slot="header" style="font-size: 30px;text-align: center">
           <span>社团介绍</span>
         </div>
         <div id=introduction>
-        UTALK 友谈协会，下方是一个笑脸，表明我们社团十分有爱，是一个很欢乐的大家庭，同时笑脸里面表明了社团名称和社团创建时间。最后是我们社团的口号，激励大家积极勇敢说英语。
+          UTALK 友谈协会，下方是一个笑脸，表明我们社团十分有爱，是一个很欢乐的大家庭，同时笑脸里面表明了社团名称和社团创建时间。最后是我们社团的口号，激励大家积极勇敢说英语。
         </div>
       </el-card>
     </el-main>
@@ -176,6 +213,7 @@
 
 <script>
     import qs from 'qs'
+
     export default {
         name: 'clubIndex',
         data() {
@@ -189,29 +227,35 @@
                 operation: false,
                 announcement: false,
                 activityreleased: false,
+                RecruitNotice: false,
                 // form2: {
                 //     name: '',
                 //     date: '',
                 //     place: '',
                 //     content: ''
                 // },
-                form3: {
-                    name: '',
-                    user: ''
+                departmentuser: {
+                    departmentName:'',
+                    departmentLeader:''
+                },
+                form4: {
+                    startTime: '',
+                    endTime: '',
+                    introduction: ''
                 },
                 audit: false,
                 gridData: [{
                     id: '211',
                     name: '王小虎',
                 }],
-                createActivity:{
+                createActivity: {
                     name: '',
                     date: '',
                     place: '',
                     introduction: '',
-                    startTime:'',
-                    endTime:'',
-                    deadLine:'',
+                    startTime: '',
+                    endTime: '',
+                    deadLine: '',
                     rangeoption: [{
                         value: '全校',
                         label: '全校'
@@ -223,7 +267,7 @@
                         label: '部门'
                     }],
                     range: '',
-                    place:[
+                    place: [
                         {
                             value: '1',
                             label: '理四1楼大教室'
@@ -233,12 +277,15 @@
                         }, {
                             value: '3',
                             label: '北校操场'
-                        },{
+                        }, {
                             value: '4',
                             label: '风雨操场'
+                        }, {
+                            value: '5',
+                            label: '科技楼'
                         }
                     ],
-                    palaceid:''
+                    palaceid: ''
 
                 }
             }
@@ -250,16 +297,16 @@
             totacts() {
                 this.$router.replace({path: '/contacts'})
             },
-            toactivity(){
+            toactivity() {
                 this.$router.replace({path: '/ClubActivity'})
             },
-            createactivity(){
+            createactivity() {
 
                 this.createActivity.associationid = this.$store.state.associationId
                 this.createActivity.departmentid = this.$store.state.departmentId
                 console.log(this.createActivity)
                 var ca = qs.stringify(this.createActivity)
-
+                // console.log(ca)
                 this.$axios({
                         method: 'post',
                         url: '/createActivity',
@@ -271,12 +318,20 @@
                 ).then(successResponse => {
                     // console.log(successResponse.data);
                     if (successResponse.data.port === 200) {
-
+                        this.$message({
+                            message: '审核通过',
+                            type: 'success'
+                        });
 
                     }
-                    if(successResponse.data.port === 401){
+                    if (successResponse.data.port === 401) {
 
                     }
+                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                    },1000);
+
+
                 })
             }
         },

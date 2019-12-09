@@ -8,25 +8,34 @@
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="活动编号">
-              <span>{{ props.row.id }}</span>
+              <span>{{ props.row.activityid }}</span>
             </el-form-item>
             <el-form-item label="活动名称">
-              <span>{{ props.row.name }}</span>
-            </el-form-item>
-            <el-form-item label="申请社团">
-              <span>{{ props.row.club }}</span>
-            </el-form-item>
-            <el-form-item label="活动时间">
-              <span>{{ props.row.activityTime }}</span>
-            </el-form-item>
-            <el-form-item label="发布时间">
-              <span>{{ props.row.releaseTime }}</span>
-            </el-form-item>
-            <el-form-item label="活动地点">
-              <span>{{ props.row.place}}</span>
+              <span>{{ props.row.activityname }}</span>
             </el-form-item>
             <el-form-item label="活动内容">
-              <span>{{ props.row.content }}</span>
+              <span>{{ props.row.activityintroduction }}</span>
+            </el-form-item>
+            <el-form-item label="活动地点">
+              <span>{{ props.row.activitypalce}}</span>
+            </el-form-item>
+            <el-form-item label="申请社团">
+              <span>{{ props.row.associationsname }}</span>
+            </el-form-item>
+            <el-form-item label="申请部门">
+              <span>{{ props.row.departmentid }}</span>
+            </el-form-item>
+            <el-form-item label="开始时间">
+              <span>{{ props.row.activitystarttime }}</span>
+            </el-form-item>
+            <el-form-item label="结束时间">
+              <span>{{ props.row.activityendtime }}</span>
+            </el-form-item>
+            <el-form-item label="发布时间">
+              <span>{{ props.row.activitiesapplicationtime }}</span>
+            </el-form-item>
+            <el-form-item label="截止时间">
+              <span>{{ props.row.activitydeadline }}</span>
             </el-form-item>
           </el-form>
         </template>
