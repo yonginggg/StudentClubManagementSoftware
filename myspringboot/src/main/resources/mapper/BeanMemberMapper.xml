@@ -11,7 +11,7 @@
     <result column="departmentId" property="departmentid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    memberId, memberPost, memberTime, memberIntroduction, userId, associationsId
+    memberId, memberPost, memberTime, memberIntroduction, userId, associationsId,departmentId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -19,7 +19,7 @@
     from member
     where memberId = #{memberid,jdbcType=INTEGER}
   </select>
-  <select id="selectmember" resultMap="BaseResultMap" >
+  <select id="selectMember" resultMap="BaseResultMap" >
     select *
     from member
     where userId = #{userid} and associationsId = #{associationsid}

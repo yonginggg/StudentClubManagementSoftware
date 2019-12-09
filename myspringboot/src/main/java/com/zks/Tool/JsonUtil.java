@@ -133,15 +133,28 @@ public class JsonUtil {
         return jsonObject;
     }
 
+//    public static JSONObject MemberResult(int port, BeanMember member){
+//        JSONObject jsonObject = new JSONObject(true);
+//        jsonObject.put("port",port);
+//        jsonObject.put("memberId",member.getMemberid());
+//        jsonObject.put("memberPost",member.getMemberpost());
+//        jsonObject.put("memberTime",df.format(member.getMembertime()));
+//        jsonObject.put("memberIntroduction",member.getMemberintroduction());
+//        jsonObject.put("userId ",member.getUserid());
+//        jsonObject.put("associationsId",member.getAssociationsid());
+//        return jsonObject;
+//    }
+
     public static JSONObject MemberResult(int port, BeanMember member){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
-        jsonObject.put("memberId",member.getMemberid());
-        jsonObject.put("memberPost",member.getMemberpost());
-        jsonObject.put("memberTime",df.format(member.getMembertime()));
-        jsonObject.put("memberIntroduction",member.getMemberintroduction());
-        jsonObject.put("userId ",member.getUserid());
-        jsonObject.put("associationsId",member.getAssociationsid());
+        jsonObject.put("memberid",member.getMemberid());
+        jsonObject.put("memberpost",member.getMemberpost());
+        jsonObject.put("membertime",member.getMembertime());
+        jsonObject.put("memberintroduction",member.getMemberintroduction());
+        jsonObject.put("userid",member.getUserid());
+        jsonObject.put("associationsid",member.getAssociationsid());
+        jsonObject.put("departmentid",member.getDepartmentid());
         return jsonObject;
     }
 

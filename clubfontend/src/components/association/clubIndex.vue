@@ -46,15 +46,15 @@
           </div>
         </el-dialog>
         <!--活动发布-->
-        <el-dialog title="活动发布" :visible.sync="activityreleased" style="height:1000px; width:1000px;margin-left: 250px;margin-top: -100px" :modal-append-to-body="false">
+        <el-dialog title="活动发布" :visible.sync="activityreleased" style="height:800px; width:1000px;margin-left: 250px;margin-top: -100px" :modal-append-to-body="false">
           <el-form :model="form2">
             <el-form-item label="活动名称" style="width: 400px">
-              <el-input v-model="form2.name" placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
+              <el-input v-model="createActivity.name" placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
             </el-form-item>
             <el-form-item label="活动范围" style="width: 400px">
-              <el-select v-model="rangevalue" placeholder="请选择" style="width: 400px">
+              <el-select v-model="createActivity.rangevalue" placeholder="请选择" style="width: 400px">
                 <el-option
-                  v-for="item in rangeoption"
+                  v-for="item in createActivity.rangeoption"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -63,26 +63,41 @@
             </el-form-item>
             <el-form-item label="活动时间" style="width: 400px">
               <el-date-picker
-                v-model="value1"
+                v-model="createActivity.valuetime1"
                 type="daterange"
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 style="width: 400px">
               </el-date-picker>
-              <el-form-item label="活动地点" style="width: 400px">
-                <el-input v-model="form2.place" placeholder="请输入内容 10字以内" maxlength="10" show-word-limit></el-input>
-              </el-form-item>
+            </el-form-item>
+            <el-form-item label="活动报名截止时间" style="width: 400px">
+              <el-date-picker
+                v-model="createActivity.deadLine"
+                type="datetime"
+                placeholder="活动报名截止时间"
+                style="width: 400px">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="活动地点" style="width: 400px">
+              <el-select v-model="createActivity.palaceid" placeholder="请选择" style="width: 400px">
+                <el-option
+                  v-for="item in createActivity.place"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="活动内容">
-              <el-input type="textarea" v-model="form2.content" :autosize="{ minRows: 5, maxRows: 10}"
+              <el-input type="textarea" v-model="createActivity.introduction" :autosize="{ minRows: 5, maxRows: 10}"
                         placeholder="请输入内容,200字以内" maxlength="200" show-word-limit>>
               </el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="createdepartment = false">取 消</el-button>
-            <el-button type="primary" @click="createdepartment = false">确 定</el-button>
+            <el-button type="primary" v-on:click="createactivity">确 定</el-button>
           </div>
         </el-dialog>
         <!--部门创建-->
@@ -143,6 +158,7 @@
 </template>
 
 <script>
+    import qs from 'qs'
     export default {
         name: 'clubIndex',
         data() {
@@ -156,12 +172,12 @@
                 operation: false,
                 announcement: false,
                 activityreleased: false,
-                form2: {
-                    name: '',
-                    date: '',
-                    place: '',
-                    content: ''
-                },
+                // form2: {
+                //     name: '',
+                //     date: '',
+                //     place: '',
+                //     content: ''
+                // },
                 form3: {
                     name: '',
                     user: ''
@@ -171,15 +187,42 @@
                     id: '211',
                     name: '王小虎',
                 }],
-                value1: '',
-                rangeoption: [{
-                    value: '全校',
-                    label: '全校'
-                }, {
-                    value: '全社',
-                    label: '全社'
-                }],
-                rangevalue: ''
+                createActivity:{
+                    name: '',
+                    date: '',
+                    place: '',
+                    introduction: '',
+                    valuetime1: '',
+                    deadLine:'',
+                    rangeoption: [{
+                        value: '全校',
+                        label: '全校'
+                    }, {
+                        value: '社团',
+                        label: '社团'
+                    }, {
+                        value: '部门',
+                        label: '部门'
+                    }],
+                    rangevalue: '',
+                    place:[
+                        {
+                            value: '1',
+                            label: '理四1楼大教室'
+                        }, {
+                            value: '2',
+                            label: '南校操场'
+                        }, {
+                            value: '3',
+                            label: '北校操场'
+                        },{
+                            value: '4',
+                            label: '风雨操场'
+                        }
+                    ],
+                    palaceid:''
+
+                }
             }
         },
         methods: {
@@ -191,6 +234,9 @@
             },
             toactivity(){
                 this.$router.replace({path: '/ClubActivity'})
+            },
+            createactivity(){
+
             }
         },
         mounted() {

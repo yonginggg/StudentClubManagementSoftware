@@ -11,7 +11,8 @@ export default new Vuex.Store({
     },
     associationId:1,
     associationName:'luoluo',
-    associationsIntroduction:'hahaha'
+    associationsIntroduction:'hahaha',
+    departmentId:1
   },
   mutations: {
     login (state, user) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     associationsIntroduction(state,associationsIntroduction){
       state.associationsIntroduction = associationsIntroduction
+    },
+    departmentId(state,departmentId){
+      state.departmentId = departmentId
     }
   }
 })
