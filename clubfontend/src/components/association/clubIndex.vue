@@ -162,7 +162,7 @@
           <el-form :model="form4">
             <el-form-item label="招新开始时间" style="width: 400px">
               <el-date-picker
-                v-model="RecruitNotice.startTime"
+                v-model="recruitnotice.recruitNoticeStartTime"
                 type="datetime"
                 placeholder="招新开始时间"
                 style="width: 400px">
@@ -170,21 +170,21 @@
             </el-form-item>
             <el-form-item label="招新结束时间" style="width: 400px">
               <el-date-picker
-                v-model="RecruitNotice.endTime"
+                v-model="recruitnotice.recruitNoticeEndTime"
                 type="datetime"
                 placeholder="活动结束时间"
                 style="width: 400px">
               </el-date-picker>
             </el-form-item>
             <el-form-item label="招新内容">
-              <el-input type="textarea" v-model="RecruitNotice.introduction" :autosize="{ minRows: 5, maxRows: 10}"
+              <el-input type="textarea" v-model="recruitnotice.recruitNoticeContent" :autosize="{ minRows: 5, maxRows: 10}"
                         placeholder="请输入内容,200字以内" maxlength="200" show-word-limit>>
               </el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="createdepartment = false">取 消</el-button>
-            <el-button type="primary" v-on:click="createactivity">确 定</el-button>
+            <el-button @click="RecruitNotice = false">取 消</el-button>
+            <el-button type="primary" v-on:click="createrecuritenotice">确 定</el-button>
           </div>
         </el-dialog>
       </el-row>
@@ -218,6 +218,13 @@
                 announcement: false,
                 activityreleased: false,
                 RecruitNotice: false,
+                // 招新表
+                recruitnotice:{
+                    recruitNoticeContent:'',
+                    recruitNoticeStartTime:'',
+                    recruitNoticeEndTime:'',
+
+                },
                 // form2: {
                 //     name: '',
                 //     date: '',
@@ -355,7 +362,42 @@
 
                 })
 
-            }
+            },
+            createrecuritenotice() {
+
+                this.recruitnotice.userId = this.$store.state.user.userId
+                this.recruitnotice.associationsId = this.$store.state.associationId
+
+                // console.log(this.createActivity)
+                var cr = qs.stringify(this.recruitnotice)
+                // console.log(ca)
+                this.$axios({
+                        method: 'post',
+                        url: '/createrecruitnotice',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: cr, // 直接提交转换后的数据即可
+                    },
+                ).then(successResponse => {
+                    // console.log(successResponse.data);
+                    if (successResponse.data.port === 200) {
+                        this.$message({
+                            message: '发布成功',
+                            type: 'success'
+                        });
+
+                    }
+                    if (successResponse.data.port === 401) {
+
+                    }
+                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                    },1000);
+
+                })
+
+            },
         },
         mounted() {
             document.getElementById("assName").innerHTML = this.$store.state.associationName;
