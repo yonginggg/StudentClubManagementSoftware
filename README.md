@@ -1,2 +1,2 @@
 # StudentClubManagementSoftware
-软工作业
+springboot + vue + mysql 社团管理系统
