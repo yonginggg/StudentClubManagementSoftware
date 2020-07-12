@@ -100,6 +100,7 @@ public class AssociationService {
         session.commit();
         return jsonObject;
     }
+
     //更改社团状态（比如说：已删除，正在审核，审核通过，审核失败）
     //审核通过之后，更改社团创立时间，将社长加入member
     public void modifyMemberInsertLeader(String userid, int assid){
@@ -110,7 +111,7 @@ public class AssociationService {
         member.setMemberintroduction("Leader");
         member.setMembertime(new Date());
         member.setMemberpost("社长");
-        member.setDepartmentid(0);
+        member.setDepartmentid(999999);
         session.insert("insertMember",member);
         session.commit();
     }
@@ -132,6 +133,7 @@ public class AssociationService {
         session.commit();
         return jsonObject;
     }
+
     //更改社团简介
     public JSONObject modifyAssociationsIntroductById(int id, String intro) throws Exception{
         JSONObject jsonObject = null;
@@ -147,7 +149,6 @@ public class AssociationService {
         return jsonObject;
     }
     public static void main(String[] args) throws Exception {
-        AssociationService associationService = new AssociationService();
-        associationService.createAssociation("wfhjj","fghjj","ghjhy","235");
+
     }
 }

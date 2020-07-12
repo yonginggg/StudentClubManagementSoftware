@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/activity/activity",
+    "pages/associations/associations",
+    "pages/notice/notice"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#1296db",
+    "list": [
+      {
+        "pagePath": "pages/associations/associations",
+        "text": "社团",
+        "iconPath": "images/所有社团.png",
+        "selectedIconPath": "images/所有社团 (1).png"
+      },
+      {
+        "pagePath": "pages/activity/activity",
+        "text": "活动",
+        "iconPath": "images/活动 (1).png",
+        "selectedIconPath": "images/活动.png"
+      },
+      {
+        "pagePath": "pages/notice/notice",
+        "text": "公告",
+        "iconPath": "images/公告.png",
+        "selectedIconPath": "images/公告 (1).png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "个人",
+        "iconPath": "images/社团管理.png",
+        "selectedIconPath": "images/社团管理2.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

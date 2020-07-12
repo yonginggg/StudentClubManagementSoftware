@@ -18,30 +18,35 @@
     <include refid="Base_Column_List" />
     from user
   </select>
+
   <select id="selectUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where userId = #{userid,jdbcType=VARCHAR}
   </select>
+
   <select id="selectUserByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from user
     where userName = #{username,jdbcType=VARCHAR}
   </select>
+
   <delete id="deleteUser" parameterType="java.lang.String" >
     delete from user
     where userId = #{userid,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insertUser" parameterType="com.zks.model.BeanUser" >
-    insert into user (userId, userName, userPwd, 
-      userSex, userMajor, userClass, 
+    insert into user (userId, userName, userPwd,
+      userSex, userMajor, userClass,
       userTel)
-    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR}, 
-      #{usersex,jdbcType=VARCHAR}, #{usermajor,jdbcType=VARCHAR}, #{userclass,jdbcType=VARCHAR}, 
+    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR},
+      #{usersex,jdbcType=VARCHAR}, #{usermajor,jdbcType=VARCHAR}, #{userclass,jdbcType=VARCHAR},
       #{usertel,jdbcType=VARCHAR})
   </insert>
+
   <update id="updateUser" parameterType="com.zks.model.BeanUser" >
     update user
     set userName = #{username,jdbcType=VARCHAR},

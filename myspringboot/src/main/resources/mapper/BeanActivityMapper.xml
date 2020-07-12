@@ -34,6 +34,13 @@
     from activity
   </select>
 
+  <select id="searchActivity" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from activity
+    where activityName like #{activityName,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectActivityByState" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

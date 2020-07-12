@@ -38,30 +38,47 @@
         var dataObj = qs.stringify(this.pwdInformation);
         var _this = this
         // console.log(this.pwdInformation)
-        this.$axios({
-            method: 'post',
-            url: '/changePwd',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
+        if(this.pwdInformation.userPwd==''||this.pwdInformation.userNewPwd==''||this.pwdInformation.userNewPwd2==''){
+          this.$message({
+            message: '信息不能为空',
+            type: 'error'
+          });
+        }else{
+          this.$axios({
+              method: 'post',
+              url: '/changePwd',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              data: dataObj, // 直接提交转换后的数据即可
             },
-            data: dataObj, // 直接提交转换后的数据即可
-          },
-        ).then(successResponse => {
-          if (successResponse.data.port === 200) {
-            // _this.$store.commit('login', _this.loginForm)
-            this.$alert("请重新登陆", '修改成功', {
-              confirmButtonText: '确定',
-            }).then(() => {
-              this.$router.replace({path: '/login'})
-            })
+          ).then(successResponse => {
+            if (successResponse.data.port === 200) {
+              // _this.$store.commit('login', _this.loginForm)
+              // this.$alert("请重新登陆", '修改成功', {
+              //   confirmButtonText: '确定',
+              // })
+              this.$message({
+                message: '修改成功，请重新登陆',
+                type: 'success'
+              })
+                // .then(() => {
+                  this.$router.replace({path: '/login'})
+                // })
 
-          }
-          if(successResponse.data.port === 401){
-            this.$alert(successResponse.data.ErrorResult, '修改失败', {
-              confirmButtonText: '确定',
-            })
-          }
-        })
+            }
+            if(successResponse.data.port === 401){
+              // this.$alert(successResponse.data.ErrorResult, '修改失败', {
+              //   confirmButtonText: '确定',
+              // })
+              this.$message({
+                message: '修改失败： '+successResponse.data.ErrorResult,
+                type: 'error'
+              });
+            }
+          })
+        }
+
       },
       cancel() {
         this.$router

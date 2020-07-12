@@ -11,11 +11,11 @@
         </el-form-item>
         <el-form-item label="社团类型" style="width: 300px" >
           <el-select v-model="form.associationsType" placeholder="请选择社团类型" >
-            <el-option label="学术类" value="xueshu"></el-option>
-            <el-option label="体育类" value="tiyu"></el-option>
-            <el-option label="艺术类" value="yishu"></el-option>
-            <el-option label="公益类" value="gongyi"></el-option>
-            <el-option label="科技类" value="keji"></el-option>
+            <el-option label="学术类" value="学术类"></el-option>
+            <el-option label="体育类" value="体育类"></el-option>
+            <el-option label="艺术类" value="艺术类"></el-option>
+            <el-option label="公益类" value="公益类"></el-option>
+            <el-option label="科技类" value="科技类"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="社长学号" style="width: 200px" >
@@ -57,27 +57,37 @@
         methods: {
             onSubmit () {
                 var dataObj = qs.stringify(this.form);
-                // console.log(dataObj)
-                this.$axios({
-                        method: 'post',
-                        url: '/createassociation',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        data: dataObj, // 直接提交转换后的数据即可
+                if(this.form.associationsName==''||this.form.associationsType==''||this.form.associationsIntroduction==''){
+                  this.$message({
+                    message: '信息不能为空',
+                    type: 'error'
+                  });
+                }else{
+                  this.$axios({
+                      method: 'post',
+                      url: '/createassociation',
+                      headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                      },
+                      data: dataObj, // 直接提交转换后的数据即可
                     },
-                ).then(successResponse => {
+                  ).then(successResponse => {
                     if (successResponse.data.port === 200) {
-                        this.$alert("congratulations", '创建成功', {
-                            confirmButtonText: '确定',
-                        })
+                      // this.$alert("congratulations", '创建成功', {
+                      //     confirmButtonText: '确定',
+                      // })
+                      this.$message({
+                        message: '请求已发送，注意查收',
+                        type: 'success'
+                      });
+                      setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                      },1000);
                     }
-                    if(successResponse.data.port ===401){
-                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
-                            confirmButtonText: '确定',
-                        })
-                    }
-                })
+                  })
+                }
+
+
                 // console.log("hello")
             }
         }

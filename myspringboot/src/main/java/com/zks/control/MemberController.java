@@ -22,4 +22,15 @@ public class MemberController {
         result.put("member",array);
         return result;
     }
+
+    //显示社团成员
+    @RequestMapping(value = "/selectMemberByAssociationsId", method = RequestMethod.POST)
+    public JSONObject selectMemberByAssociationsId(@RequestParam("associationId") Integer associationId) throws Exception {
+        MemberService memberService = new MemberService();
+        String member = JSON.toJSONString(memberService.selectMemberByAssociationsId(associationId));
+        JSONArray array= JSONArray.parseArray(member);
+        JSONObject result = new JSONObject();
+        result.put("member",array);
+        return result;
+    }
 }

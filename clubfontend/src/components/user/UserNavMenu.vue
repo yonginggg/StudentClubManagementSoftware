@@ -9,7 +9,9 @@
     @close="handleClose"
     background-color="#486586"
     text-color="#fff"
-    active-text-color="#1890ff">
+    active-text-color="#1890ff"
+    :default-openeds="openeds"
+  >
     <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
     <el-submenu index="1">
       <template slot="title">
@@ -46,6 +48,7 @@
                 user: {
                     userId: ''
                 },
+                openeds: ['1','association'],
                 association: []
             }
         },
@@ -82,7 +85,12 @@
                 this.$store.commit('associationName',name)
                 this.$store.commit('associationId',id)
                 this.$store.commit('associationsIntroduction',introduction)
-
+                sessionStorage.setItem('associationName',name);
+                sessionStorage.setItem('associationId',id);
+                sessionStorage.setItem('associationsIntroduction',introduction);
+                // console.log(sessionStorage.getItem("associationName"))
+                // console.log(sessionStorage.getItem("associationId"))
+                // console.log(sessionStorage.getItem("associationsIntroduction"))
                 var dataobj = qs.stringify({userId:this.$store.state.user.userId,
                     associationId:this.$store.state.associationId})
                 this.$axios({
@@ -94,19 +102,15 @@
                         data: dataobj, // 直接提交转换后的数据即可
                     },
                 ).then(successResponse => {
-                    // console.log(successResponse.data.member[0].departmentid);
                     this.$store.commit('departmentId',successResponse.data.member[0].departmentid)
+                    sessionStorage.setItem('departmentId',successResponse.data.member[0].departmentid)
+
                     this.$store.commit('memberPost',successResponse.data.member[0].memberpost)
-                    // if (successResponse.data.port === 200) {
-                    //
-                    // }
-                    // if(successResponse.data.port === 401){
-                    //
-                    // }
+                   sessionStorage.setItem('memberPost',successResponse.data.member[0].memberpost)
                 })
                 console.log(this.$store.state.memberPost)
-                // console.log(this.$store.state.associationName)
                 this.$router.replace({path : "/clubindex" })
+                window.location.reload()
             }
         }
 

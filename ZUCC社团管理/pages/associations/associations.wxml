@@ -1,0 +1,73 @@
+<!--pages/associations/associations.wxml-->
+<view id="container">
+	<swiper class="card-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#e1f4f3">
+		<swiper-item wx:for="{{swiperList}}" wx:key="index" class="{{cardCur==index?'cur':''}}">
+			<view class="swiper-item">
+				<image class="lunbo" src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+				<video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+			</view>
+		</swiper-item>
+	</swiper>
+
+	<!-- <view class='border'></view>
+	<view wx:for="{{act_array}}" wx:for-item="item" data-index="{{index}}" wx:key='index' wx:for-index="bindex">
+		<view class="cu-card case no-card" bindtap="jumpAct" data-bindex='{{bindex}}' data-act-id="{{item.activityId}}" data-club-id="{{item.clubId}}">
+			<view class="cu-item shadow">
+				<view class="image">
+					<image src="{{item.activityCover}}" mode="scaleToFill"></image>
+					<view class="cu-tag bg-black ">立即报名</view>
+					<view class="cu-bar bg-shadeBottom">
+						<text class="text-cut">{{item.activityName}}</text>
+					</view>
+				</view>
+				<view class="cu-list menu-avatar">
+					<view class="cu-item">
+						<view class="cu-avatar round lg" style="background-image:url({{item.userAvatar}});"></view>
+						<view class="content flex-sub">
+							<view class="text-grey">{{item.userName}}</view>
+							<view class="text-gray text-sm flex justify-between">
+								{{item.time}}
+								<view class="text-gray text-sm">
+									<text class="cuIcon-hot margin-lr-xs"></text> {{item.hot}}
+									<text class="cuIcon-peoplelist margin-lr-xs"></text> {{item.activityPeople}}人
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view> -->
+
+<view class="box">
+		<view class="cu-bar bg-white">
+			<view class="action sub-title">
+				<text class="text-xl text-bold text-black">招兵买马</text>
+				<text class="text-ABC text-black">JoinUs</text>
+				<!-- last-child选择器-->
+			</view>
+		</view>
+	</view>
+
+	<view class="container">
+		<view class="widget">
+			<text class="column">社团名称</text>
+			<text class="link-column">操作</text>
+		</view>
+		<scroll-view scroll-y="true">
+			<view>
+				<block wx:for="{{list}}">
+					<view class="widget">
+						<text class="column">{{item.associationsname}}</text>
+						<view class="link-column">
+							<text class="link" bindtap="createActivitySign" data-associationsid="{{item.associationsid}}" data-associationsname="{{item.associationsname}}" data-index="{{index}}">申请入社</text>
+						</view>
+					</view>
+				</block>
+
+			</view>
+		</scroll-view>
+	</view>
+</view>
+
+<van-toast id="van-toast" />

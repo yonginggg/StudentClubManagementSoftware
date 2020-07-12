@@ -15,6 +15,7 @@ public class ActivitySignController {
     // 活动报名
     @RequestMapping(value = "/createactivitysign", method = RequestMethod.POST)
     public JSONObject createActivitySign(@RequestParam("userid") String userId,@RequestParam("activityid") Integer activityId) throws Exception {
+        System.out.println(userId+activityId);
         ActivitySignService activitySignService = new ActivitySignService();
         JSONObject result = activitySignService.createActivitySign(userId,activityId);
         return result;

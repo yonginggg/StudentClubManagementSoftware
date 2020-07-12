@@ -60,12 +60,11 @@
     from recruitsign
     where userId = #{userId,jdbcType=VARCHAR}
   </select>
-  <select id="selectRecruitSignByUserAndAssc" resultMap="BaseResultMap"  >
+  <select id="selectRecruitSignByAssociationsId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from recruitsign
-    where associationsId in(select associationsId from associations
-    where associationsLeader =#{associationsLeader,jdbcType=VARCHAR})
+    where associationsId = #{associationsId,jdbcType=INTEGER}
   </select>
   <select id="selectRecruitSignBySignid" resultMap="BaseResultMap" >
     select
@@ -79,12 +78,7 @@
     from member
     where userId in(select userId from recruitsign where recruitSignId =#{recruitSignId,jdbcType=INTEGER})
   </select>
-  <select id="selectMemberByUid" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List_member" />
-    from member
-    where userId =#{userId,jdbcType=VARCHAR}
-  </select>
+
   <select id="selectMemberByMid" resultMap="BaseResultMap_member" >
     select
     <include refid="Base_Column_List_member" />
@@ -96,12 +90,7 @@
     from recruitSign
     where recruitSignId =#{recruitSignId,jdbcType=INTEGER}
   </select>
-  <select id="selectAssociation_test" resultMap="BaseResultMap_association" >
-    select
-    <include refid="Base_Column_List_association" />
-    from associations
-    where associationsId = #{associationsId,jdbcType=INTEGER}
-  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from recruitsign
     where recruitSignId = #{recruitsignid,jdbcType=INTEGER}

@@ -46,9 +46,9 @@ public class ActivityController {
 
     // 显示社团活动
     @RequestMapping(value = "/associationactivity", method = RequestMethod.POST)
-    public JSONObject showAssociationActivity(@RequestParam("post") String post,@RequestParam("associationName") String associationName,@RequestParam("departmentId") int departmentId) throws Exception {
+    public JSONObject showAssociationActivity(@RequestParam("associationId") int associationId) throws Exception {
         ActivityService activityService = new ActivityService();
-        String associationactivity = JSON.toJSONString( activityService.loadActivityByAssociation(post,associationName,departmentId));
+        String associationactivity = JSON.toJSONString( activityService.loadActivityByAssociation(associationId));
         JSONArray array= JSONArray.parseArray(associationactivity);
         JSONObject result = new JSONObject();
         result.put("associationactivity",array);
@@ -67,9 +67,20 @@ public class ActivityController {
     // 创建活动
     @RequestMapping(value = "/createActivity", method = RequestMethod.POST)
     public JSONObject createActivity(@RequestParam("range") String range,@RequestParam("name") String name,@RequestParam("introduction") String introduction,@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("deadLine") String deadLine,@RequestParam("palaceid") int palaceid,@RequestParam("associationid") int associationid,@RequestParam("departmentid") int departmentid) throws Exception {
-        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
         ActivityService activityService = new ActivityService();
         JSONObject result = activityService.createActivity(range,name,introduction,formatter.parse(startTime), formatter.parse(endTime), formatter.parse(deadLine),palaceid,associationid,departmentid);
+        return result;
+    }
+
+    // 模糊查询活动
+    @RequestMapping(value = "/searchActivity", method = RequestMethod.POST)
+    public JSONObject searchActivity(@RequestParam("keyword") String keyword) throws Exception {
+        ActivityService activityService = new ActivityService();
+        String associationactivity = JSON.toJSONString( activityService.searchActivity(keyword));
+        JSONArray array= JSONArray.parseArray(associationactivity);
+        JSONObject result = new JSONObject();
+        result.put("searchActivity",array);
         return result;
     }
 }

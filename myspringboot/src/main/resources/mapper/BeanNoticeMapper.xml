@@ -26,7 +26,7 @@
   <select id="selectNoticeBySchool" resultMap="BaseResultMap">
     select *
     from notice
-    where noticeRange ="全校"
+    where noticeRange ="全校" and noticeState="审核通过"
   </select>
   <select id="selectNoticeByAssociation" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select noticeId,noticeRange,noticeName,noticeContent,noticeTime,noticeState
@@ -43,6 +43,14 @@
     from notice
     where  departmentId= #{departmentId} and noticeRange = "部门"
   </select>
+
+  <select id="selectNoticeByAssociationId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from notice
+    where associationsId = #{associationsId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from notice
     where noticeId = #{noticeid,jdbcType=INTEGER}

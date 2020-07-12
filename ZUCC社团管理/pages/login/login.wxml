@@ -1,0 +1,42 @@
+<!--pages/login/login.wxml-->
+
+<view class="container"> 
+  <view class="login-icon">  
+    <image class="login-img" src="/images/zucc.jpeg"></image>  
+  </view>  
+  <view class="login-from">  
+  <form bindsubmit="formSubmit" class='form'>
+    <view class="myno">
+    <!-- 学号 -->
+      <view class="weui-cell weui-cell_input">
+      <image class="nameImage" src="/images/用户.png"></image>
+          <!-- <view class="weui-cell__hd">
+              <view class="weui-label">学号</view>
+          </view> -->
+          <view class="weui-cell__bd">
+              <input class="weui-input" name="no" bindinput="noinput" value='{{no}}' placeholder="   请输入学号" />
+          </view>
+      </view>
+    </view>
+    <view class="mypwd">
+      <!-- 密码 -->
+      <view class="weui-cell weui-cell_input">
+      <image class="nameImage" src="/images/密码.png"></image>
+          <!-- <view class="weui-cell__hd">
+              <view class="weui-label">密码</view>
+          </view> -->
+          <view class="weui-cell__bd">
+              <input class="weui-input" type="password" name="pwd" bindinput="pwdinput" placeholder="   请输入密码" value='{{pwd}}'/>
+          </view>
+      </view>
+    </view>
+ 
+     <!--按钮-->  
+    <view class="loginBtnView">  
+      <button class="loginBtn" size="{{primarySize}}"  form-type='submit' disabled='{{disabled}}'>登录</button>  
+    </view>  
+    </form>
+  
+  </view>  
+</view>
+

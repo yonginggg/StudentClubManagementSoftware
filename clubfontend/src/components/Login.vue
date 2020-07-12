@@ -65,6 +65,10 @@
                     // console.log(successResponse.data);
                     if (successResponse.data.port === 200) {
                       // console.log(successResponse.data)
+                      this.$message({
+                        message: '登陆成功',
+                        type: 'success'
+                      });
                         _this.$store.commit('login', _this.loginForm)
                       if(this.loginForm.type ==='学生'){
                         this.$router.replace({path: '/index'})
@@ -75,9 +79,13 @@
 
                     }
                     if(successResponse.data.port === 401){
-                        this.$alert(successResponse.data.ErrorResult, '登录失败', {
-                            confirmButtonText: '确定',
-                        })
+                        // this.$alert(successResponse.data.ErrorResult, '登录失败', {
+                        //     confirmButtonText: '确定',
+                        // })
+                      this.$message({
+                        message: '登陆失败:'+successResponse.data.ErrorResult,
+                        type: 'error'
+                      });
                     }
                 })
             },

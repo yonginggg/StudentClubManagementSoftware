@@ -15,12 +15,23 @@
               <el-form-item label="活动内容">
                 <span>{{ props.row.activityintroduction }}</span>
               </el-form-item>
+              <el-form-item label="活动范围">
+                <span>{{ props.row.activityrange }}</span>
+              </el-form-item>
             </el-form>
           </template>
         </el-table-column>
         <el-table-column
           label="活动名称"
           prop="activityname">
+        </el-table-column>
+        <el-table-column
+          label="发布者"
+          prop="associationsname">
+        </el-table-column>
+        <el-table-column
+          label="活动地址"
+          prop="activitypalce">
         </el-table-column>
         <el-table-column
           label="活动开始时间"
@@ -82,5 +93,16 @@
 </script>
 
 <style scoped>
-
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 </style>

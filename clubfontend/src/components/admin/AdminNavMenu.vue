@@ -9,7 +9,8 @@
     @close="handleClose"
     background-color="#486586"
     text-color="#fff"
-    active-text-color="#1890ff">
+    active-text-color="#1890ff"
+    :default-openeds="openeds">
     <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
     <el-menu-item index="usermanager">
       <template slot="title">
@@ -59,7 +60,12 @@
 </template>
 <script>
 export default {
-name: `AdminNavMenu`
+name: `AdminNavMenu`,
+  data(){
+    return{
+      openeds: ['usermanager','5','6','7'],
+    }
+  }
 }
 </script>
 <style scoped>

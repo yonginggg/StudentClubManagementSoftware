@@ -31,70 +31,41 @@
           prop="noticetime"
           sortable>
         </el-table-column>
-
-      </el-table>
-      <el-table
-        :data="departmentData.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
-        ref="filterTable"
-        stripe
-        height="305"
-        style="width: 100%; margin: 10px">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="公告内容">
-                <span>{{ props.row.shop }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column  type="index" label="编号" width="300">
-        </el-table-column>
-        <el-table-column
-          label="公告名称"
-          prop="noticename">
-        </el-table-column>
-        <el-table-column
-          label="发布时间"
-          prop="noticetime"
-          sortable>
-        </el-table-column>
-        <el-table-column
-          label="部门名称"
-          prop="noticerange">
-        </el-table-column>
       </el-table>
     </el-main>
   </el-container>
 </template>
 
 <script>
+  import qs from 'qs'
     export default {
         name: "clubnotice",
         data () {
             return {
+                assName:{
+
+                },
                 associationData: [
-                    {noticename:'222',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'1111'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'}
+
                 ],
-                departmentData:[
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'},
-                    {noticename:'111',noticetcontent:'2222'}
-                ]
             }
-        }
+        },
+      mounted () {
+        var that = this;
+        that.assName.associationsId = sessionStorage.getItem("associationId");
+        var an = qs.stringify(that.assName)
+        this.$axios({
+            method: 'post',
+            url: '/noticebyassociations',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: an , // 直接提交转换后的数据即可
+          },
+        ).then(successResponse => {
+            this.associationData  = successResponse.data.noticebyassociations;
+        })
+      }
     }
 </script>
 

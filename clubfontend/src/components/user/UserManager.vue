@@ -88,9 +88,13 @@
                         });
                     }
                     if (successResponse.data.port === 401) {
-                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
-                            confirmButtonText: '确定',
-                        })
+                        // this.$alert(successResponse.data.ErrorResult, '注册失败', {
+                        //     confirmButtonText: '确定',
+                        // })
+                      this.$message({
+                        message: '密码修改失败',
+                        type: 'error'
+                      });
                     }
                 })
             }

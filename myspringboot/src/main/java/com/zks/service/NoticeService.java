@@ -78,7 +78,8 @@ public class NoticeService {
         return jsonObject;
 //     return null;
     }
-    //创建社团公告
+
+    // 社长创建社团公告
     public JSONObject createNotice(String noticerange, String noticename, String noticecontent, int associationid) throws Exception {
         JSONObject jsonObject = null;
         SqlSession session = MybatiesSession.getSession();
@@ -97,7 +98,7 @@ public class NoticeService {
             notice.setNoticecontent(noticecontent);
             notice.setNoticetime(now);
             notice.setAssociationsid(associationid);
-            notice.setDepartmentid(0);
+            notice.setDepartmentid(999999);
             if(noticerange.equals("全校"))
                 notice.setNoticestate("等待审核");
             else
@@ -108,8 +109,35 @@ public class NoticeService {
 
         session.commit();
         return jsonObject;
-
     }
+
+    // 管理员创建全校公告
+    public JSONObject createManagerNotice(String noticename, String noticecontent) throws Exception {
+        JSONObject jsonObject = null;
+        SqlSession session = MybatiesSession.getSession();
+        Date now = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        if (noticename==null) {
+            jsonObject = JsonUtil.errorResult(401, "公告名字不得为空");
+        } else if (noticecontent==null) {
+            jsonObject = JsonUtil.errorResult(401, "公告内容不得为空");
+        } else {
+            BeanNotice notice = new BeanNotice();
+            notice.setNoticerange("全校");
+            notice.setNoticename(noticename);
+            notice.setNoticecontent(noticecontent);
+            notice.setNoticetime(now);
+            notice.setAssociationsid(0);
+            notice.setDepartmentid(999999);
+            notice.setNoticestate("审核通过");
+            session.insert("insertNotice", notice);
+            jsonObject = JsonUtil.NoticeResult(200, notice);
+        }
+
+        session.commit();
+        return jsonObject;
+    }
+
     //审核公告
     public JSONObject changeNoticeState(int noticeid, Boolean answer) throws Exception {
         BeanNotice notice = new BeanNotice();
@@ -169,17 +197,19 @@ public class NoticeService {
         return list;
     }
     // 显示社团公告
-    public List<JSONObject> loadNoticeByAssociation(String associationName) throws Exception {
-        List<BeanNotice> noticeList = null;
-        JSONObject jsonObject = null;
+    public List<JSONObject> loadNoticeByAssociation(Integer associationId) throws Exception {
+        List<BeanNotice> noticeList;
+        JSONObject jsonObject;
         List<JSONObject> list = new ArrayList<JSONObject>();
 
         SqlSession session = MybatiesSession.getSession();
-        noticeList = session.selectList("selectNoticeByAssociation",associationName);
+        noticeList = session.selectList("selectNoticeByAssociationId",associationId);
 
         for(int i=0;i<noticeList.size();i++) {
-            jsonObject = JsonUtil.NoticeResult(200, noticeList.get(i));
-            list.add(jsonObject);
+            if(noticeList.get(i).getNoticestate().equals("审核通过")) {
+                jsonObject = JsonUtil.NoticeResult(200, noticeList.get(i));
+                list.add(jsonObject);
+            }
         }
 
         session.commit();

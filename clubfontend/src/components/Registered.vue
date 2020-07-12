@@ -116,12 +116,20 @@
                     },
                 ).then(successResponse => {
                     if (successResponse.data.port === 200) {
-                        this.$router.replace({path: '/login'})
+                      this.$message({
+                        message: '注册成功',
+                        type: 'success'
+                      });
+                      setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+
+                      },1000);
+                      this.$router.replace({path: '/login'})
                     }
                     if (successResponse.data.port === 401) {
-                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
-                            confirmButtonText: '确定',
-                        })
+                      this.$message({
+                        message: '注册失败： '+successResponse.data.ErrorResult,
+                        type: 'error'
+                      });
                     }
                 })
             },

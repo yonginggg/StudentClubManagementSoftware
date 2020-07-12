@@ -1,0 +1,40 @@
+<!--pages/notice/notice.wxml-->
+<view>
+	<swiper class="textSwiper" indicator-dots="{{false}}" autoplay vertical circular interval="2000" current='{{current}}'>
+		<swiper-item class='swiperItem' wx:for="{{messageList}}" wx:for-item="item" wx:key="{{index}}">
+			<text class="messageText">{{item.noticename}}</text>
+			<image class="removeMessage" src='/images/叉.png' data-index="{{index}}" bindtap="onClickRemoveMessage"></image>
+		</swiper-item>
+	</swiper>
+</view>
+
+<van-collapse value="{{ activeName }}" bind:change="onChange" wx:for="{{list}}" wx:for-item="item" wx:for-index="index" accordion>
+	<van-collapse-item title="{{item.noticename}}" name="{{index}}">
+		<view class="cu-list menu sm-border card-menu margin-top">
+			<view class="cu-item">
+				<view class="content">
+					<text class="cuIcon-notice text-blue"></text>
+					<text class="text-blue">详情 : {{item.noticetcontent}}</text>
+				</view>
+			</view>
+			<view class="cu-item">
+				<view class="content">
+					<text class="cuIcon-time text-blue"></text>
+					<text class="text-blue">发布时间 : {{item.noticetime}}</text>
+				</view>
+			</view>
+			<view class="cu-item">
+				<view class="content">
+					<text class="cuIcon-global text-blue"></text>
+					<text class="text-blue">范围 : {{item.noticerange}}</text>
+				</view>
+			</view>
+			<view class="cu-item">
+				<view class="content">
+					<text class="cuIcon-people text-blue"></text>
+					<text class="text-blue">发布者 : {{item.associationsname}}</text>
+				</view>
+			</view>
+		</view>
+	</van-collapse-item>
+</van-collapse>

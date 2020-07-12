@@ -39,9 +39,7 @@ public class UserService {
             }
         }
         else if ("管理员".equals(type)){
-//            System.out.println("管理员"+manager);
-            System.out.println(manager.getManagerid());
-            System.out.println(manager.getManagerpwd());
+
             if (manager == null) {
                 jsonObject = JsonUtil.errorResult(401, "账号不存在");
             } else if (!manager.getManagerpwd().equals(md5Pwd)) {

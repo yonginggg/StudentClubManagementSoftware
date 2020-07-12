@@ -26,8 +26,13 @@
         <el-table-column
           label="活动范围"
           prop="noticerange"
-          :filters="[{text: '全校', value: '全校'}, {text: '全社', value: '全社'}, {text: '部门', value: '部门'}]"
+          :filters="[{text: '全校', value: '全校'}, {text: '全社', value: '全社'}]"
           :filter-method="filterRange">
+        </el-table-column>
+
+        <el-table-column
+          label="社团名称"
+          prop="associationsname">
         </el-table-column>
         <el-table-column
           label="审核状态"
@@ -43,15 +48,15 @@
         </el-table-column>
         <el-table-column
           align="right">
-          <template slot-scope="scope">
+          <template slot-scope="scope" class="handlebutton" v-if="scope.row.noticestate==='等待审核'">
             <el-button
               size="middle"
               type="primary" plain
-              @click="handleEdit(scope.$index, scope.row)">同意</el-button>
+              @click="handleSuccess(scope.row)">同意</el-button>
             <el-button
               size="middle"
               type="danger" plain
-              @click="handleEdit(scope.$index, scope.row)">拒绝</el-button>
+              @click="handleError(scope.row)">拒绝</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,6 +65,7 @@
 </template>
 
 <script>
+  import  qs from 'qs'
     export default {
         name: 'Query_Announcement',
         data () {
@@ -73,6 +79,7 @@
                     this.tableData = response.data.allnotice
                     console.log(this.tableData)
                 })
+
         },
         methods: {
             filterState(value, row) {
@@ -81,7 +88,47 @@
             filterRange(value, row, column) {
                 const property = column['property'];
                 return row[property] === value;
-            }
+            },
+          handleSuccess(row){
+              var sd = qs.stringify({noticeid:row.noticeid,answer:true})
+            this.$axios({
+                method: 'post',
+                url: '/examinenotice',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: sd, // 直接提交转换后的数据即可
+              },
+            ).then(successResponse => {
+              this.$message({
+                message: '审核通过',
+                type: 'success'
+              });
+              setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+              },1000);
+            })
+          },
+          handleError(row){
+            var sd = qs.stringify({noticeid:row.noticeid,answer:false})
+            this.$axios({
+                method: 'post',
+                url: '/examinenotice',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: sd, // 直接提交转换后的数据即可
+              },
+            ).then(successResponse => {
+              this.$message({
+                message: '审核未通过',
+                type: 'success'
+              });
+              setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                window.location.reload();//页面刷新
+              },1000);
+            })
+          }
         }
     }
 </script>

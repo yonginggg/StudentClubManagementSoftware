@@ -8,29 +8,37 @@ import com.zks.model.BeanMember;
 import com.zks.model.BeanRecruitSign;
 import org.apache.ibatis.session.SqlSession;
 
+import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
 public class RecruitSignService {
     //创建招新申请表(招新报名)
-    public JSONObject insertrecruit(String userid, int associationsId,String content){
+    public JSONObject insertrecruit(String userid, int associationsId,String content,String recruitNoticeStartTime) throws ParseException {
         JSONObject jsonObject = null;
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Date startTime = df.parse(recruitNoticeStartTime);
         SqlSession session = MybatiesSession.getSession();
         Date now = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 
-        BeanRecruitSign member = null;
-        member = session.selectOne("selectMemberByUid",userid);
+        List<BeanMember> memberList;
+        memberList = session.selectList("selectMemberByUid",userid);
+        int sum = 0;
+        for(int i=0;i<memberList.size();i++){
+            if(memberList.get(i).getAssociationsid() == associationsId){
+                sum++;
+            }
+        }
+
         BeanAssociations association = new BeanAssociations();
-        association = session.selectOne("selectAssociation_test",associationsId);
+        association = session.selectOne("selectAssociations",associationsId);
         List<BeanRecruitSign> sign1 = null;
         sign1 = session.selectList("selectResult",userid);
         for(int i = 0; i < sign1.size(); i++){
             BeanRecruitSign sign2 = null;
             sign2 = sign1.get(i);
             if(sign2.getAssociationsid().equals(associationsId) && sign2.getRecruitSignApplicationState().equals("等待审核")){
-                jsonObject = JsonUtil.errorResult(401,"您已提交招新表");
+                jsonObject = JsonUtil.errorResult(401,"您已提交过招新表");
                 return jsonObject;
             }
         }
@@ -38,8 +46,10 @@ public class RecruitSignService {
             jsonObject = JsonUtil.errorResult(401,"请选择社团");
         }else if(content == null|| content.equals("")){
             jsonObject = JsonUtil.errorResult(401,"个人介绍不能为空");
-        }else if(member != null){
+        }else if(sum > 0){
             jsonObject = JsonUtil.errorResult(401,"您已经是该社社员");
+        }else if(now.before(startTime)) {
+            jsonObject = JsonUtil.errorResult(401, "招新尚未开始");
         }else if(association == null) {
             jsonObject = JsonUtil.errorResult(401, "社团不存在");
         }
@@ -87,14 +97,14 @@ public class RecruitSignService {
                 newMember.setMemberintroduction(recruitSign.getRecruitSignContent());
                 newMember.setUserid(recruitSign.getUserid());
                 newMember.setAssociationsid(recruitSign.getAssociationsid());
-                newMember.setDepartmentid(1);
+                newMember.setDepartmentid(999999);
 
-                session.insert("insertMember_test",newMember);
+                session.insert("insertMember",newMember);
 
                 BeanAssociations associations = new BeanAssociations();
-                associations = session.selectOne("selectAssociation_test",recruitSign.getAssociationsid());
+                associations = session.selectOne("selectAssociations",recruitSign.getAssociationsid());
                 associations.setAssociationsnumber(associations.getAssociationsnumber()+1);
-                session.update("updateAssociation_member",associations);
+                session.update("updateByAssociationsId",associations);
                 jsonObject = JsonUtil.MemberResult(200, newMember);
                 session.commit();
             } else{
@@ -147,27 +157,28 @@ public class RecruitSignService {
         return list;
     }
 
-    //显示该用户所属社团的所有申请表(社长查询
-    public List<JSONObject> loadAllRecruitSignByAssociation(String userid) throws Exception {
+    //显示该社团的所有申请表(社长查询
+    public List<JSONObject> loadAllRecruitSignByAssociationsId(Integer associationsId) throws Exception {
         List<BeanRecruitSign> recruitSignList = null;
-        JSONObject jsonObject = null;
+        JSONObject jsonObject = new JSONObject();
         List<JSONObject> list = new ArrayList<JSONObject>();
 
         SqlSession session = MybatiesSession.getSession();
-        recruitSignList = session.selectList("selectRecruitSignByUserAndAssc",userid);
+        recruitSignList = session.selectList("selectRecruitSignByAssociationsId",associationsId);
         if(recruitSignList == null){
             jsonObject = JsonUtil.errorResult(401,"无招新申请表");
         }
         else {
             for (int i = 0; i < recruitSignList.size(); i++) {
-                jsonObject = JsonUtil.RecruitSignResult(200, recruitSignList.get(i));
-                list.add(jsonObject);
+                if(recruitSignList.get(i).getRecruitSignApplicationState().equals("等待审核")) {
+                    jsonObject = JsonUtil.RecruitSignResult(200, recruitSignList.get(i));
+                    list.add(jsonObject);
+                }
             }
         }
         session.commit();
         return list;
     }
-
 
     public static void main(String[] args) throws Exception {
         RecruitSignService a = new RecruitSignService();

@@ -22,9 +22,9 @@
             <el-form-item label="申请社团">
               <span>{{ props.row.associationsname }}</span>
             </el-form-item>
-            <el-form-item label="申请部门">
-              <span>{{ props.row.departmentid }}</span>
-            </el-form-item>
+<!--            <el-form-item label="申请部门">-->
+<!--              <span>{{ props.row.departmentid }}</span>-->
+<!--            </el-form-item>-->
             <el-form-item label="开始时间">
               <span>{{ props.row.activitystarttime }}</span>
             </el-form-item>

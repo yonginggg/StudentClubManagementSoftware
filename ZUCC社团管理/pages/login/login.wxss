@@ -1,0 +1,77 @@
+/* pages/login/login.wxss */
+page{
+  height: 100%;
+  background-size:100%;
+  background-image: url('https://img-blog.csdn.net/20180727144314722?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NvbmdPa29L/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70');
+}
+ 
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  box-sizing: border-box;
+  /* background-color: #f2f2f2;     */
+} 
+ 
+/*登录图片*/
+.login-icon{
+  flex: none;
+  margin: 0 auto;
+  margin-top: 200rpx;
+}
+.login-img{
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 110rpx;
+  opacity: 0.6;
+}
+ 
+/*表单内容*/
+.login-from {
+  margin-top: 90px;
+  flex: auto;
+  height:100%;
+}
+ 
+/* 输入框 */
+.myno{
+  width: 90%;
+  height: 80rpx;
+  margin: 0 auto;
+  border:1px solid #ccc;
+  border-radius: 50rpx;
+ 
+}
+.mypwd{
+  width: 90%;
+  height: 80rpx;
+  margin: 0 auto;
+  border:1px solid #ccc;
+  border-radius: 50rpx;
+  margin-top: 20rpx;
+}
+/*按钮*/
+.loginBtnView {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+ 
+.loginBtn {
+  width: 90%;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 35px;
+  color: #fff;
+  background-color:#7e8ef0;
+  border: 0.1rpx solid #ccc;
+  border-radius: 40rpx;
+}
+ 
+ 
+.nameImage, .keyImage {
+  margin-right: 10px;
+  width: 14px;
+  height: 14px
+}

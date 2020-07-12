@@ -9,6 +9,10 @@
       prop="noticename">
     </el-table-column>
     <el-table-column
+      label="发布者"
+      prop="associationsname">
+    </el-table-column>
+    <el-table-column
       label="公告内容"
       prop="noticetcontent">
     </el-table-column>

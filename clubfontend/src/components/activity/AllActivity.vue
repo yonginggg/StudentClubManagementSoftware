@@ -10,6 +10,12 @@
           <el-form-item label="活动内容">
             <span>{{ props.row.activityintroduction }}</span>
           </el-form-item>
+          <el-form-item label="活动发布时间">
+            <span>{{ props.row.activitiesapplicationtime }}</span>
+          </el-form-item>
+          <el-form-item label="活动截止时间">
+            <span>{{ props.row.activityendtime }}</span>
+          </el-form-item>
         </el-form>
       </template>
     </el-table-column>
@@ -18,20 +24,20 @@
       prop="activityname">
     </el-table-column>
     <el-table-column
-      label="活动发布时间"
-      prop="activitiesapplicationtime">
+      label="发布者"
+      prop="associationsname">
     </el-table-column>
     <el-table-column
-      label="活动报名截止时间"
-      prop="activitydeadline">
+      label="地点"
+      prop="activitypalce">
     </el-table-column>
     <el-table-column
       label="活动开始时间"
       prop="activitystarttime">
     </el-table-column>
     <el-table-column
-      label="活动结束时间"
-      prop="activityendtime">
+      label="报名截止时间"
+      prop="activitydeadline">
     </el-table-column>
     <el-table-column
       align="right">
@@ -98,9 +104,13 @@
                         });
                     }
                     if (successResponse.data.port === 401) {
-                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
-                            confirmButtonText: '确定',
-                        })
+                        // this.$alert(successResponse.data.ErrorResult, '报名失败', {
+                        //     confirmButtonText: '确定',
+                        // })
+                      this.$message({
+                        message: '报名失败： '+successResponse.data.ErrorResult,
+                        type: 'error'
+                      });
                     }
                 })
             }
@@ -110,5 +120,16 @@
 </script>
 
 <style scoped>
-
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 </style>

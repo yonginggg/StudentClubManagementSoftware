@@ -10,7 +10,7 @@
           style="width: 100%">
           <el-table-column
             label="社团名字"
-            prop="associationsName">
+            prop="associationsname">
           </el-table-column>
           <el-table-column
             label="招新内容"
@@ -36,7 +36,9 @@
               <el-button
                 size="middle"
                 type="primary"
-                @click.native.console="signin(scope.$index, scope.row)">报名社团</el-button>
+                @click="signin(scope.$index, scope.row)">
+                报名社团
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -67,8 +69,6 @@
                 rows.userId = this.$store.state.user.userId
                 rows.recruitSignContent = '这是个人介绍'
                 var dataObj = qs.stringify(rows);
-
-                // console.log(dataObj)
                 this.$axios({
                         method: 'post',
                         url: '/createrecruitsign',
@@ -86,9 +86,13 @@
                         });
                     }
                     if(successResponse.data.port === 401){
-                        this.$alert(successResponse.data.ErrorResult, '登录失败', {
-                            confirmButtonText: '确定',
-                        })
+                        // this.$alert(successResponse.data.ErrorResult, '登录失败', {
+                        //     confirmButtonText: '确定',
+                        // })
+                      this.$message({
+                        message: '报名失败:  '+successResponse.data.ErrorResult,
+                        type: 'error'
+                      });
                     }
                 })
             }

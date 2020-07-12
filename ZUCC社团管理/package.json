@@ -1,0 +1,15 @@
+{
+  "name": "zucc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vant-weapp": "^0.5.28",
+    "weui": "^2.3.0"
+  }
+}

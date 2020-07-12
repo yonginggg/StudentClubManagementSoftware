@@ -2,7 +2,9 @@
 <template>
   <!--社团活动-->
   <div id="app" style="position: fixed;width: 85%;height: 100%;top: 0;right: 0; border: 1px solid #eee">
-    <span style="letter-spacing: 20px; ">社团活动</span>
+    <el-header style="text-align: center; font-size: 20px; height: 50px;line-height: 50px; background-color: lightsteelblue">
+      <span style="letter-spacing: 20px; ">社团活动</span>
+    </el-header>
     <el-table
       :data="tableData.filter(data => !search || tableData.activityname.toLowerCase().includes(search.toLowerCase()))"
       stripe
@@ -124,7 +126,7 @@
 </template>
 
 <script>
-  import qs from 'qs'
+    import qs from 'qs'
     export default {
         name: 'ClubActivity',
         data() {
@@ -133,14 +135,16 @@
                 },
                 tableData: [],
                 departmentActivity: [],
-                search: ''
+                search: '',
             }
         },
         mounted() {
             // console.log(this.$store.state.associationName),
-            this.data.post = this.$store.state.memberPost
-            this.data.associationName = this.$store.state.associationName
-            this.data.departmentId = this.$store.state.departmentId
+            // this.data.post = "社长"
+            // this.data.associationName = this.$store.state.associationName
+            // this.data.associationName = sessionStorage.getItem("associationName")
+            // this.data.departmentId = 1
+            this.data.associationId = sessionStorage.getItem("associationId")
             var dataObj = qs.stringify(this.data)
             console.log(dataObj)
             this.$axios({
@@ -185,17 +189,16 @@
                     },
                 ).then(successResponse => {
                     if (successResponse.data.port === 200) {
-                        // this.$router.replace({path: '/login'})
-                        // console.log("success")
                         this.$message({
                             message: '报名活动成功',
                             type: 'success'
                         });
                     }
                     if (successResponse.data.port === 401) {
-                        this.$alert(successResponse.data.ErrorResult, '注册失败', {
-                            confirmButtonText: '确定',
-                        })
+                      this.$message({
+                        message: '报名活动失败：  '+successResponse.data.ErrorResult,
+                        type: 'error'
+                      });
                     }
                     setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
                         window.location.reload();//页面刷新

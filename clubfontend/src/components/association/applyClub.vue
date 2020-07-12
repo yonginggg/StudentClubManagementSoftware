@@ -102,7 +102,16 @@
                         },
                         data: data, // 直接提交转换后的数据即可
                     },
-                )
+                ).then(successResponse => {
+                  this.$message({
+                    message: '审核通过',
+                    type: 'success'
+                  });
+                  setTimeout(function(){
+                    window.location.reload();
+                  }, 1500);
+                })
+
             },
             no(index, rows) {
                 rows.associationstate = '审核失败'
@@ -117,7 +126,17 @@
                         },
                         data: data, // 直接提交转换后的数据即可
                     },
-                )
+                ).then(successResponse => {
+
+                  this.$message({
+                    message: '审核未通过',
+                    type: 'error'
+                  });
+                  setTimeout(function(){
+                    window.location.reload();
+                  }, 1500);
+
+                })
             }
         }
     }

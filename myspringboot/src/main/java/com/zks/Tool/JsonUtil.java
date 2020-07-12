@@ -11,6 +11,7 @@ public class JsonUtil {
 
     static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    //报错提示
     public static JSONObject errorResult(int port, String ErrorResult){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -18,6 +19,7 @@ public class JsonUtil {
         return jsonObject;
     }
 
+    //用户
     public static JSONObject UserResult(int port, BeanUser user){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -31,6 +33,7 @@ public class JsonUtil {
         return jsonObject;
     }
 
+    //管理员
     public static JSONObject ManagerResult(int port, BeanManager manager){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -42,6 +45,7 @@ public class JsonUtil {
         return jsonObject;
     }
 
+    //活动
     public static JSONObject ActivityResult(int port, BeanActivity activity){
         SqlSession session = MybatiesSession.getSession();
         BeanAssociations a = session.selectOne("selectAssociations",activity.getAssociationsid());
@@ -78,6 +82,7 @@ public class JsonUtil {
         return jsonObject;
     }
 
+    //活动报名
     public static JSONObject ActivitySignResult(int port, BeanActivitySign activitySign){
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
@@ -89,19 +94,10 @@ public class JsonUtil {
         return jsonObject;
     }
 
-    public static JSONObject SubjectPostResult(int port, BeanSubjectPost subjectPost){
-        JSONObject jsonObject = new JSONObject(true);
-        jsonObject.put("port",port);
-        jsonObject.put("subjectpostid",subjectPost.getSubjectpostid());
-        jsonObject.put("subjectposttitle",subjectPost.getSubjectposttitle());
-        jsonObject.put("subjectpostcontent",subjectPost.getSubjectpostcontent());
-        jsonObject.put("subjectposttime",df.format(subjectPost.getSubjectposttime()));
-        jsonObject.put("collectnum",subjectPost.getCollectnum());
-        jsonObject.put("looknum",subjectPost.getLooknum());
-        jsonObject.put("userid",subjectPost.getUserid());
-        return jsonObject;
-    }
+    //公告
     public static JSONObject NoticeResult(int port, BeanNotice notice){
+        SqlSession session = MybatiesSession.getSession();
+        BeanAssociations a = session.selectOne("selectAssociations",notice.getAssociationsid());
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
         jsonObject.put("noticeid",notice.getNoticeid());
@@ -110,10 +106,12 @@ public class JsonUtil {
         jsonObject.put("noticetcontent",notice.getNoticecontent());
         jsonObject.put("noticetime",df.format(notice.getNoticetime()));
         jsonObject.put("associationsid",notice.getAssociationsid());
+        jsonObject.put("associationsname",a.getAssociationsname());
         jsonObject.put("departmentid",notice.getDepartmentid());
         jsonObject.put("noticestate",notice.getNoticestate());
         return jsonObject;
     }
+
     //社团
     public static JSONObject AssociationResult(int port, BeanAssociations associations){
         JSONObject jsonObject = new JSONObject(true);
@@ -130,17 +128,32 @@ public class JsonUtil {
         return jsonObject;
     }
 
-
     //招新申请
     public static JSONObject RecruitSignResult(int port, BeanRecruitSign recruitSign){
+        SqlSession session = MybatiesSession.getSession();
+        BeanUser u = session.selectOne("selectUser",recruitSign.getUserid());
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
         jsonObject.put("recruitSignId",recruitSign.getRecruitsignid());
         jsonObject.put("recruitSignTime",df.format(recruitSign.getRecruitsigntime()));
         jsonObject.put("userId",recruitSign.getUserid());
+        jsonObject.put("username",u.getUsername());
         jsonObject.put("associationsId",recruitSign.getAssociationsid());
         jsonObject.put("recruitSignContent ",recruitSign.getRecruitSignContent());
         jsonObject.put("recruitSignApplicationState",recruitSign.getRecruitSignApplicationState());
+        return jsonObject;
+    }
+
+    public static JSONObject SubjectPostResult(int port, BeanSubjectPost subjectPost){
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("port",port);
+        jsonObject.put("subjectpostid",subjectPost.getSubjectpostid());
+        jsonObject.put("subjectposttitle",subjectPost.getSubjectposttitle());
+        jsonObject.put("subjectpostcontent",subjectPost.getSubjectpostcontent());
+        jsonObject.put("subjectposttime",df.format(subjectPost.getSubjectposttime()));
+        jsonObject.put("collectnum",subjectPost.getCollectnum());
+        jsonObject.put("looknum",subjectPost.getLooknum());
+        jsonObject.put("userid",subjectPost.getUserid());
         return jsonObject;
     }
 
@@ -156,8 +169,11 @@ public class JsonUtil {
 //        return jsonObject;
 //    }
 
+    // 社团成员
     public static JSONObject MemberResult(int port, BeanMember member){
         JSONObject jsonObject = new JSONObject(true);
+        SqlSession session = MybatiesSession.getSession();
+        BeanUser u = session.selectOne("selectUser",member.getUserid());
         jsonObject.put("port",port);
         jsonObject.put("memberid",member.getMemberid());
         jsonObject.put("memberpost",member.getMemberpost());
@@ -166,11 +182,19 @@ public class JsonUtil {
         jsonObject.put("userid",member.getUserid());
         jsonObject.put("associationsid",member.getAssociationsid());
         jsonObject.put("departmentid",member.getDepartmentid());
+        jsonObject.put("username",u.getUsername());
+        jsonObject.put("usersex",u.getUsersex());
+        jsonObject.put("usermajor",u.getUsermajor());
+        jsonObject.put("userclass",u.getUserclass());
+        jsonObject.put("usertel",u.getUsertel());
+
         return jsonObject;
     }
 
     //招新表
     public static JSONObject RecruitNoticeResult(int port, BeanRecruitNotice recruitNotice){
+        SqlSession session = MybatiesSession.getSession();
+        BeanAssociations a = session.selectOne("selectAssociations",recruitNotice.getAssociationsid());
         JSONObject jsonObject = new JSONObject(true);
         jsonObject.put("port",port);
         jsonObject.put("recruitNoticeId",recruitNotice.getRecruitnoticeid());
@@ -179,6 +203,7 @@ public class JsonUtil {
         jsonObject.put("recruitNoticeEndTime",df.format(recruitNotice.getRecruitnoticeendtime()));
         jsonObject.put("recruitNoticeReleaseTime",df.format(recruitNotice.getRecruitnoticereleasetime()));
         jsonObject.put("associationsId",recruitNotice.getAssociationsid());
+        jsonObject.put("associationsname",a.getAssociationsname());
         return jsonObject;
     }
 

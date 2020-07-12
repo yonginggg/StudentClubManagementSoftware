@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ActivityService {
+public class ActivityService{
     // 创建活动
     public JSONObject createActivity(String range, String name, String introduction, Date startTime, Date endTime, Date deadLine, int palaceid, int associationid, int departmentid) throws Exception{
         JSONObject jsonObject = null;
 
+        System.out.println(startTime);
         SqlSession session = MybatiesSession.getSession();
         Date now = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -43,7 +44,7 @@ public class ActivityService {
             activity.setActivitypalce(palaceid);
             activity.setAssociationsid(associationid);
             if(!range.equals("部门"))
-                activity.setDepartmentid(0);
+                activity.setDepartmentid(999999);
             else
                 activity.setDepartmentid(departmentid);
             activity.setActivitiesapplicationtime(now);
@@ -118,14 +119,15 @@ public class ActivityService {
 
     //显示全校活动
     public List<JSONObject> loadActivityBySchool() throws Exception {
-        List<BeanActivity> activityList = null;
-        JSONObject jsonObject = null;
+        List<BeanActivity> activityList;
+        JSONObject jsonObject;
         List<JSONObject> list = new ArrayList<JSONObject>();
+        Date now = new Date();
 
         SqlSession session = MybatiesSession.getSession();
         activityList = session.selectList("selectActivityByState","审核通过");
         for(int i=0;i<activityList.size();i++) {
-            if(activityList.get(i).getActivityrange().equals("全校")) {
+            if(activityList.get(i).getActivityrange().equals("全校") && activityList.get(i).getActivityendtime().after(now)) {
                 jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
                 list.add(jsonObject);
             }
@@ -136,24 +138,48 @@ public class ActivityService {
     }
 
     // 显示社团活动
-    public List<JSONObject> loadActivityByAssociation(String post, String associationName, int departmentId) throws Exception {
+    public List<JSONObject> loadActivityByAssociation(int associationId) throws Exception {
         List<BeanActivity> activityList = null;
         JSONObject jsonObject = null;
         List<JSONObject> list = new ArrayList<JSONObject>();
+        Date now = new Date();
 
         SqlSession session = MybatiesSession.getSession();
-        BeanAssociations association = session.selectOne("selectAssociationsByName",associationName);
-        int associationId = association.getAssociationsid();
         activityList = session.selectList("selectActivityByAssociation",associationId);
 
         for(int i=0;i<activityList.size();i++) {
-            if (post.equals("社长")) {
-                if (!activityList.get(i).getActivityrange().equals("全校")) {
-                    jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
-                    list.add(jsonObject);
+//            if (post.equals("社长")) {
+//                if (!activityList.get(i).getActivityrange().equals("全校") && activityList.get(i).getActivityendtime().after(now)) {
+//                    jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
+//                    list.add(jsonObject);
+//                }
+//            }
+//            else {
+                if (activityList.get(i).getActivityrange().equals("社团")) {
+                    if (activityList.get(i).getActivityendtime().after(now)) {
+                        jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
+                        list.add(jsonObject);
+                    }
                 }
-            } else {
-                if (activityList.get(i).getActivityrange().equals("社团") || activityList.get(i).getDepartmentid() == departmentId) {
+//            }
+        }
+
+        session.commit();
+        return list;
+    }
+
+    // 模糊查询活动
+    public List<JSONObject> searchActivity(String keyword) throws Exception {
+        List<BeanActivity> activityList;
+        JSONObject jsonObject;
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        Date now = new Date();
+
+        SqlSession session = MybatiesSession.getSession();
+        activityList = session.selectList("selectActivityByState","审核通过");
+        for(int i=0;i<activityList.size();i++) {
+            if(activityList.get(i).getActivityrange().equals("全校") && activityList.get(i).getActivityendtime().after(now)) {
+                if (activityList.get(i).getActivityname().contains(keyword)) {
                     jsonObject = JsonUtil.ActivityResult(200, activityList.get(i));
                     list.add(jsonObject);
                 }
@@ -163,7 +189,6 @@ public class ActivityService {
         session.commit();
         return list;
     }
-
 
     // 判断场地是否可用
     public Boolean placeAvailability(int placeId, Date startTime, Date endTime) throws Exception {

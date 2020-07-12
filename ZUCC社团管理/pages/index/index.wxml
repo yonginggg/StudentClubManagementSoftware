@@ -1,0 +1,94 @@
+<!--index.wxml-->
+<view class="container">
+	<view class="userinfo">
+		<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+		<block wx:else>
+			<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+			<text class="userinfo-nickname">{{userInfo.nickName}}</text>
+		</block>
+	</view>
+
+	<!-- <view class="margin radius bg-gradual-white shadow-blur dongtu">
+		<image src="/images/wave.gif" mode="scaleToFill" class="gif-white response" style="height:100rpx"></image>
+	</view> -->
+
+	<van-collapse value="{{ activeName }}" bind:change="onChange" accordion>
+		<van-collapse-item title="个人信息" name="2">
+			<view class="cu-list menu sm-border card-menu margin-top">
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-people text-blue"></text>
+						<text class="text-blue">姓名 : {{user[0]}}</text>
+					</view>
+				</view>
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-tag text-blue"></text>
+						<text class="text-blue">性别 : {{user[1]}}</text>
+					</view>
+				</view>
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-group text-blue"></text>
+						<text class="text-blue">班级 : {{user[2]}}</text>
+					</view>
+				</view>
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-phone text-blue"></text>
+						<text class="text-blue">联系方式 : {{user[3]}}</text>
+					</view>
+				</view>
+			</view>
+		</van-collapse-item>
+		<van-collapse-item title="我的社团" name="3">
+			<view class="cu-list menu sm-border card-menu margin-top" wx:for="{{associationsList}}" wx:for-item="item">
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-medal text-blue"></text>
+						<text class="text-blue">{{item.associationsName}}</text>
+					</view>
+				</view>
+			</view>
+		</van-collapse-item>
+		<van-collapse-item title="我的活动" name="4">
+			<view class="cu-list menu sm-border card-menu margin-top" wx:for="{{activityList}}" wx:for-item="item">
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-hot text-blue"></text>
+						<text class="text-blue">{{item.activityname}}</text>
+					</view>
+				</view>
+			</view>
+		</van-collapse-item>
+				<van-collapse-item title="关于我们" name="5">
+			<view class="cu-list menu sm-border card-menu margin-top">
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-weixin text-blue"></text>
+						<text class="text-blue">  yys981030</text>
+					</view>
+				</view>
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-mobile text-blue"></text>
+						<text class="text-blue">  18857533745</text>
+					</view>
+				</view>
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-location text-blue"></text>
+						<text class="text-blue">  ZUCC-JavaEE</text>
+					</view>
+				</view>
+				<view class="cu-item">
+					<view class="content">
+						<text class="cuIcon-github text-blue"></text>
+						<text class="text-blue">  https://github.com/zucc-Zs/test</text>
+					</view>
+				</view>
+			</view>
+		</van-collapse-item>
+	</van-collapse>
+</view>
+

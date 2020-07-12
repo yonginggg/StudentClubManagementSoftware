@@ -54,7 +54,28 @@ public class RecruitNoticeService {
         session.commit();
         return jsonObject;
     }
-    //显示所有招新表
+
+//    显示所有招新表
+    public List<JSONObject> loadAllRecruitNotice() throws Exception {
+        List<BeanRecruitNotice> recruitNoticeList = null;
+        JSONObject jsonObject = null;
+        List<JSONObject> list = new ArrayList<JSONObject>();
+        Date now = new Date();
+
+        SqlSession session = MybatiesSession.getSession();
+        recruitNoticeList = session.selectList("selectAllRecruitNotice");
+
+        for(int i = 0; i < recruitNoticeList.size(); i++){
+            if(recruitNoticeList.get(i).getRecruitnoticeendtime().after(now)) {
+                jsonObject = JsonUtil.RecruitNoticeResult(200, recruitNoticeList.get(i));
+                list.add(jsonObject);
+            }
+        }
+        session.commit();
+        return list;
+    }
+
+//    //显示所有招新表
 //    public List<JSONObject> loadAllRecruitNotice() throws Exception {
 //        List<BeanRecruitNotice> recruitNoticeList = null;
 //        JSONObject jsonObject = null;
@@ -64,33 +85,18 @@ public class RecruitNoticeService {
 //        recruitNoticeList = session.selectList("selectAllRecruitNotice");
 //
 //        for(int i = 0; i < recruitNoticeList.size(); i++){
-//            jsonObject = JsonUtil.RecruitNoticeResult(200, recruitNoticeList.get(i));
-//            list.add(jsonObject);
+//            Date now = new Date();
+//            if(now.after(recruitNoticeList.get(i).getRecruitnoticeendtime())){continue;}
+//            else {
+//                BeanAssociations associationName = session.selectOne("selectAssociationName_one",recruitNoticeList.get(i).getAssociationsid());
+//                jsonObject = JsonUtil.TwoRecruitNoticeResult(200, recruitNoticeList.get(i),associationName.getAssociationsname());
+//                list.add(jsonObject);
+//            }
 //        }
 //        session.commit();
 //        return list;
 //    }
-    //显示所有招新表
-    public List<JSONObject> loadAllRecruitNotice() throws Exception {
-        List<BeanRecruitNotice> recruitNoticeList = null;
-        JSONObject jsonObject = null;
-        List<JSONObject> list = new ArrayList<JSONObject>();
 
-        SqlSession session = MybatiesSession.getSession();
-        recruitNoticeList = session.selectList("selectAllRecruitNotice");
-
-        for(int i = 0; i < recruitNoticeList.size(); i++){
-            Date now = new Date();
-            if(now.after(recruitNoticeList.get(i).getRecruitnoticeendtime())){continue;}
-            else {
-                BeanAssociations associationName = session.selectOne("selectAssociationName_one",recruitNoticeList.get(i).getAssociationsid());
-                jsonObject = JsonUtil.TwoRecruitNoticeResult(200, recruitNoticeList.get(i),associationName.getAssociationsname());
-                list.add(jsonObject);
-            }
-        }
-        session.commit();
-        return list;
-    }
     //删除招新表
     public List<JSONObject> deleteRecruitNotice(int recruitNoticeId) throws Exception {
         BeanRecruitNotice recruitNotice = new BeanRecruitNotice();

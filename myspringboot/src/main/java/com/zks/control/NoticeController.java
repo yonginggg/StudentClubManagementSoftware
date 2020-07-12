@@ -32,11 +32,12 @@ public class NoticeController {
         result.put("noticebyschool",array);
         return result;
     }
+
     //显示社团公告
     @RequestMapping(value = "noticebyassociations", method = RequestMethod.POST)
-    public JSONObject showNoticeByAssociations(@RequestParam("associationsName") String associationsName) throws Exception {
+    public JSONObject showNoticeByAssociations(@RequestParam("associationsId") Integer associationsId) throws Exception {
         NoticeService noticeService = new NoticeService();
-        String noticebyassociations = JSON.toJSONString( noticeService.loadNoticeByAssociation(associationsName));
+        String noticebyassociations = JSON.toJSONString( noticeService.loadNoticeByAssociation(associationsId));
         JSONArray array= JSONArray.parseArray(noticebyassociations);
         JSONObject result = new JSONObject();
         result.put("noticebyassociations",array);
@@ -61,7 +62,7 @@ public class NoticeController {
         JSONObject result = noticeService.createadminNotice(noticeRange,noticeName, noticeContent);
         return result;
     }
-    //社团公告
+    // 创建社团公告
     @RequestMapping(value = "noticecreate", method = RequestMethod.POST)
     public JSONObject createNotice(@RequestParam("noticeRange") String noticeRange, @RequestParam("noticeName") String noticeName,
                                    @RequestParam("noticeContent") String noticeContent,@RequestParam("associationId") Integer associationId
@@ -70,7 +71,7 @@ public class NoticeController {
         JSONObject result = noticeService.createNotice(noticeRange,noticeName, noticeContent,associationId);
         return result;
     }
-    // 部门公告
+    // 创建部门公告
     @RequestMapping(value = "noticedepartmentcreate", method = RequestMethod.POST)
     public JSONObject createdepartmentNotice( @RequestParam("noticeName") String noticeName,
                                               @RequestParam("noticeContent") String noticeContent,@RequestParam("userId")  String userId,@RequestParam("associationId") Integer associationId
@@ -79,6 +80,15 @@ public class NoticeController {
         JSONObject result = noticeService.createDepartmentNotice(noticeName, noticeContent,userId,associationId);
         return result;
     }
+
+    // 管理员创建全校公告
+    @RequestMapping(value = "createmanagernotice", method = RequestMethod.POST)
+    public JSONObject createManagerNotice( @RequestParam("noticeName") String noticeName, @RequestParam("noticeContent") String noticeContent) throws Exception {
+        NoticeService noticeService = new NoticeService();
+        JSONObject result = noticeService.createManagerNotice(noticeName, noticeContent);
+        return result;
+    }
+
     //审核公告
     @RequestMapping(value = "/examinenotice", method = RequestMethod.POST)
     public JSONObject examineNotice(@RequestParam("noticeid") int noticeid,@RequestParam("answer") Boolean answer) throws Exception {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @ResponseBody
 public class AssociationsController {
+    // 创建社团
     @RequestMapping(value = "/createassociation", method = RequestMethod.POST)
     public JSONObject createAssociation(@RequestParam("associationsName") String associationsName, @RequestParam("associationsType") String associationsType,
                                         @RequestParam("associationsIntroduction") String associationsIntroduction, @RequestParam("associationsLeader") String associationsLeader) throws Exception {

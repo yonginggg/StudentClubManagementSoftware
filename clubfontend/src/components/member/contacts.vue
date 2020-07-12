@@ -5,32 +5,43 @@
       <span style="letter-spacing: 20px; ">通讯录</span>
     </el-header>
     <el-main>
-      <span style="letter-spacing: 20px; ">社长</span>
       <el-table
         :data="tableData"
-        style="width: 100%">
+        style="width: 100%;">
         <el-table-column
-          prop="id"
+          prop="userid"
           label="学号"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="username"
           label="姓名"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="major"
+          prop="usersex"
+          label="性别"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="usermajor"
           label="专业"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="class"
-          label="班级">
+          prop="userclass"
+          label="班级"
+          width="180">
         </el-table-column>
         <el-table-column
-          prop="club"
-          label="社团">
+          prop="usertel"
+          label="手机"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="memberintroduction"
+          label="职务"
+          width="180">
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -41,145 +52,38 @@
           </template>
         </el-table-column>
       </el-table>
-      <span style="letter-spacing: 20px; ">部长</span>
-      <el-table
-        :data="tableData2"
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="学号"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="major"
-          label="专业"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="class"
-          label="班级">
-        </el-table-column>
-        <el-table-column
-          prop="department"
-          label="部门">
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="handleEdit(scope.$index, scope.row)">更改部长</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <span style="letter-spacing: 20px; ">社员</span>
-      <el-table
-        :data="tableData3"
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="学号"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="major"
-          label="专业"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="class"
-          label="班级">
-        </el-table-column>
-        <el-table-column
-          prop="department"
-          label="部门">
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="warning"
-              @click="handleEdit(scope.$index, scope.row)">分配部门</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
     </el-main>
   </el-container>
 </template>
 
 <script>
+  import qs from 'qs'
 export default {
   name: 'contacts',
   data () {
     return {
-      tableData: [{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        club: 'xx社团'
-      }],
-      tableData2: [{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      },{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      },{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      }],
-      tableData3: [{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      },{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      },{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      },{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      },{
-        id: '31701011',
-        name: '王小虎',
-        major: '计算机',
-        class: '1702',
-        department: 'xx部门'
-      }]
+      data:{
+      },
+      tableData: [],
     }
+  },
+  mounted () {
+    this.data.associationId = sessionStorage.getItem("associationId")
+    var dataObj = qs.stringify(this.data)
+    console.log(dataObj)
+    this.$axios({
+        method: 'post',
+        url: '/selectMemberByAssociationsId',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: dataObj, // 直接提交转换后的数据即可
+      },
+    ).then(successResponse => {
+      console.log(successResponse.data)
+      // {"member":[{"port":200,"memberpost":"社长","departmentid":999999,"membertime":1575952423000,"associationsid":3,"memberintroduction":"Leader","userid":"31701055","memberid":3}]}
+      this.tableData = successResponse.data.member
+    })
   }
 }
 </script>

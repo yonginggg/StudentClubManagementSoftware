@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "活动大厅",
+  "usingComponents": {
+    "van-search":"/miniprogram_npm/vant-weapp/search/index",
+    "van-toast": "/miniprogram_npm/vant-weapp/toast/index"
+  }
+}
